@@ -76,6 +76,15 @@
         background-color: rgba(15, 23, 42, 0.95);
     }
 
+    /* Styling Default untuk Background Gambar */
+    .bg-page {
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+        min-height: 100vh;
+    }
+
     </style>
 </head>
 <body class="bg-slate-50">
@@ -101,7 +110,7 @@
 
             <div class="hidden md:flex items-center space-x-1">
                 <a href="/" class="nav-link-transition text-slate-300 hover:text-[#69BE28] hover:bg-white/5 px-4 py-2 rounded-xl text-sm font-semibold">Beranda</a>
-                <a href="/sparepart_motor" class="nav-link-transition text-slate-300 hover:text-[#DC002E] hover:bg-white/5 px-4 py-2 rounded-xl text-sm font-semibold">Sparepart</a>
+                <a href="/sparepart" class="nav-link-transition text-slate-300 hover:text-[#DC002E] hover:bg-white/5 px-4 py-2 rounded-xl text-sm font-semibold">Sparepart</a>
                 <a href="/aksesoris" class="nav-link-transition text-slate-300 hover:text-[#003DA5] hover:bg-white/5 px-4 py-2 rounded-xl text-sm font-semibold">Aksesoris</a>
 
                 <div class="relative group">
@@ -210,10 +219,11 @@
         <span class="font-bold">Service Motor</span>
     </a>
     
-    <a href="/cuci_motor text-sm w-5"></i>
+    <a href="/cuci_motor" class="mobile-nav-item flex items-center gap-3 px-4 py-4 text-slate-300 hover:text-white hover:bg-white/5 rounded-2xl transition-all" style="--delay: 6">
+        <i class="fa-solid fa-soap text-sm w-5"></i>
         <span class="font-bold">Cuci Motor</span>
     </a>
-    
+
     <a href="/modifikasi_motor" class="mobile-nav-item flex items-center gap-3 px-4 py-4 text-slate-300 hover:text-white hover:bg-white/5 rounded-2xl transition-all" style="--delay: 7">
         <i class="fa-solid fa-wand-magic-sparkles text-sm w-5"></i>
         <span class="font-bold">Modifikasi</span>
