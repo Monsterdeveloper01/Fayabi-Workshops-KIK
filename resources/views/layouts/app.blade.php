@@ -32,7 +32,7 @@
         justify-content: center;
         transition: opacity 0.5s ease-out;
     }
-    
+
     .spinner {
         width: 50px;
         height: 50px;
@@ -98,7 +98,7 @@
 <nav x-data="{ openMobile: false }" class="bg-slate-900 sticky top-0 z-50 shadow-2xl border-b border-slate-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-20">
-            
+
             <div class="flex-shrink-0 flex items-center gap-3 group cursor-pointer">
                 <div class="flex flex-col leading-none">
                     <span class="text-white text-xl font-black tracking-tighter uppercase italic">
@@ -148,8 +148,8 @@
                             </div>
                             <i class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform" :class="userOpen ? 'rotate-180' : ''"></i>
                         </button>
-                        
-                        <div x-show="userOpen" 
+
+                        <div x-show="userOpen"
                             x-cloak
                             x-transition:enter="transition ease-out duration-200"
                             x-transition:enter-start="opacity-0 scale-95 translate-y-2"
@@ -158,7 +158,7 @@
                             x-transition:leave-start="opacity-100 scale-100 translate-y-0"
                             x-transition:leave-end="opacity-0 scale-95 translate-y-2"
                             class="absolute right-0 mt-3 w-52 bg-slate-800 border border-white/10 rounded-2xl shadow-2xl py-2 z-[60]">
-                            
+
                             <div class="px-4 py-2 border-b border-white/5 mb-1 sm:hidden">
                                 <p class="text-white text-xs font-bold">User Pro</p>
                                 <p class="text-slate-500 text-[10px]">Premium Member</p>
@@ -175,7 +175,7 @@
                                 <i class="fa-solid fa-right-from-bracket w-4"></i> Keluar
                             </a>
                         </div>
-                    </div>                
+                    </div>
                 <div class="md:hidden">
                     <button @click="openMobile = !openMobile" class="text-slate-300 hover:text-white transition-colors">
                         <i class="fa-solid text-2xl" :class="openMobile ? 'fa-xmark' : 'fa-bars-staggered'"></i>
@@ -185,7 +185,7 @@
         </div>
     </div>
 
-<div x-show="openMobile" 
+<div x-show="openMobile"
      x-cloak
      @click.away="openMobile = false"
      x-transition:enter="transition ease-out duration-300"
@@ -195,17 +195,17 @@
      x-transition:leave-start="opacity-100 translate-y-0"
      x-transition:leave-end="opacity-0 -translate-y-10"
      class="md:hidden bg-slate-900/95 backdrop-blur-xl border-t border-slate-800 px-4 pt-2 pb-6 space-y-1 shadow-2xl">
-    
+
     <a href="{{ url('/') }}" class="mobile-nav-item flex items-center gap-3 px-4 py-4 text-slate-300 hover:text-white hover:bg-white/5 rounded-2xl transition-all" style="--delay: 1">
         <i class="fa-solid fa-house text-sm w-5"></i>
         <span class="font-bold">Beranda</span>
     </a>
-    
+
     <a href="/sparepart" class="mobile-nav-item flex items-center gap-3 px-4 py-4 text-slate-300 hover:text-white hover:bg-white/5 rounded-2xl transition-all" style="--delay: 2">
         <i class="fa-solid fa-gears text-sm w-5"></i>
         <span class="font-bold">Sparepart</span>
     </a>
-    
+
     <a href="/aksesoris" class="mobile-nav-item flex items-center gap-3 px-4 py-4 text-slate-300 hover:text-white hover:bg-white/5 rounded-2xl transition-all" style="--delay: 3">
         <i class="fa-solid fa-helmet-safety text-sm w-5"></i>
         <span class="font-bold">Aksesoris</span>
@@ -218,7 +218,7 @@
         <i class="fa-solid fa-screwdriver-wrench text-sm w-5"></i>
         <span class="font-bold">Service Motor</span>
     </a>
-    
+
     <a href="/cuci_motor" class="mobile-nav-item flex items-center gap-3 px-4 py-4 text-slate-300 hover:text-white hover:bg-white/5 rounded-2xl transition-all" style="--delay: 6">
         <i class="fa-solid fa-soap text-sm w-5"></i>
         <span class="font-bold">Cuci Motor</span>
@@ -270,14 +270,14 @@
         link.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
             const target = this.getAttribute('target');
-            
+
             // Validasi: Jangan munculkan loader jika:
             // 1. Link kosong atau hanya '#'
             // 2. Link JavaScript (void, dll)
             // 3. Link membuka tab baru (_blank)
-            if (href && 
-                href !== '#' && 
-                !href.startsWith('javascript') && 
+            if (href &&
+                href !== '#' &&
+                !href.startsWith('javascript') &&
                 !href.startsWith('#') &&
                 target !== '_blank') {
                 showLoader();
@@ -288,6 +288,8 @@
     <main class="py-12">
        @yield('content')
     </main>
+
+<script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 
 </body>
 </html>

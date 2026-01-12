@@ -78,6 +78,7 @@
                             ['name' => 'Ducati', 'slug' => 'ducati', 'img' => 'ducati.svg'],
                             ['name' => 'Harley', 'slug' => 'harley', 'img' => 'harley-davidson.svg'],
                             ['name' => 'KTM', 'slug' => 'ktm', 'img' => 'ktm.svg'],
+                            ['name' => 'BMW', 'slug' => 'bmw', 'img' => 'bmw.svg'],
                         ];
 
                         $tripleBrands = array_merge($brands, $brands, $brands);

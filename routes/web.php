@@ -89,3 +89,7 @@ Route::get('/brand/yamaha', function () {
 Route::get('/brand/honda', function () {
     return view('brand.honda');
 });
+
+Route::get('/brand/bmw', function () {
+    return view('brand.bmw');
+});
