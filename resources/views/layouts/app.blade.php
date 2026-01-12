@@ -116,14 +116,7 @@
         </div>
     </nav>
     <main class="py-12">
-        <div class="container mx-auto px-4">
-            <div class="bg-white rounded-3xl p-10 shadow-sm border border-slate-200 min-h-[400px] flex items-center justify-center border-dashed">
-                <div class="text-center">
-                    <h1 class="text-4xl font-black text-slate-800 italic uppercase">Siap Menjelajah? ⚡</h1>
-                    <p class="text-slate-500 mt-2">Konten website motor kamu akan tampil di sini.</p>
-                </div>
-            </div>
-        </div>
+       @yield('content')
     </main>
 
 </body>
