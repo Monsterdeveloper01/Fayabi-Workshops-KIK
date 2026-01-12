@@ -1,110 +1,129 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>E-Commerce Otomotif</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOTO-SHOP | E-Commerce Otomotif Modern</title>
     
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
-        /* --- Kustomisasi Warna Sesuai Request --- */
-        :root {
-            --warna-hitam: #1a1a1a;        /* Dasar Navbar */
-            --warna-kawasaki: #69BE28;     /* Hijau */
-            --warna-honda: #DC002E;        /* Merah */
-            --warna-suzuki: #003DA5;       /* Biru */
-        }
-
-        .bg-custom-black {
-            background-color: var(--warna-hitam);
-        }
-
-        /* Warna teks menu normal */
-        .navbar-dark .navbar-nav .nav-link {
-            color: rgba(255,255,255, 0.8);
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        /* Efek Hover dengan warna-warni motor */
-        .nav-item:nth-child(1) .nav-link:hover { color: var(--warna-kawasaki); } /* Beranda jadi Hijau */
-        .nav-item:nth-child(2) .nav-link:hover { color: var(--warna-honda); }    /* Sparepart jadi Merah */
-        .nav-item:nth-child(3) .nav-link:hover { color: var(--warna-suzuki); }   /* Aksesoris jadi Biru */
-        .nav-item:nth-child(4) .nav-link:hover { color: #ffffff; text-decoration: underline; } /* Jasa */
-
-        /* Supaya Dropdown User ada di pojok kanan */
-        .navbar-nav.ms-auto {
-            margin-left: auto;
+        body { font-family: 'Inter', sans-serif; }
+        
+        /* Custom Smooth Transition */
+        .nav-link-transition {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
     </style>
 </head>
-<body>
+<body class="bg-slate-50">
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-custom-black py-3">
-        <div class="container">
-            
-            <a class="navbar-brand fw-bold" href="#">
-                <i class="fa-solid fa-motorcycle text-white"></i> MOTO-SHOP
-            </a>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarNav">
+    <nav class="bg-slate-900 sticky top-0 z-50 shadow-2xl border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
                 
-                <ul class="navbar-nav mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Beranda</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Sparepart</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Aksesoris</a>
-                    </li>
-                    
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownJasa" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Jasa
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownJasa">
-                            <li><a class="dropdown-item" href="#">Service Motor</a></li>
-                            <li><a class="dropdown-item" href="#">Cuci Motor</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Jasa Modifikasi Motor</a></li>
-                        </ul>
-                    </li>
-                </ul>
+                <div class="flex-shrink-0 flex items-center gap-3 group cursor-pointer">
+                    {{-- <div class="bg-gradient-to-tr from-red-600 to-red-500 p-2 rounded-xl shadow-lg shadow-red-600/30 group-hover:rotate-6 transition-transform">
+                        <i class="fa-solid fa-motorcycle text-white text-xl"></i>
+                    </div> --}}
+                    <div class="flex flex-col leading-none">
+                        <span class="text-white text-xl font-black tracking-tighter uppercase italic">
+                            FAYABI<span class="text-red-500">WORKSHOP'S</span>
+                        </span>
+                        <span class="text-[10px] text-slate-400 font-bold tracking-[0.2em] uppercase">Premium Hub</span>
+                    </div>
+                </div>
 
-                <ul class="navbar-nav ms-auto"> 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdownUser" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <div class="bg-light text-dark rounded-circle d-flex justify-content-center align-items-center me-2" style="width: 30px; height: 30px;">
-                                <i class="fa-solid fa-user"></i>
+                <div class="hidden md:flex items-center space-x-1">
+                    <a href="#" class="nav-link-transition text-slate-300 hover:text-[#69BE28] hover:bg-white/5 px-4 py-2 rounded-xl text-sm font-semibold">
+                        Beranda
+                    </a>
+                    <a href="#" class="nav-link-transition text-slate-300 hover:text-[#DC002E] hover:bg-white/5 px-4 py-2 rounded-xl text-sm font-semibold">
+                        Sparepart
+                    </a>
+                    <a href="#" class="nav-link-transition text-slate-300 hover:text-[#003DA5] hover:bg-white/5 px-4 py-2 rounded-xl text-sm font-semibold">
+                        Aksesoris
+                    </a>
+
+                    <div class="relative group">
+                        <button class="nav-link-transition flex items-center gap-1.5 text-slate-300 group-hover:text-white px-4 py-2 rounded-xl text-sm font-semibold">
+                            Jasa 
+                            <i class="fa-solid fa-chevron-down text-[10px] group-hover:rotate-180 transition-transform duration-300"></i>
+                        </button>
+                        
+                        <div class="absolute left-0 mt-2 w-56 bg-slate-800 border border-white/10 rounded-2xl shadow-2xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                            <a href="#" class="flex items-center gap-3 px-4 py-3 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
+                                <i class="fa-solid fa-screwdriver-wrench text-slate-500 w-5"></i> Service Motor
+                            </a>
+                            <a href="#" class="flex items-center gap-3 px-4 py-3 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
+                                <i class="fa-solid fa-soap text-slate-500 w-5"></i> Cuci Motor
+                            </a>
+                            <div class="border-t border-white/5 my-1"></div>
+                            <a href="#" class="flex items-center gap-3 px-4 py-3 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
+                                <i class="fa-solid fa-wand-magic-sparkles text-slate-500 w-5"></i> Jasa Modifikasi
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <button class="hidden lg:flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-slate-950 px-5 py-2.5 rounded-full font-bold text-xs uppercase tracking-tight transition-all transform hover:scale-105 shadow-lg shadow-amber-500/20">
+                        <i class="fa-solid fa-plus-circle"></i> Jual Motor
+                    </button>
+
+                    <div class="relative group">
+                        <button class="flex items-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 p-1.5 pr-4 rounded-full transition-all">
+                            <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-slate-700 to-slate-600 flex items-center justify-center border border-white/20 shadow-inner">
+                                <i class="fa-solid fa-user text-white text-xs"></i>
                             </div>
-                            Halo, User
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownUser">
-                            <li><a class="dropdown-item" href="#">Settings</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item text-danger" href="#">Logout</a></li>
-                        </ul>
-                    </li>
-                </ul>
+                            <div class="hidden sm:flex flex-col items-start leading-tight">
+                                <span class="text-white text-[11px] font-medium opacity-60">Selamat datang,</span>
+                                <span class="text-white text-sm font-bold">User Pro</span>
+                            </div>
+                            <i class="fa-solid fa-chevron-down text-[10px] text-slate-500"></i>
+                        </button>
+
+                        <div class="absolute right-0 mt-2 w-52 bg-slate-800 border border-white/10 rounded-2xl shadow-2xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                            <div class="px-4 py-2 border-b border-white/5 mb-1">
+                                <p class="text-xs text-slate-400">ID Member: #MS-9921</p>
+                            </div>
+                            <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
+                                <i class="fa-solid fa-circle-user text-slate-500"></i> Profil Saya
+                            </a>
+                            <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
+                                <i class="fa-solid fa-gear text-slate-500"></i> Pengaturan
+                            </a>
+                            <div class="border-t border-white/5 my-1"></div>
+                            <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-sm text-red-400 hover:bg-red-500/10 transition-colors font-bold">
+                                <i class="fa-solid fa-right-from-bracket"></i> Logout
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="md:hidden flex items-center">
+                        <button class="text-slate-300 p-2 hover:bg-white/5 rounded-lg">
+                            <i class="fa-solid fa-bars-staggered text-xl"></i>
+                        </button>
+                    </div>
+                </div>
 
             </div>
         </div>
     </nav>
-    <main class="py-4">
-        <div class="container">
-            @yield('content')
+    <main class="py-12">
+        <div class="container mx-auto px-4">
+            <div class="bg-white rounded-3xl p-10 shadow-sm border border-slate-200 min-h-[400px] flex items-center justify-center border-dashed">
+                <div class="text-center">
+                    <h1 class="text-4xl font-black text-slate-800 italic uppercase">Siap Menjelajah? ⚡</h1>
+                    <p class="text-slate-500 mt-2">Konten website motor kamu akan tampil di sini.</p>
+                </div>
+            </div>
         </div>
     </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
