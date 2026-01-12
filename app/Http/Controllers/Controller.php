@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 abstract class Controller
 {
-    public function RouteJualBeliMotor() { // Modul
-        return view('jualbelimotor.index');
-    }
+    // public function RouteJualBeliMotor() { // Modul
+    //     return view('jualbelimotor.index');
+    // }
     
     public function RouteSparePartMotor() { //
         return view('sparepart.index');
