@@ -15,7 +15,62 @@
     .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; }
     .custom-scrollbar::-webkit-scrollbar-thumb { background: #888; border-radius: 10px; }
     
-    [x-cloak] { display: none !important; }
+            [x-cloak] { display: none !important; }
+        /* Animasi Loading Overlay */
+    #loader {
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.9); /* slate-900 */
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 0.5s ease-out;
+    }
+    
+    .spinner {
+        width: 50px;
+        height: 50px;
+        border: 5px solid rgba(255, 255, 255, 0.1);
+        border-top: 5px solid #ef4444; /* red-500 */
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    .loader-hidden {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+        /* Efek Staggered Animation untuk Menu Mobile */
+    .mobile-nav-item {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    /* Saat menu terbuka, jalankan animasi pada tiap item */
+    [x-show="openMobile"] .mobile-nav-item {
+        animation: slideInRight 0.4s forwards;
+        animation-delay: calc(var(--delay) * 0.1s);
+    }
+
+    @keyframes slideInRight {
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    /* Efek Glassmorphism tambahan */
+    .bg-slate-900\/95 {
+        background-color: rgba(15, 23, 42, 0.95);
+    }
+
 </style>
 
 @php
