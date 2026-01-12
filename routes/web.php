@@ -34,3 +34,10 @@ Route::get('/modifikasi_motor', function () {
     
     return view('modifikasi_motor.index');
 });
+
+Route::get('/sparepart', function () {
+    // Kita "matikan" dulu view-nya buat ngetes
+    // dd('Halo, ini route Modifikasi Motor lho!'); 
+    
+    return view('sparepart.index');
+});
