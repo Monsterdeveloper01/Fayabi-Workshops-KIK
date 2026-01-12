@@ -93,3 +93,7 @@ Route::get('/brand/honda', function () {
 Route::get('/brand/bmw', function () {
     return view('brand.bmw');
 });
+
+Route::get('/jual', function () {
+    return view('jual.index');
+});

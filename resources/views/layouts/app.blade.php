@@ -134,7 +134,7 @@
             </div>
 
             <div class="flex items-center gap-4">
-                <button class="hidden lg:flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-slate-950 px-5 py-2.5 rounded-full font-bold text-xs uppercase tracking-tight transition-all transform hover:scale-105 shadow-lg shadow-amber-500/20">
+                <button href="/jual" class="hidden lg:flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-slate-950 px-5 py-2.5 rounded-full font-bold text-xs uppercase tracking-tight transition-all transform hover:scale-105 shadow-lg shadow-amber-500/20">
                     <i class="fa-solid fa-plus-circle"></i> Jual Motor
                 </button>
                     <div x-data="{ userOpen: false }" @click.away="userOpen = false" class="relative">
@@ -285,7 +285,7 @@
         });
     });
 </script>
-    <main class="py-12">
+    <main>
        @yield('content')
     </main>
 

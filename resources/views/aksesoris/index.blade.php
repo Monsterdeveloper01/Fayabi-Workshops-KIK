@@ -118,11 +118,22 @@
     selectedProduct: { name: '', price: '', desc: '', img: '', brand: '' }
 }" class="min-h-screen pb-20 relative">
 
-    <div class="container mx-auto px-4 pt-8 mb-8 text-center">
-        <h1 class="text-3xl md:text-4xl font-black text-slate-800 italic uppercase tracking-tighter">
-            Marketplace <span class="text-red-600">Aksesoris</span>
-        </h1>
-        <p class="text-slate-500 mt-2 font-medium text-sm md:text-base">Temukan part racing original untuk performa maksimal.</p>
+  
+    <div class="bg-slate-900 text-white pt-10 pb-16 relative overflow-hidden border-b-4 border-red-600 z-20 shadow-[inset_0_6px_10px_-4px_rgba(0,0,0,0.6)]">
+        
+        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 20px 20px;"></div>
+        
+        <div class="container mx-auto px-4 relative z-10 text-center">
+            <span class="inline-block py-1 px-3 rounded-full bg-red-600/20 border border-red-600 text-red-400 text-xs font-bold uppercase tracking-widest mb-4">
+                Aksesoris & Modifikasi
+            </span>
+            <h1 class="text-3xl md:text-5xl font-black italic uppercase tracking-tighter mb-4">
+                Pusat <span class="text-red-500">Aksesoris</span> Terlengkap
+            </h1>
+            <p class="text-slate-400 max-w-2xl mx-auto text-sm md:text-base">
+                Sedia Aksesoris motor <span class="text-white font-bold">Terbaik</span>, OEM, hingga Aftermarket pilihan. Jaminan presisi untuk motormu.
+            </p>
+        </div>
     </div>
 
     <div class="container mx-auto px-4 mb-10">
