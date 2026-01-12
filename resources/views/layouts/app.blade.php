@@ -219,47 +219,33 @@
         <i class="fa-solid fa-wand-magic-sparkles text-sm w-5"></i>
         <span class="font-bold">Modifikasi</span>
     </a>
-</div>
-</nav>
+</div></nav>
 <script>
-    const loader = document.getElementById('loader');
-
-    // Fungsi untuk menyembunyikan loader
-    const hideLoader = () => {
+    // 1. Logika Loading Page
+    window.addEventListener('load', () => {
+        // Hilangkan loader saat halaman selesai dimuat
+        const loader = document.getElementById('loader');
         loader.classList.add('loader-hidden');
-    };
-
-    // Fungsi untuk menampilkan loader
-    const showLoader = () => {
-        loader.classList.remove('loader-hidden');
-    };
-
-    // 1. Sembunyikan loader saat halaman selesai dimuat
-    window.addEventListener('load', hideLoader);
-
-    // 2. PERBAIKAN: Sembunyikan loader jika user kembali (Back Button)
-    window.addEventListener('pageshow', (event) => {
-        if (event.persisted) {
-            hideLoader();
-        }
     });
 
-    // 3. Trigger Loading saat klik Link
+    // 2. Trigger Loading saat klik Link
     document.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', function(e) {
+            // Cek jika link internal (bukan # atau javascript:void)
             const href = this.getAttribute('href');
-            // Pastikan bukan link anchor (#), bukan link kosong, dan bukan target _blank
-            if (href && href !== '#' && !href.startsWith('javascript') && this.target !== '_blank') {
-                showLoader();
+            if (href && href !== '#' && !href.startsWith('javascript')) {
+                const loader = document.getElementById('loader');
+                loader.classList.remove('loader-hidden');
             }
         });
     });
 
-    // 4. Alpine.js Resize Handler
+    // 3. Tambahan untuk Alpine.js (Memastikan menu tertutup saat resize)
     window.addEventListener('resize', () => {
         if (window.innerWidth >= 768) {
+            // Akses data Alpine secara manual jika diperlukan
             const nav = document.querySelector('nav');
-            if (nav && nav.__x) nav.__x.$data.openMobile = false;
+            if (nav.__x) nav.__x.$data.openMobile = false;
         }
     });
 </script>
