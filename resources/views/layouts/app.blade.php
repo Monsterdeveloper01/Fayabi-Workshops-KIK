@@ -102,7 +102,7 @@
             <div class="hidden md:flex items-center space-x-1">
                 <a href="/" class="nav-link-transition text-slate-300 hover:text-[#69BE28] hover:bg-white/5 px-4 py-2 rounded-xl text-sm font-semibold">Beranda</a>
                 <a href="/sparepart_motor" class="nav-link-transition text-slate-300 hover:text-[#DC002E] hover:bg-white/5 px-4 py-2 rounded-xl text-sm font-semibold">Sparepart</a>
-                <a href="/aksesoris_motor" class="nav-link-transition text-slate-300 hover:text-[#003DA5] hover:bg-white/5 px-4 py-2 rounded-xl text-sm font-semibold">Aksesoris</a>
+                <a href="/aksesoris" class="nav-link-transition text-slate-300 hover:text-[#003DA5] hover:bg-white/5 px-4 py-2 rounded-xl text-sm font-semibold">Aksesoris</a>
 
                 <div class="relative group">
                     <button class="nav-link-transition flex items-center gap-1.5 text-slate-300 group-hover:text-white px-4 py-2 rounded-xl text-sm font-semibold">
@@ -192,12 +192,12 @@
         <span class="font-bold">Beranda</span>
     </a>
     
-    <a href="{{ route('sparepart_motor.index') }}" class="mobile-nav-item flex items-center gap-3 px-4 py-4 text-slate-300 hover:text-white hover:bg-white/5 rounded-2xl transition-all" style="--delay: 2">
+    <a href="/sparepart" class="mobile-nav-item flex items-center gap-3 px-4 py-4 text-slate-300 hover:text-white hover:bg-white/5 rounded-2xl transition-all" style="--delay: 2">
         <i class="fa-solid fa-gears text-sm w-5"></i>
         <span class="font-bold">Sparepart</span>
     </a>
     
-    <a href="{{ route('aksesoris_motor.index') }}" class="mobile-nav-item flex items-center gap-3 px-4 py-4 text-slate-300 hover:text-white hover:bg-white/5 rounded-2xl transition-all" style="--delay: 3">
+    <a href="/aksesoris" class="mobile-nav-item flex items-center gap-3 px-4 py-4 text-slate-300 hover:text-white hover:bg-white/5 rounded-2xl transition-all" style="--delay: 3">
         <i class="fa-solid fa-helmet-safety text-sm w-5"></i>
         <span class="font-bold">Aksesoris</span>
     </a>
@@ -205,48 +205,74 @@
     <div class="border-t border-white/5 my-4 mx-4"></div>
     <span class="px-4 text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-2 block" style="--delay: 4">Layanan Bengkel</span>
 
-    <a href="{{ route('service_motor.index') }}" class="mobile-nav-item flex items-center gap-3 px-4 py-4 text-slate-300 hover:text-white hover:bg-white/5 rounded-2xl transition-all" style="--delay: 5">
+    <a href="/service_motor" class="mobile-nav-item flex items-center gap-3 px-4 py-4 text-slate-300 hover:text-white hover:bg-white/5 rounded-2xl transition-all" style="--delay: 5">
         <i class="fa-solid fa-screwdriver-wrench text-sm w-5"></i>
         <span class="font-bold">Service Motor</span>
     </a>
     
-    <a href="{{ route('cuci_motor.index') }}" class="mobile-nav-item flex items-center gap-3 px-4 py-4 text-slate-300 hover:text-white hover:bg-white/5 rounded-2xl transition-all" style="--delay: 6">
-        <i class="fa-solid fa-soap text-sm w-5"></i>
+    <a href="/cuci_motor text-sm w-5"></i>
         <span class="font-bold">Cuci Motor</span>
     </a>
     
-    <a href="{{ route('modifikasi_motor.index') }}" class="mobile-nav-item flex items-center gap-3 px-4 py-4 text-slate-300 hover:text-white hover:bg-white/5 rounded-2xl transition-all" style="--delay: 7">
+    <a href="/modifikasi_motor" class="mobile-nav-item flex items-center gap-3 px-4 py-4 text-slate-300 hover:text-white hover:bg-white/5 rounded-2xl transition-all" style="--delay: 7">
         <i class="fa-solid fa-wand-magic-sparkles text-sm w-5"></i>
         <span class="font-bold">Modifikasi</span>
     </a>
 </div></nav>
 <script>
-    // 1. Logika Loading Page
-    window.addEventListener('load', () => {
-        // Hilangkan loader saat halaman selesai dimuat
-        const loader = document.getElementById('loader');
-        loader.classList.add('loader-hidden');
+    const loader = document.getElementById('loader');
+
+    // Fungsi tunggal untuk menyembunyikan loader
+    const hideLoader = () => {
+        if (loader) {
+            loader.classList.add('loader-hidden');
+        }
+    };
+
+    // Fungsi untuk menampilkan loader
+    const showLoader = () => {
+        if (loader) {
+            loader.classList.remove('loader-hidden');
+        }
+    };
+
+    // A. Deteksi pemuatan halaman selesai
+    if (document.readyState === 'complete') {
+        hideLoader();
+    } else {
+        window.addEventListener('load', hideLoader);
+    }
+
+    // B. PENGAMAN CADANGAN (Failsafe)
+    // Jika dalam 5 detik halaman belum "load", paksa sembunyikan loader
+    setTimeout(hideLoader, 5000);
+
+    // C. Perbaikan untuk tombol BACK (BFcache)
+    window.addEventListener('pageshow', (event) => {
+        // Jika halaman diambil dari cache browser (tombol back), sembunyikan loader
+        if (event.persisted) {
+            hideLoader();
+        }
     });
 
-    // 2. Trigger Loading saat klik Link
+    // D. Trigger Loading saat klik Link
     document.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', function(e) {
-            // Cek jika link internal (bukan # atau javascript:void)
             const href = this.getAttribute('href');
-            if (href && href !== '#' && !href.startsWith('javascript')) {
-                const loader = document.getElementById('loader');
-                loader.classList.remove('loader-hidden');
+            const target = this.getAttribute('target');
+            
+            // Validasi: Jangan munculkan loader jika:
+            // 1. Link kosong atau hanya '#'
+            // 2. Link JavaScript (void, dll)
+            // 3. Link membuka tab baru (_blank)
+            if (href && 
+                href !== '#' && 
+                !href.startsWith('javascript') && 
+                !href.startsWith('#') &&
+                target !== '_blank') {
+                showLoader();
             }
         });
-    });
-
-    // 3. Tambahan untuk Alpine.js (Memastikan menu tertutup saat resize)
-    window.addEventListener('resize', () => {
-        if (window.innerWidth >= 768) {
-            // Akses data Alpine secara manual jika diperlukan
-            const nav = document.querySelector('nav');
-            if (nav.__x) nav.__x.$data.openMobile = false;
-        }
     });
 </script>
     <main class="py-12">
