@@ -4,16 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MOTO-SHOP | E-Commerce Otomotif Modern</title>
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
-    
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
         body { font-family: 'Inter', sans-serif; }
-        
+
         /* Custom Smooth Transition */
         .nav-link-transition {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -25,7 +26,7 @@
     <nav class="bg-slate-900 sticky top-0 z-50 shadow-2xl border-b border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
-                
+
                 <div class="flex-shrink-0 flex items-center gap-3 group cursor-pointer">
                     {{-- <div class="bg-gradient-to-tr from-red-600 to-red-500 p-2 rounded-xl shadow-lg shadow-red-600/30 group-hover:rotate-6 transition-transform">
                         <i class="fa-solid fa-motorcycle text-white text-xl"></i>
@@ -51,10 +52,10 @@
 
                     <div class="relative group">
                         <button class="nav-link-transition flex items-center gap-1.5 text-slate-300 group-hover:text-white px-4 py-2 rounded-xl text-sm font-semibold">
-                            Jasa 
+                            Jasa
                             <i class="fa-solid fa-chevron-down text-[10px] group-hover:rotate-180 transition-transform duration-300"></i>
                         </button>
-                        
+
                         <div class="absolute left-0 mt-2 w-56 bg-slate-800 border border-white/10 rounded-2xl shadow-2xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
                             <a href="#" class="flex items-center gap-3 px-4 py-3 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
                                 <i class="fa-solid fa-screwdriver-wrench text-slate-500 w-5"></i> Service Motor
@@ -115,9 +116,14 @@
         </div>
     </nav>
     <main class="py-12">
-      @yield('content')
-
-      
+        <div class="container mx-auto px-4">
+            <div class="bg-white rounded-3xl p-10 shadow-sm border border-slate-200 min-h-[400px] flex items-center justify-center border-dashed">
+                <div class="text-center">
+                    <h1 class="text-4xl font-black text-slate-800 italic uppercase">Siap Menjelajah? ⚡</h1>
+                    <p class="text-slate-500 mt-2">Konten website motor kamu akan tampil di sini.</p>
+                </div>
+            </div>
+        </div>
     </main>
 
 </body>
