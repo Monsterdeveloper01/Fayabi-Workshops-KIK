@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MOTO-SHOP | E-Commerce Otomotif Modern</title>
+    <title>MOTO-SHOP | Jasa Cuci Motor Modern</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -19,10 +19,10 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Background Image Styling */
+        /* Background Image Styling - Diganti ke Pencucian Motor */
         .hero-bg {
             background-image: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), 
-                              url('https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?q=80&w=1974&auto=format&fit=crop');
+                              url('https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?q=80&w=1974&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -135,16 +135,16 @@
             <div class="bg-white rounded-[2.5rem] shadow-2xl border-2 border-slate-200 overflow-hidden">
                 <div class="bg-white p-8 md:p-10 border-b-8 border-red-600">
                     <h2 class="text-3xl md:text-4xl font-black text-slate-900 uppercase tracking-tighter">
-                        Formulir <span class="text-red-600">Service Motor</span>
+                        Formulir <span class="text-red-600">Cuci Steam Motor</span>
                     </h2>
-                    <p class="text-slate-500 text-sm md:text-lg mt-1 font-bold">Lengkapi data kendaraan untuk pendaftaran service.</p>
+                    <p class="text-slate-500 text-sm md:text-lg mt-1 font-bold">Lengkapi data kendaraan untuk pendaftaran cuci motor.</p>
                 </div>
 
                 <form action="#" method="POST" class="p-6 md:p-12 space-y-8 md:space-y-10">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
                         <div class="space-y-3">
                             <label class="block text-sm md:text-base font-black text-slate-900 uppercase tracking-widest">Nama Lengkap Pelanggan</label>
-                            <input type="text" placeholder="Masukkan nama sesuai STNK" 
+                            <input type="text" placeholder="Masukkan nama Anda" 
                                 class="w-full bg-slate-50 border-2 border-slate-300 text-slate-900 px-6 py-4 md:py-5 rounded-2xl text-lg md:text-xl font-bold focus:outline-none focus:border-[#69BE28] focus:bg-white transition-all placeholder:text-slate-400 placeholder:font-normal">
                         </div>
                         <div class="space-y-3">
@@ -181,7 +181,7 @@
                                 <label class="cursor-pointer">
                                     <input type="radio" name="service" class="peer sr-only">
                                     <div class="bg-white border-2 border-slate-300 text-slate-900 p-4 rounded-2xl text-center font-black text-xs md:text-sm uppercase peer-checked:bg-slate-900 peer-checked:text-white peer-checked:border-slate-900 transition-all hover:border-slate-400">
-                                        Service Rutin
+                                        Cuci Steam
                                     </div>
                                 </label>
                             </div>
@@ -194,8 +194,8 @@
                     </div>
 
                     <div class="space-y-3">
-                        <label class="block text-sm md:text-base font-black text-slate-900 uppercase tracking-widest">Catatan Keluhan Mesin</label>
-                        <textarea rows="3" placeholder="Ceritakan masalah motor Anda secara detail..." 
+                        <label class="block text-sm md:text-base font-black text-slate-900 uppercase tracking-widest">Catatan Tambahan</label>
+                        <textarea rows="3" placeholder="Contoh: Fokus bersihkan bagian mesin atau velg..." 
                             class="w-full bg-slate-50 border-2 border-slate-300 text-slate-900 p-6 rounded-2xl text-lg md:text-xl font-bold focus:outline-none focus:border-red-600 focus:bg-white transition-all placeholder:text-slate-400 placeholder:font-normal resize-none"></textarea>
                     </div>
 

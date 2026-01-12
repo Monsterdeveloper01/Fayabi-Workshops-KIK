@@ -20,3 +20,17 @@ Route::get('/service_motor', function () {
     
     return view('service_motor.index');
 });
+
+Route::get('/cuci_motor', function () {
+    // Kita "matikan" dulu view-nya buat ngetes
+    // dd('Halo, ini route Cuci Motor lho!'); 
+    
+    return view('cuci_motor.index');
+});
+
+Route::get('/modifikasi_motor', function () {
+    // Kita "matikan" dulu view-nya buat ngetes
+    // dd('Halo, ini route Modifikasi Motor lho!'); 
+    
+    return view('modifikasi_motor.index');
+});
