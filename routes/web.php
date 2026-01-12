@@ -41,3 +41,37 @@ Route::get('/sparepart', function () {
 
     return view('sparepart.index');
 });
+
+// Brand Routes
+
+Route::get('/brand/harley', function () {
+    return view('brand.harley');
+});
+
+Route::get('/brand/aprilia', function () {
+    return view('brand.aprilia');
+});
+
+Route::get('/brand/ducati', function () {
+    return view('brand.ducati');
+});
+
+Route::get('/brand/kawasaki', function () {
+    return view('brand.kawasaki');
+});
+
+Route::get('/brand/ktm', function () {
+    return view('brand.ktm');
+});
+
+Route::get('/brand/suzuki', function () {
+    return view('brand.suzuki');
+});
+
+Route::get('/brand/yamaha', function () {
+    return view('brand.yamaha');
+});
+
+Route::get('/brand/honda', function () {
+    return view('brand.honda');
+});
