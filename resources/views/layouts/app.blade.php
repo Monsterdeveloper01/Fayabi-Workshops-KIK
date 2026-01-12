@@ -164,10 +164,10 @@
                                 <p class="text-slate-500 text-[10px]">Premium Member</p>
                             </div>
 
-                            <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
+                            <a href="/profile_setting" class="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
                                 <i class="fa-solid fa-circle-user text-slate-500 w-4"></i> Profil Saya
                             </a>
-                            <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
+                            <a href="/booking_history" class="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
                                 <i class="fa-solid fa-clock-rotate-left text-slate-500 w-4"></i> Riwayat Booking
                             </a>
                             <div class="border-t border-white/5 my-1"></div>

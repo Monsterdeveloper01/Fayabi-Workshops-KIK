@@ -42,6 +42,20 @@ Route::get('/sparepart', function () {
     return view('sparepart.index');
 });
 
+Route::get('/profile_setting', function () {
+    // Kita "matikan" dulu view-nya buat ngetes
+    // dd('Halo, ini route Profile Setting lho!');
+
+    return view('profile_setting.index');
+});
+
+Route::get('/booking_history', function () {
+    // Kita "matikan" dulu view-nya buat ngetes
+    // dd('Halo, ini route Booking History lho!');
+
+    return view('booking_history.index');
+});
+
 // Brand Routes
 
 Route::get('/brand/harley', function () {
