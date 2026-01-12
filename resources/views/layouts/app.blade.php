@@ -100,9 +100,9 @@
             </div>
 
             <div class="hidden md:flex items-center space-x-1">
-                <a href="{{ url('/') }}" class="nav-link-transition text-slate-300 hover:text-[#69BE28] hover:bg-white/5 px-4 py-2 rounded-xl text-sm font-semibold">Beranda</a>
-                <a href="{{ route('sparepart_motor.index') }}" class="nav-link-transition text-slate-300 hover:text-[#DC002E] hover:bg-white/5 px-4 py-2 rounded-xl text-sm font-semibold">Sparepart</a>
-                <a href="{{ route('aksesoris_motor.index') }}" class="nav-link-transition text-slate-300 hover:text-[#003DA5] hover:bg-white/5 px-4 py-2 rounded-xl text-sm font-semibold">Aksesoris</a>
+                <a href="/" class="nav-link-transition text-slate-300 hover:text-[#69BE28] hover:bg-white/5 px-4 py-2 rounded-xl text-sm font-semibold">Beranda</a>
+                <a href="/sparepart_motor" class="nav-link-transition text-slate-300 hover:text-[#DC002E] hover:bg-white/5 px-4 py-2 rounded-xl text-sm font-semibold">Sparepart</a>
+                <a href="/aksesoris_motor" class="nav-link-transition text-slate-300 hover:text-[#003DA5] hover:bg-white/5 px-4 py-2 rounded-xl text-sm font-semibold">Aksesoris</a>
 
                 <div class="relative group">
                     <button class="nav-link-transition flex items-center gap-1.5 text-slate-300 group-hover:text-white px-4 py-2 rounded-xl text-sm font-semibold">
@@ -110,14 +110,14 @@
                     </button>
 
                     <div class="absolute left-0 mt-2 w-56 bg-slate-800 border border-white/10 rounded-2xl shadow-2xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
-                        <a href="{{ route('service_motor.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
+                        <a href="/service_motor" class="flex items-center gap-3 px-4 py-3 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
                             <i class="fa-solid fa-screwdriver-wrench text-slate-500 w-5"></i> Service Motor
                         </a>
-                        <a href="{{ route('cuci_motor.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
+                        <a href="/cuci_motor" class="flex items-center gap-3 px-4 py-3 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
                             <i class="fa-solid fa-soap text-slate-500 w-5"></i> Cuci Motor
                         </a>
                         <div class="border-t border-white/5 my-1"></div>
-                        <a href="{{ route('modifikasi_motor.index') }}" class="flex items-center gap-3 px-4 py-3 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
+                        <a href="/modifikasi_motor" class="flex items-center gap-3 px-4 py-3 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
                             <i class="fa-solid fa-wand-magic-sparkles text-slate-500 w-5"></i> Jasa Modifikasi
                         </a>
                     </div>
@@ -128,7 +128,45 @@
                 <button class="hidden lg:flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-slate-950 px-5 py-2.5 rounded-full font-bold text-xs uppercase tracking-tight transition-all transform hover:scale-105 shadow-lg shadow-amber-500/20">
                     <i class="fa-solid fa-plus-circle"></i> Jual Motor
                 </button>
-                
+                    <div x-data="{ userOpen: false }" @click.away="userOpen = false" class="relative">
+                        <button @click="userOpen = !userOpen" class="flex items-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 p-1.5 pr-4 rounded-full transition-all">
+                            <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-slate-700 to-slate-600 flex items-center justify-center border border-white/20 shadow-inner">
+                                <i class="fa-solid fa-user text-white text-xs"></i>
+                            </div>
+                            <div class="hidden sm:flex flex-col items-start leading-tight">
+                                <span class="text-white text-[11px] font-medium opacity-60">Selamat datang,</span>
+                                <span class="text-white text-sm font-bold">User Pro</span>
+                            </div>
+                            <i class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform" :class="userOpen ? 'rotate-180' : ''"></i>
+                        </button>
+                        
+                        <div x-show="userOpen" 
+                            x-cloak
+                            x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0 scale-95 translate-y-2"
+                            x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                            x-transition:leave="transition ease-in duration-150"
+                            x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                            x-transition:leave-end="opacity-0 scale-95 translate-y-2"
+                            class="absolute right-0 mt-3 w-52 bg-slate-800 border border-white/10 rounded-2xl shadow-2xl py-2 z-[60]">
+                            
+                            <div class="px-4 py-2 border-b border-white/5 mb-1 sm:hidden">
+                                <p class="text-white text-xs font-bold">User Pro</p>
+                                <p class="text-slate-500 text-[10px]">Premium Member</p>
+                            </div>
+
+                            <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
+                                <i class="fa-solid fa-circle-user text-slate-500 w-4"></i> Profil Saya
+                            </a>
+                            <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
+                                <i class="fa-solid fa-clock-rotate-left text-slate-500 w-4"></i> Riwayat Booking
+                            </a>
+                            <div class="border-t border-white/5 my-1"></div>
+                            <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-sm text-red-400 hover:bg-red-500/10 font-bold transition-colors">
+                                <i class="fa-solid fa-right-from-bracket w-4"></i> Keluar
+                            </a>
+                        </div>
+                    </div>                
                 <div class="md:hidden">
                     <button @click="openMobile = !openMobile" class="text-slate-300 hover:text-white transition-colors">
                         <i class="fa-solid text-2xl" :class="openMobile ? 'fa-xmark' : 'fa-bars-staggered'"></i>
@@ -181,33 +219,47 @@
         <i class="fa-solid fa-wand-magic-sparkles text-sm w-5"></i>
         <span class="font-bold">Modifikasi</span>
     </a>
-</div></nav>
+</div>
+</nav>
 <script>
-    // 1. Logika Loading Page
-    window.addEventListener('load', () => {
-        // Hilangkan loader saat halaman selesai dimuat
-        const loader = document.getElementById('loader');
+    const loader = document.getElementById('loader');
+
+    // Fungsi untuk menyembunyikan loader
+    const hideLoader = () => {
         loader.classList.add('loader-hidden');
+    };
+
+    // Fungsi untuk menampilkan loader
+    const showLoader = () => {
+        loader.classList.remove('loader-hidden');
+    };
+
+    // 1. Sembunyikan loader saat halaman selesai dimuat
+    window.addEventListener('load', hideLoader);
+
+    // 2. PERBAIKAN: Sembunyikan loader jika user kembali (Back Button)
+    window.addEventListener('pageshow', (event) => {
+        if (event.persisted) {
+            hideLoader();
+        }
     });
 
-    // 2. Trigger Loading saat klik Link
+    // 3. Trigger Loading saat klik Link
     document.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', function(e) {
-            // Cek jika link internal (bukan # atau javascript:void)
             const href = this.getAttribute('href');
-            if (href && href !== '#' && !href.startsWith('javascript')) {
-                const loader = document.getElementById('loader');
-                loader.classList.remove('loader-hidden');
+            // Pastikan bukan link anchor (#), bukan link kosong, dan bukan target _blank
+            if (href && href !== '#' && !href.startsWith('javascript') && this.target !== '_blank') {
+                showLoader();
             }
         });
     });
 
-    // 3. Tambahan untuk Alpine.js (Memastikan menu tertutup saat resize)
+    // 4. Alpine.js Resize Handler
     window.addEventListener('resize', () => {
         if (window.innerWidth >= 768) {
-            // Akses data Alpine secara manual jika diperlukan
             const nav = document.querySelector('nav');
-            if (nav.__x) nav.__x.$data.openMobile = false;
+            if (nav && nav.__x) nav.__x.$data.openMobile = false;
         }
     });
 </script>
