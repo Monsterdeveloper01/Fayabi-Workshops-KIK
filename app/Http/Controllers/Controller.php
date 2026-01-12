@@ -12,9 +12,9 @@ abstract class Controller
         return view('sparepart.index');
     }
 
-    public function RouteAksesorisMotor() { // Farel
-     return view('aksesoris.index');
-    }
+    // public function RouteAksesorisMotor() { // Farel
+    //  return view('aksesoris.index');
+    // }
 
     public function RouteServisMotor() { // Yazid
         return view('servismotor.index');
