@@ -34,7 +34,3 @@ Route::get('/modifikasi_motor', function () {
     
     return view('modifikasi_motor.index');
 });
-
-Route::get('/sparepart', function () {
-    return view('sparepart.index');
-});
