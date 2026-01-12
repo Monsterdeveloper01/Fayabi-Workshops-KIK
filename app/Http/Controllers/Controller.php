@@ -29,5 +29,7 @@ abstract class Controller
         return view('modifikasi.index');
     }
 
+    //BRAND MOTOR : Honda, Yamaha, Suzuki Kawazaki, Aprila, Ducati, Harley, KTM
+
 
 }
