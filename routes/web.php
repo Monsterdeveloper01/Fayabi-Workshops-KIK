@@ -13,3 +13,10 @@ Route::get('/aksesoris', function () {
     
     return view('aksesoris.index');
 });
+
+Route::get('/service_motor', function () {
+    // Kita "matikan" dulu view-nya buat ngetes
+    // dd('Halo, ini route Service Motor lho!'); 
+    
+    return view('service_motor.index');
+});
