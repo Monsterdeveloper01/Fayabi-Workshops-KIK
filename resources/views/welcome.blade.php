@@ -107,40 +107,5 @@
         </div>
     </section>
 
-    {{-- HERO --}}
-    <section class="relative bg-slate-900 rounded-[40px] overflow-hidden min-h-[500px] flex items-center">
-        <div class="absolute inset-0 opacity-40">
-            <img src="https://images.unsplash.com/photo-1558981403-c5f91dbbe980?auto=format&fit=crop&q=80&w=2070"
-                 class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/60 to-transparent"></div>
-        </div>
-
-        <div class="relative z-10 px-8 md:px-16 w-full md:w-2/3">
-            <span class="text-red-500 font-black tracking-widest uppercase text-sm">
-                FAYABI WORKSHOP PRESENT
-            </span>
-
-            <h1 class="text-5xl md:text-7xl font-black text-white italic uppercase leading-none mt-4">
-                LEVEL UP <br>
-                <span class="text-transparent" style="-webkit-text-stroke: 1px white;">
-                    YOUR RIDE
-                </span>
-            </h1>
-
-            <p class="text-slate-300 mt-6 text-lg max-w-md">
-                Solusi perawatan, modifikasi, dan sparepart motor premium dengan standar workshop profesional.
-            </p>
-
-            <div class="mt-8 flex gap-4">
-                <button class="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-xl font-bold shadow-lg shadow-red-600/30">
-                    Mulai Belanja
-                </button>
-                <button class="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-8 py-4 rounded-xl font-bold">
-                    Lihat Jasa
-                </button>
-            </div>
-        </div>
-    </section>
-
 </div>
 @endsection
