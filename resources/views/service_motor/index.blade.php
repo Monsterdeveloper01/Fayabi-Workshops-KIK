@@ -1,94 +1,114 @@
 @extends('layouts.app')
-
 @section('content')
-    <main class="py-8">
-        <section class="max-w-2xl mx-auto my-6 px-4">
-            <div class="mb-4">
-                <a href="{{ url('/') }}" class="inline-flex items-center gap-2 text-white hover:text-red-600 transition-all group bg-slate-900/50 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
-                    <div class="w-6 h-6 rounded-full border border-white flex items-center justify-center group-hover:bg-white group-hover:text-slate-900 transition-all">
+    <main class="min-h-screen w-full relative flex flex-col justify-center items-center py-12" 
+      style="background: linear-gradient(rgba(15, 23, 42, 0.534), rgba(15, 23, 42, 0.9)), 
+             url('https://i.pinimg.com/736x/74/b0/4c/74b04c2120c6f2ce5bd41f1dcfdb2fe9.jpg'); 
+             background-size: cover; 
+             background-position: center; 
+             background-attachment: fixed;
+             margin-bottom: -2rem; 
+             ">
+
+        <section class="max-w-2xl w-full mx-auto px-4 relative z-10">
+            <div class="mb-6">
+                <a href="{{ url('/') }}" class="inline-flex items-center gap-2 text-white hover:text-[#DC002E] transition-all group bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20">
+                    <div class="w-6 h-6 rounded-full border border-white flex items-center justify-center group-hover:bg-[#DC002E] group-hover:border-[#DC002E] transition-all">
                         <i class="fa-solid fa-arrow-left text-[10px]"></i>
                     </div>
-                    <span class="font-black uppercase tracking-widest text-[9px]">Kembali</span>
+                    <span class="font-black uppercase tracking-widest text-[10px]">Kembali</span>
                 </a>
             </div>
 
-            <div class="bg-slate-900/90 backdrop-blur-xl rounded-[1.5rem] shadow-2xl border border-white/10 overflow-hidden">
-                <div class="bg-slate-800/50 p-6 border-b-4 border-red-600">
+            <div class="bg-white/10 backdrop-blur-xl rounded-[2rem] shadow-[0_8px_32px_0_rgba(0,0,0,0.8)] border border-white/20 overflow-hidden">
+                <div class="bg-slate-900/40 p-6 border-b-4 border-red-600 backdrop-blur-md">
                     <h2 class="text-xl md:text-2xl font-black text-white uppercase tracking-tighter">
-                        Formulir <span class="text-red-600">Service & Maintenance</span>
+                        Booking <span class="text-red-600">Service</span> Motor
                     </h2>
-                    <p class="text-slate-400 text-xs md:text-sm mt-1 font-bold italic text-white/70">Lengkapi data untuk penjadwalan servis rutin kendaraan Anda.</p>
+                    <p class="text-white/70 text-xs md:text-sm mt-1 font-bold italic">Perawatan berkala dengan mekanik ahli dan suku cadang original.</p>
                 </div>
 
                 <form action="#" method="POST" class="p-6 md:p-8 space-y-6">
                     @csrf
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div class="space-y-2">
-                            <label class="block text-[10px] font-black text-white uppercase tracking-widest">Nama Lengkap Pelanggan</label>
+                            <label class="block text-[10px] font-black text-white uppercase tracking-widest">Nama Lengkap</label>
                             <input type="text" name="nama" placeholder="Nama Anda" 
-                                class="w-full bg-slate-800/50 border-2 border-slate-700 text-white px-4 py-3 rounded-xl text-sm font-bold focus:outline-none focus:border-red-600 focus:bg-slate-800 transition-all placeholder:text-slate-500">
+                                class="w-full bg-white/5 border-2 border-white/10 text-white px-4 py-3 rounded-xl text-sm font-bold focus:outline-none focus:border-red-600 focus:bg-white/10 transition-all placeholder:text-white/30">
                         </div>
                         <div class="space-y-2">
-                            <label class="block text-[10px] font-black text-white uppercase tracking-widest">Nomor WhatsApp (Aktif)</label>
+                            <label class="block text-[10px] font-black text-white uppercase tracking-widest">Nomor WhatsApp</label>
                             <input type="tel" name="whatsapp" placeholder="0812..." 
-                                class="w-full bg-slate-800/50 border-2 border-slate-700 text-white px-4 py-3 rounded-xl text-sm font-bold focus:outline-none focus:border-[#DC002E] focus:bg-slate-800 transition-all placeholder:text-slate-500">
+                                class="w-full bg-white/5 border-2 border-white/10 text-white px-4 py-3 rounded-xl text-sm font-bold focus:outline-none focus:border-red-600 focus:bg-white/10 transition-all placeholder:text-white/30">
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                         <div class="space-y-2">
-                            <label class="block text-[10px] font-black text-white uppercase tracking-widest">Tipe Motor</label>
+                            <label class="block text-[10px] font-black text-white uppercase tracking-widest">Merk Motor</label>
                             <div class="relative">
-                                <select name="tipe" class="w-full bg-slate-800/50 border-2 border-slate-700 text-white px-4 py-3 rounded-xl text-sm font-bold focus:outline-none focus:border-red-600 focus:bg-slate-800 appearance-none cursor-pointer transition-all">
-                                    <option value="" class="bg-slate-900">Pilih Tipe Motor</option>
-                                    <option value="sport" class="bg-slate-900">Motor Sport</option>
-                                    <option value="matic" class="bg-slate-900">Motor Matic</option>
-                                    <option value="bebek" class="bg-slate-900">Motor Bebek</option>
+                                <select name="tipe" class="w-full bg-white/5 border-2 border-white/10 text-white px-4 py-3 rounded-xl text-sm font-bold focus:outline-none focus:border-red-600 focus:bg-slate-900 appearance-none cursor-pointer transition-all">
+                                    <option value="" class="bg-slate-900">Pilih Merk</option>
+                                    <option value="kawasaki" class="bg-slate-900">Kawasaki</option>
+                                    <option value="honda" class="bg-slate-900">Honda</option>
+                                    <option value="suzuki" class="bg-slate-900">Suzuki</option>
+                                    <option value="yamaha" class="bg-slate-900">Yamaha</option>
                                 </select>
                                 <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-white pointer-events-none text-xs"></i>
                             </div>
                         </div>
                         <div class="md:col-span-2 space-y-2">
-                            <label class="block text-[10px] font-black text-white uppercase tracking-widest">Model / Nama Motor</label>
-                            <input type="text" name="model" placeholder="Contoh: GSX-R 150 / Satria FU" 
-                                class="w-full bg-slate-800/50 border-2 border-slate-700 text-white px-4 py-3 rounded-xl text-sm font-bold focus:outline-none focus:border-[#003DA5] focus:bg-slate-800 transition-all placeholder:text-slate-500">
+                            <label class="block text-[10px] font-black text-white uppercase tracking-widest">Model / Seri Motor</label>
+                            <input type="text" name="model" placeholder="Contoh: Ninja ZX-25R / Vario 160" 
+                                class="w-full bg-white/5 border-2 border-white/10 text-white px-4 py-3 rounded-xl text-sm font-bold focus:outline-none focus:border-red-600 focus:bg-white/10 transition-all placeholder:text-white/30">
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div class="space-y-2">
-                            <label class="block text-[10px] font-black text-white uppercase tracking-widest">Jenis Layanan</label>
-                            <div class="bg-white text-slate-900 p-2.5 rounded-xl text-center font-black text-[10px] uppercase border-2 border-white">
-                                Service Rutin
+                            <label class="block text-[10px] font-black text-white uppercase tracking-widest">Jenis Service</label>
+                            <div class="relative">
+                                <select name="jenis_service" class="w-full bg-white/5 border-2 border-white/10 text-white px-4 py-3 rounded-xl text-sm font-bold focus:outline-none focus:border-red-600 focus:bg-slate-900 appearance-none cursor-pointer transition-all">
+                                    <option value="rutin" class="bg-slate-900">Service Rutin / Tune Up</option>
+                                    <option value="ganti_oli" class="bg-slate-900">Ganti Oli</option>
+                                    <option value="berat" class="bg-slate-900">Service Berat / Turun Mesin</option>
+                                    <option value="kelistrikan" class="bg-slate-900">Perbaikan Kelistrikan</option>
+                                </select>
+                                <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-white pointer-events-none text-xs"></i>
                             </div>
                         </div>
                         <div class="space-y-2">
-                            <label class="block text-[10px] font-black text-white uppercase tracking-widest">Tanggal Kedatangan</label>
+                            <label class="block text-[10px] font-black text-white uppercase tracking-widest">Tanggal Service</label>
                             <input type="date" name="tanggal"
-                                class="w-full bg-slate-800/50 border-2 border-slate-700 text-white px-4 py-3 rounded-xl text-sm font-bold focus:outline-none focus:border-red-600 focus:bg-slate-800 transition-all color-scheme-dark">
+                                class="w-full bg-white/5 border-2 border-white/10 text-white px-4 py-3 rounded-xl text-sm font-bold focus:outline-none focus:border-red-600 focus:bg-white/10 transition-all color-scheme-dark">
                         </div>
                     </div>
 
                     <div class="space-y-2">
-                        <label class="block text-[10px] font-black text-white uppercase tracking-widest">Keluhan / Catatan</label>
-                        <textarea name="catatan" rows="2" placeholder="Sebutkan keluhan pada mesin Anda..." 
-                            class="w-full bg-slate-800/50 border-2 border-slate-700 text-white p-4 rounded-xl text-sm font-bold focus:outline-none focus:border-white focus:bg-slate-800 transition-all placeholder:text-slate-500 resize-none"></textarea>
+                        <label class="block text-[10px] font-black text-white uppercase tracking-widest">Keluhan / Catatan Tambahan</label>
+                        <textarea name="catatan" rows="2" placeholder="Sebutkan keluhan motor Anda..." 
+                            class="w-full bg-white/5 border-2 border-white/10 text-white p-4 rounded-xl text-sm font-bold focus:outline-none focus:border-red-600 focus:bg-white/10 transition-all placeholder:text-white/30 resize-none"></textarea>
                     </div>
 
-                    <div class="pt-4 flex flex-col md:flex-row gap-3">
+                    <div class="pt-4 flex flex-col md:flex-row gap-4">
                         <button type="button" onclick="history.back()"
-                            class="flex-1 bg-transparent border-2 border-white text-white font-black py-3 rounded-xl uppercase tracking-[0.1em] text-[10px] hover:bg-white hover:text-slate-900 transition-all order-2 md:order-1">
+                            class="flex-1 bg-white/10 backdrop-blur-md border-2 border-white text-white font-black py-4 rounded-2xl uppercase tracking-[0.1em] text-[10px] hover:bg-white hover:text-slate-900 transition-all order-2 md:order-1 shadow-lg">
                             Batal
                         </button>
                         <button type="submit" 
-                            class="flex-[1.5] bg-red-600 hover:bg-red-700 text-white font-black py-3 rounded-xl uppercase tracking-[0.1em] text-xs shadow-lg transition-all transform hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2 order-1 md:order-2 border-2 border-red-600">
-                            <i class="fa-solid fa-paper-plane text-sm"></i>
-                            Booking Service
+                            class="flex-[2] bg-red-600 hover:bg-red-700 text-white font-black py-4 rounded-2xl uppercase tracking-[0.1em] text-xs shadow-[0_0_20px_rgba(220,38,38,0.4)] transition-all transform hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-3 order-1 md:order-2 border-2 border-red-600">
+                            <i class="fa-solid fa-calendar-check text-sm"></i>
+                            Booking Jadwal Service
                         </button>
                     </div>
                 </form>
             </div>
+            <br><br>
         </section>
     </main>
-    <style>.color-scheme-dark { color-scheme: dark; }</style>
+
+    <style>
+        .color-scheme-dark { color-scheme: dark; }
+        main { animation: fadeIn 0.8s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
 @endsection
