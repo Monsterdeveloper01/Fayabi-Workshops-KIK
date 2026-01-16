@@ -1,5 +1,34 @@
 @extends('layouts.app')
 
+@php
+    $id = request()->route('id');
+    $allNews = [
+        1 => [
+            'title' => 'Gelar Workshop Modifikasi Honda Seri Matic: Optimasi CVT & Performa Harian',
+            'author' => 'Admin Fayabi',
+            'date' => 'Jumat, 15 Januari 2026',
+            'image' => 'https://i.pinimg.com/736x/28/44/45/2844454618a9a4463c18c99438c51715.jpg',
+            'content' => "Fayabi Workshop sukses menggelar sesi edukasi eksklusif bagi para pecinta motor matic di Jakarta. Acara bertajuk 'Matic Mastery' ini dihadiri oleh lebih dari 50 peserta dari berbagai komunitas.\n\nFokus utama dalam workshop kali ini adalah pemahaman mendalam mengenai sistem CVT (Continuously Variable Transmission). Banyak pengguna motor matic yang ingin performa responsif namun salah dalam memilih derajat kemiringan pulley atau berat roller. Tim mekanik Fayabi menjelaskan bahwa modifikasi bukan sekadar mengganti part, tapi menyelaraskan antara berat roller, per kawahara, dan jalur roller agar akselerasi halus namun tetap bertenaga di tanjakan.\n\nSelain sektor mesin, workshop ini juga membahas tren estetika 'Proper Modif' yang mengedepankan kebersihan pengerjaan dan pemilihan part yang fungsional. Kami percaya bahwa motor yang kencang harus dibarengi dengan sistem pengereman yang mumpuni demi keselamatan berkendara."
+        ],
+        2 => [
+            'title' => 'Layanan Detailing Keramik Pro Kini Tersedia di Fayabi: Proteksi Maksimal Hingga 3 Tahun',
+            'author' => 'Tim Detailing',
+            'date' => 'Kamis, 10 Januari 2026',
+            'image' => 'https://images.unsplash.com/photo-1615172282427-9a57ef2d142e?q=80&w=800',
+            'content' => "Menjawab permintaan pelanggan setianya, Fayabi Workshop secara resmi meluncurkan layanan 'Nano Ceramic Coating Pro 9H'. Teknologi ini merupakan terobosan terbaru dalam dunia proteksi cat kendaraan yang mampu memberikan efek daun talas (hydrophobic) yang sangat kuat.\n\nProses detailing di Fayabi dimulai dengan tahap Multi-Stage Paint Correction untuk menghilangkan baret halus (swirl marks) dan oksidasi pada cat. Setelah permukaan benar-benar bersih dan bening, lapisan cairan keramik diaplikasikan secara merata di ruangan bebas debu. Lapisan ini akan mengeras dan menjadi pelindung permanen yang melindungi cat dari sinar UV, hujan asam, dan kotoran burung yang seringkali merusak lapisan pernis motor.\n\nKeunggulan dari layanan kami adalah garansi selama 3 tahun dan paket perawatan berkala setiap 6 bulan. Dengan Keramik Pro, motor Anda akan selalu terlihat 'wet look' seperti baru keluar dari showroom setiap harinya."
+        ],
+        3 => [
+            'title' => 'Waspada Musim Hujan: Tips Merawat Mesin Motor Agar Tetap Prima dari Mekanik Senior',
+            'author' => 'Mekanik Senior',
+            'date' => 'Rabu, 02 Januari 2026',
+            'image' => 'https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?q=80&w=800',
+            'content' => "Memasuki puncak musim penghujan, perawatan motor memerlukan perhatian ekstra. Air hujan yang mengandung kadar asam tinggi dan kotoran jalanan bisa menjadi musuh utama bagi komponen logam pada motor Anda.\n\nLangkah pertama yang paling krusial adalah jangan membiarkan air hujan mengering di bodi atau area mesin. Segera bilas dengan air bersih setelah sampai di rumah. Air hujan yang mengering dapat menyebabkan korosi pada rangka dan membuat baut-baut menjadi macet. Selain itu, perhatikan area rantai (untuk motor manual) atau filter udara (untuk motor matic). Filter udara yang lembap akan menghambat aliran oksigen ke ruang bakar, sehingga motor terasa 'brebet' dan boros bensin.\n\nKami juga menyarankan untuk rutin memberikan pelumas pada area-area yang bergerak seperti engsel standar samping dan tuas rem. Jika Anda merasa performa motor menurun saat musim hujan, segera bawa ke Fayabi Workshop untuk pengecekan sistem kelistrikan agar terhindar dari risiko korsleting akibat air."
+        ]
+    ];
+
+    $news = $allNews[$id] ?? $allNews[1];
+@endphp
+
 @section('content')
 {{-- Master Container --}}
 <div class="bg-white min-h-screen pb-20">
@@ -53,11 +82,13 @@
 
                 {{-- Isi Berita Dinamis --}}
                 <article class="prose prose-slate max-w-none">
-                    <div class="text-slate-700 leading-relaxed text-lg space-y-6 italic font-medium">
-                        {!! nl2br(e($news['content'])) !!}
+                    <div class="prose prose-slate max-w-none text-slate-700 leading-relaxed text-lg text-justify">
+                        @foreach(explode("\n\n", $news['content']) as $paragraph)
+                            <p class="indent-12 mb-4">
+                                {{ $paragraph }}
+                            </p>
+                        @endforeach
                     </div>
-
-                    {{-- Elemen 'Baca Juga' untuk mempercantik layout --}}
                     <div class="bg-slate-50 border-l-4 border-red-600 p-6 my-10">
                         <p class="text-sm font-bold text-slate-900">BACA JUGA: 
                             <a href="#" class="text-red-600 hover:underline ml-1 italic">Update Stok Sparepart Original Bulan Ini di Fayabi Workshop</a>

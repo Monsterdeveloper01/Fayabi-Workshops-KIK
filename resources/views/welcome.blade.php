@@ -235,7 +235,6 @@
 
         {{-- Grid Produk --}}
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            
             {{-- Item 1: Unit Motor --}}
             <div class="group bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-xl transition-all duration-300">
                 <div class="relative aspect-square overflow-hidden bg-slate-100">
@@ -329,7 +328,7 @@
             {{-- Berita 1 --}}
             <div class="group bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-100 hover:shadow-2xl transition-all duration-500">
                 <div class="relative h-56 overflow-hidden">
-                    <img src="https://i.pinimg.com/736x/5f/25/d2/5f25d2d67ca43e707c2f0629ed439417.jpg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <img src="https://i.pinimg.com/736x/28/44/45/2844454618a9a4463c18c99438c51715.jpg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                 </div>
                 <div class="p-8">
                     <p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-3">Jan 15, 2026</p>
