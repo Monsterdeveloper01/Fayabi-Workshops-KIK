@@ -21,7 +21,7 @@
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 </style>
 
-<div class="space-y-16">
+<div class="space-y-6">
 {{-- HERO SECTION LURUS - UKURAN PROPORSIONAL --}}
 <div class="relative w-full h-[400px] md:h-[500px] overflow-hidden mb-0 group">
     {{-- Background Gambar Motor --}}
@@ -67,7 +67,7 @@
 </div>
 
 {{-- STATS SECTION: FAYABI WORKSHOP DALAM ANGKA --}}
-    <section class="py-20 bg-white rounded-[3rem] my-16 shadow-sm border border-slate-100 overflow-hidden relative"
+    <section class="py-20 bg-white rounded-[3rem] my-8 shadow-sm border border-slate-100 overflow-hidden relative"
         x-data="{ 
             counters: { motor: 0, mekanik: 0, sparepart: 0, pelanggan: 0 },
             hasStarted: false,
@@ -141,7 +141,7 @@
     </section>
 
     {{-- BRAND SLIDER --}}
-    <section class="py-10 overflow-hidden"
+    <section class="py-6 overflow-hidden"
         x-data="{
             moveNext() {
                 let el = this.$refs.sliderContainer;
@@ -217,7 +217,7 @@
     </section>
 
 {{-- SECTION: UNIT & PART PILIHAN --}}
-<section class="py-16 bg-slate-50">
+<section class="py-12 bg-slate-50">
     <div class="max-w-7xl mx-auto px-4">
         
         <div class="flex items-end justify-between mb-10">
@@ -317,7 +317,7 @@
 </section>
 
     {{-- NEWS SECTION: BERITA OTOMOTIF TERUPDATE --}}
-    <section class="py-16">
+    <section class="py-12">
         <div class="text-center mb-12">
             <h2 class="text-4xl font-black text-slate-900 uppercase italic">Update <span class="text-red-600">Workshop</span></h2>
             <p class="text-slate-500 mt-4 max-w-2xl mx-auto text-sm font-medium">
