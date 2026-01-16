@@ -56,6 +56,8 @@ Route::get('/booking_history', function () {
     return view('booking_history.index');
 });
 
+
+
 Route::get('/news/{id}', function ($id) {
     $allNews = [
         1 => [
