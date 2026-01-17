@@ -426,15 +426,15 @@
             {{-- Berita 2 --}}
             <div class="group bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-100 hover:shadow-2xl transition-all duration-500">
                 <div class="relative h-56 overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1615172282427-9a57ef2d142e?q=80&w=800" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <img src="{{ asset('storage/brands/developer.jpg') }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                 </div>
                 <div class="p-8">
-                    <p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-3">Jan 10, 2026</p>
+                    <p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-3">Jan 17, 2026</p>
                     <h3 class="text-lg font-black text-slate-900 leading-tight mb-4 group-hover:text-red-600 transition-colors">
-                        Layanan Detailing Keramik Pro Kini Tersedia
+                        Mengenal FAYABI: Sinergi Tiga Siswa SMKN 2 Jakarta di Balik Evolusi Digital Fayabi Workshop
                     </h3>
                     <p class="text-slate-500 text-xs leading-relaxed mb-6 line-clamp-3">
-                        Lindungi cat motor Anda dari goresan dan kusam dengan teknologi Nano Ceramic Coating terbaru dari kami...
+                        Dibalik platform digital Fayabi Workshop, terdapat tiga sosok pengembang: Farel, Yazid, dan Bintang yang berkomitmen menghadirkan solusi otomotif premium...
                     </p>
                     <a href="/news/2" class="inline-block bg-red-600 hover:bg-red-700 text-white text-[10px] font-black uppercase tracking-widest px-6 py-3 rounded-lg transition-colors">
                         Selengkapnya

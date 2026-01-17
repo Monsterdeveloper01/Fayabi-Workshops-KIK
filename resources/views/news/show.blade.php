@@ -11,11 +11,11 @@
             'content' => "Fayabi Workshop sukses menggelar sesi edukasi eksklusif bagi para pecinta motor matic di Jakarta. Acara bertajuk 'Matic Mastery' ini dihadiri oleh lebih dari 50 peserta dari berbagai komunitas.\n\nFokus utama dalam workshop kali ini adalah pemahaman mendalam mengenai sistem CVT (Continuously Variable Transmission). Banyak pengguna motor matic yang ingin performa responsif namun salah dalam memilih derajat kemiringan pulley atau berat roller. Tim mekanik Fayabi menjelaskan bahwa modifikasi bukan sekadar mengganti part, tapi menyelaraskan antara berat roller, per kawahara, dan jalur roller agar akselerasi halus namun tetap bertenaga di tanjakan.\n\nSelain sektor mesin, workshop ini juga membahas tren estetika 'Proper Modif' yang mengedepankan kebersihan pengerjaan dan pemilihan part yang fungsional. Kami percaya bahwa motor yang kencang harus dibarengi dengan sistem pengereman yang mumpuni demi keselamatan berkendara."
         ],
         2 => [
-            'title' => 'Layanan Detailing Keramik Pro Kini Tersedia di Fayabi: Proteksi Maksimal Hingga 3 Tahun',
-            'author' => 'Tim Detailing',
-            'date' => 'Kamis, 10 Januari 2026',
-            'image' => 'https://images.unsplash.com/photo-1615172282427-9a57ef2d142e?q=80&w=800',
-            'content' => "Menjawab permintaan pelanggan setianya, Fayabi Workshop secara resmi meluncurkan layanan 'Nano Ceramic Coating Pro 9H'. Teknologi ini merupakan terobosan terbaru dalam dunia proteksi cat kendaraan yang mampu memberikan efek daun talas (hydrophobic) yang sangat kuat.\n\nProses detailing di Fayabi dimulai dengan tahap Multi-Stage Paint Correction untuk menghilangkan baret halus (swirl marks) dan oksidasi pada cat. Setelah permukaan benar-benar bersih dan bening, lapisan cairan keramik diaplikasikan secara merata di ruangan bebas debu. Lapisan ini akan mengeras dan menjadi pelindung permanen yang melindungi cat dari sinar UV, hujan asam, dan kotoran burung yang seringkali merusak lapisan pernis motor.\n\nKeunggulan dari layanan kami adalah garansi selama 3 tahun dan paket perawatan berkala setiap 6 bulan. Dengan Keramik Pro, motor Anda akan selalu terlihat 'wet look' seperti baru keluar dari showroom setiap harinya."
+            'title' => 'Mengenal FAYABI: Sinergi Tiga Siswa SMKN 2 Jakarta di Balik Evolusi Digital Fayabi Workshop',
+            'author' => 'Tim Developer',
+            'date' => 'Sabtu, 17 Januari 2026',
+            'image' => asset('storage/brands/developer.jpg'),
+            'content' => "Dibalik kemudahan akses layanan otomotif premium yang Anda nikmati saat ini di website Fayabi Workshop, terdapat sebuah cerita tentang inovasi dan kerja sama tim. Nama FAYABI sendiri bukanlah sekadar identitas korporasi, melainkan sebuah akronim dari tiga sosok pengembang (developer) muda asal SMK Negeri 2 Jakarta yang merancang platform ini dari nol: Farel Fadillah, Yazid Asyharire, dan Bintang Rayvan.\n\nProyek pengembangan website ini dimulai sebagai bentuk implementasi ilmu teknologi yang mereka timba di SMKN 2 Jakarta, dengan visi untuk mendigitalisasi layanan bengkel konvensional menjadi sebuah 'Premium Hub' yang bisa diakses kapan saja. Farel Fadillah berperan dalam memastikan arsitektur website berjalan stabil dan aman di sisi backend. Yazid Asyharire fokus pada pengembangan fitur interaktif seperti sistem Marketplace dan integrasi layanan stok. Sementara Bintang Rayvan bertanggung jawab pada sisi UI/UX, memastikan tampilan website tetap elegan, modern, dan responsif di berbagai perangkat.\n\nSinergi antara Farel, Yazid, dan Bintang menghasilkan sebuah platform yang tidak hanya berfungsi sebagai katalog, tetapi juga sebagai pusat informasi edukasi bagi komunitas otomotif. Sebagai representasi talenta muda dari SMK Negeri 2 Jakarta, tim FAYABI berkomitmen untuk terus memperbarui fitur website agar tetap relevan dengan kebutuhan pelanggan dan standar teknologi industri otomotif nasional."
         ],
         3 => [
             'title' => 'Waspada Musim Hujan: Tips Merawat Mesin Motor Agar Tetap Prima dari Mekanik Senior',
@@ -84,7 +84,7 @@
                 <article class="prose prose-slate max-w-none">
                     <div class="prose prose-slate max-w-none text-slate-700 leading-relaxed text-lg text-justify">
                         @foreach(explode("\n\n", $news['content']) as $paragraph)
-                            <p class="indent-12 mb-4">
+                            <p class="mb-4">
                                 {{ $paragraph }}
                             </p>
                         @endforeach
