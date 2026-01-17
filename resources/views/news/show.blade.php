@@ -61,13 +61,28 @@
                         </div>
                     </div>
                     
-                    {{-- Social Share --}}
-                    <div class="flex gap-2">
-                        <a href="#" class="w-8 h-8 rounded-full bg-slate-900 flex items-center justify-center text-white hover:bg-red-600 transition-colors">
-                            <i class="fa-brands fa-facebook-f text-xs"></i>
+                    {{-- Social Share - Original Brand Colors --}}
+                    <div class="flex flex-wrap gap-2 items-center">
+                        <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest mr-2 border-r border-white/10 pr-4">Share:</span>
+                        
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(url()->current()) }}" target="_blank"
+                            class="w-9 h-9 rounded-full bg-[#1877F2] flex items-center justify-center text-white hover:scale-110 hover:shadow-[0_0_15px_rgba(24,119,242,0.5)] transition-all">
+                            <i class="fa-brands fa-facebook-f text-sm"></i>
                         </a>
-                        <a href="#" class="w-8 h-8 rounded-full bg-slate-900 flex items-center justify-center text-white hover:bg-red-600 transition-colors">
-                            <i class="fa-brands fa-whatsapp text-xs"></i>
+
+                        <a href="https://api.whatsapp.com/send?text={{ urlencode('Baca berita ini: ' . url()->current()) }}" target="_blank"
+                            class="w-9 h-9 rounded-full bg-[#25D366] flex items-center justify-center text-white hover:scale-110 hover:shadow-[0_0_15px_rgba(37,211,102,0.5)] transition-all">
+                            <i class="fa-brands fa-whatsapp text-sm"></i>
+                        </a>
+
+                        <a href="https://www.instagram.com/" target="_blank"
+                            class="w-9 h-9 rounded-full bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] flex items-center justify-center text-white hover:scale-110 hover:shadow-[0_0_15px_rgba(238,42,123,0.5)] transition-all">
+                            <i class="fa-brands fa-instagram text-sm"></i>
+                        </a>
+
+                        <a href="https://t.me/share/url?url={{ urlencode(url()->current()) }}" target="_blank"
+                            class="w-9 h-9 rounded-full bg-[#26A5E4] flex items-center justify-center text-white hover:scale-110 hover:shadow-[0_0_15px_rgba(38,165,228,0.5)] transition-all">
+                            <i class="fa-brands fa-telegram text-sm"></i>
                         </a>
                     </div>
                 </div>
