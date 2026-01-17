@@ -5,7 +5,7 @@ use app\Http\Controllers;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ProfileController;
-
+use App\Http\Controllers\VendorController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -44,6 +44,16 @@ Route::get('/', function () {
 */
 
 Route::middleware(['auth'])->group(function () {
+
+    // --- AREA KHUSUS VENDOR ---
+// Kita tambahkan middleware tambahan agar User biasa gak bisa masuk sini
+Route::middleware(['auth', 'role:vendor'])->prefix('vendor')->name('vendor.')->group(function () {
+    
+    Route::get('/dashboard', [VendorController::class, 'index'])->name('dashboard');
+    Route::get('/create-product', [VendorController::class, 'create'])->name('create');
+    Route::post('/store-product', [VendorController::class, 'store'])->name('store');
+
+});
 
     // --- Menu Utama (Aksesoris & Sparepart) ---
     Route::get('/aksesoris', function () {

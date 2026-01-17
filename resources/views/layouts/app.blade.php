@@ -94,139 +94,157 @@
     $cartCount = count(session()->get('cart', [])); 
 @endphp
 
-<nav x-data="{ openMobile: false }" class="bg-slate-900 sticky top-0 z-50 shadow-2xl border-b border-slate-800">
+<nav class="bg-slate-900 sticky top-0 z-50 shadow-[0_4px_20px_-5px_rgba(0,0,0,0.5)] border-b border-white/5 backdrop-blur-md bg-opacity-90">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-20">
-            <div class="flex-shrink-0 flex items-center gap-3 group cursor-pointer">
+            
+            <a href="{{ url('/') }}" class="flex-shrink-0 flex items-center gap-3 group cursor-pointer">
                 <div class="flex flex-col leading-none">
-                    <a href="/"><span class="text-white text-xl font-black tracking-tighter uppercase italic">
-                        FAYABI<span class="text-red-500">WORKSHOP'S</span>
-                    </span></a>
-                    <span class="text-[10px] text-slate-400 font-bold tracking-[0.2em] uppercase">Premium Hub</span>
+                    <span class="text-white text-xl font-black tracking-tighter uppercase italic">
+                        FAYABI<span class="text-red-600">WORKSHOP'S</span>
+                    </span>
+                    
+                    {{-- Badge Khusus jika Vendor sedang login --}}
+                    @if(Auth::check() && Auth::user()->role == 'vendor')
+                        <span class="text-[10px] text-amber-500 font-bold tracking-[0.3em] uppercase glow-text">
+                            Vendor Panel
+                        </span>
+                    @else
+                        <span class="text-[10px] text-slate-400 font-bold tracking-[0.2em] uppercase">
+                            Premium Hub
+                        </span>
+                    @endif
                 </div>
-            </div>
+            </a>
 
             <div class="hidden md:flex items-center space-x-1">
-                <a href="/" class="nav-link-transition text-slate-300 hover:text-[#69BE28] hover:bg-white/5 px-4 py-2 rounded-xl text-sm font-semibold">Beranda</a>
-                <a href="/sparepart" class="nav-link-transition text-slate-300 hover:text-[#DC002E] hover:bg-white/5 px-4 py-2 rounded-xl text-sm font-semibold">Sparepart</a>
-                <a href="/aksesoris" class="nav-link-transition text-slate-300 hover:text-[#003DA5] hover:bg-white/5 px-4 py-2 rounded-xl text-sm font-semibold">Aksesoris</a>
 
-                <div class="relative group" x-data="{ openJasa: false }" @mouseenter="openJasa = true" @mouseleave="openJasa = false">
-                    <button class="nav-link-transition flex items-center gap-1.5 text-slate-300 group-hover:text-white px-4 py-2 rounded-xl text-sm font-semibold">
-                        Jasa <i class="fa-solid fa-chevron-down text-[10px] group-hover:rotate-180 transition-transform duration-300"></i>
-                    </button>
-                    <div x-show="openJasa" x-cloak x-transition
-                        class="absolute left-0 mt-2 w-56 bg-slate-800 border border-white/10 rounded-2xl shadow-2xl py-2 z-[70]">
-                        <a href="/service_motor" class="flex items-center gap-3 px-4 py-3 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
-                            <i class="fa-solid fa-screwdriver-wrench text-slate-500 w-5"></i> Service Motor
-                        </a>
-                        <a href="/modifikasi_motor" class="flex items-center gap-3 px-4 py-3 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
-                            <i class="fa-solid fa-wand-magic-sparkles text-slate-500 w-5"></i> Modifikasi
-                        </a>
-                        <a href="/cuci_motor" class="flex Fitems-center gap-3 px-4 py-3 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
-                            <i class="fa-solid fa-soap text-slate-500 w-5"></i> Cuci Motor
-                        </a>
+                @if(Auth::check() && Auth::user()->role == 'vendor')
+                    {{-- ================= MENU KHUSUS VENDOR ================= --}}
+                    
+                    <a href="{{ route('vendor.dashboard') }}" 
+                       class="{{ request()->routeIs('vendor.dashboard') ? 'text-white bg-white/10' : 'text-slate-400 hover:text-white hover:bg-white/5' }} px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center gap-2">
+                       <i class="fa-solid fa-chart-pie"></i> Ringkasan
+                    </a>
+
+                    <a href="{{ route('vendor.dashboard') }}" 
+                       class="text-slate-400 hover:text-white hover:bg-white/5 px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center gap-2">
+                       <i class="fa-solid fa-box"></i> Produk Saya
+                    </a>
+
+                    <a href="#" class="text-slate-400 hover:text-white hover:bg-white/5 px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-receipt"></i> Pesanan Masuk <span class="bg-red-600 text-white text-[9px] px-1.5 rounded-md">2</span>
+                    </a>
+
+                    {{-- Tombol Upload Cepat --}}
+                    <a href="{{ route('vendor.create') }}" class="ml-4 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl text-sm font-bold transition-all shadow-lg shadow-red-600/20 flex items-center gap-2 transform hover:scale-105">
+                        <i class="fa-solid fa-plus"></i> Upload
+                    </a>
+
+                @else
+                    {{-- ================= MENU USER BIASA / GUEST ================= --}}
+
+                    <a href="{{ url('/') }}" class="text-slate-300 hover:text-[#69BE28] hover:bg-white/5 px-4 py-2 rounded-xl text-sm font-semibold transition-all">
+                        Beranda
+                    </a>
+                    <a href="{{ url('/sparepart') }}" class="text-slate-300 hover:text-[#DC002E] hover:bg-white/5 px-4 py-2 rounded-xl text-sm font-semibold transition-all">
+                        Sparepart
+                    </a>
+                    <a href="{{ url('/aksesoris') }}" class="text-slate-300 hover:text-[#003DA5] hover:bg-white/5 px-4 py-2 rounded-xl text-sm font-semibold transition-all">
+                        Aksesoris
+                    </a>
+
+                    {{-- Dropdown Jasa --}}
+                    <div class="relative group">
+                        <button class="flex items-center gap-1.5 text-slate-300 group-hover:text-white px-4 py-2 rounded-xl text-sm font-semibold transition-all">
+                            Jasa <i class="fa-solid fa-chevron-down text-[10px] group-hover:rotate-180 transition-transform duration-300"></i>
+                        </button>
+                        <div class="absolute left-0 mt-2 w-56 bg-slate-900 border border-white/10 rounded-2xl shadow-2xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                            <a href="{{ url('/service_motor') }}" class="flex items-center gap-3 px-4 py-3 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
+                                <i class="fa-solid fa-screwdriver-wrench text-slate-500 w-5"></i> Service Motor
+                            </a>
+                            <a href="{{ url('/cuci_motor') }}" class="flex items-center gap-3 px-4 py-3 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
+                                <i class="fa-solid fa-soap text-slate-500 w-5"></i> Cuci Motor
+                            </a>
+                            <div class="border-t border-white/5 my-1"></div>
+                            <a href="{{ url('/modifikasi_motor') }}" class="flex items-center gap-3 px-4 py-3 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
+                                <i class="fa-solid fa-wand-magic-sparkles text-slate-500 w-5"></i> Modifikasi
+                            </a>
+                        </div>
                     </div>
-                </div>
+                @endif
+
             </div>
 
             <div class="flex items-center gap-4">
-                <a href="/checkout" class="hidden md:flex relative group p-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full transition-all">
-                    <i class="fa-solid fa-cart-shopping text-white text-lg group-hover:text-red-500 transition-colors"></i>
-                    @if($cartCount > 0)
-                    <span class="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-black w-5 h-5 flex items-center justify-center rounded-full border-2 border-slate-900 animate-bounce">
-                        {{ $cartCount }}
-                    </span>
-                    @endif
-                </a>
-
-                <a href="/jual" class="flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-slate-950 p-2.5 md:px-5 md:py-2.5 rounded-full font-bold text-xs uppercase tracking-tight transition-all transform hover:scale-105 shadow-lg shadow-amber-500/20">
-                    <i class="fa-solid fa-plus text-lg md:text-sm"></i> 
-                    <span class="hidden sm:inline">Jual Motor</span>
-                </a>
-                <div class="flex items-center gap-4">
-
-    @auth
-    <div x-data="{ userOpen: false }" @click.away="userOpen = false" class="relative">
-        
-        <button @click="userOpen = !userOpen" class="flex items-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 p-1.5 pr-4 rounded-full transition-all">
-            <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-slate-700 to-slate-600 flex items-center justify-center border border-white/20 shadow-inner">
-                <i class="fa-solid fa-user text-white text-xs"></i>
-            </div>
-            
-            <div class="hidden sm:flex flex-col items-start leading-tight">
-                <span class="text-white text-[11px] font-medium opacity-60">Halo,</span>
-                <span class="text-white text-sm font-bold">{{ Auth::user()->name }}</span>
-            </div>
-            
-            <i class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform duration-300" :class="userOpen ? 'rotate-180' : ''"></i>
-        </button>
-
-        <div 
-            x-show="userOpen"
-            x-transition:enter="transition ease-out duration-200"
-            x-transition:enter-start="opacity-0 translate-y-2"
-            x-transition:enter-end="opacity-100 translate-y-0"
-            x-transition:leave="transition ease-in duration-150"
-            x-transition:leave-start="opacity-100 translate-y-0"
-            x-transition:leave-end="opacity-0 translate-y-2"
-            style="display: none;" 
-            class="absolute right-0 mt-2 w-52 bg-slate-800 border border-white/10 rounded-2xl shadow-2xl py-2 z-50"
-        >
-            <div class="px-4 py-2 border-b border-white/5 mb-1">
-                <p class="text-xs text-slate-400">Signed in as</p>
-                <p class="text-sm font-bold text-white truncate">{{ Auth::user()->email }}</p>
-            </div>
-            
-            <a href="{{ route('profile.edit') }}" class="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
-                <i class="fa-solid fa-gear w-5 text-center"></i> Pengaturan
-            </a>
-            
-            <a href="{{ url('/booking_history') }}" class="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
-                <i class="fa-solid fa-clock-rotate-left w-5 text-center"></i> Riwayat
-            </a>
-
-            <div class="border-t border-white/5 my-1"></div>
-
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-400 hover:bg-red-500/10 transition-colors font-bold text-left">
-                    <i class="fa-solid fa-right-from-bracket w-5 text-center"></i> Logout
-                </button>
-            </form>
-        </div>
-    </div>
-    @endauth
-
-    @guest
-    <div class="flex items-center gap-3">
-        <a href="{{ route('login') }}" class="text-slate-300 hover:text-white text-sm font-bold transition-colors px-2">
-            Masuk
-        </a>
-
-        <a href="{{ route('register') }}" class="bg-white text-slate-900 hover:bg-slate-100 px-5 py-2 rounded-full text-sm font-bold transition-transform hover:scale-105 shadow-lg shadow-white/10">
-            Daftar
-        </a>
-    </div>
-    @endguest
-
-</div>
                 
-                    <div x-show="userOpen" x-cloak x-transition
-                        class="absolute right-0 mt-3 w-52 bg-slate-800 border border-white/10 rounded-2xl shadow-2xl py-2 z-[60]">
-                        <a href="/profile_setting" class="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
-                            <i class="fa-solid fa-circle-user text-slate-500 w-4"></i> Profil Saya
+                {{-- Tombol Jual Motor (Hanya untuk User Biasa) --}}
+                @if(!Auth::check() || Auth::user()->role == 'user')
+                <a href="{{ url('/jual') }}" class="hidden lg:flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-slate-950 px-5 py-2.5 rounded-full font-bold text-xs uppercase tracking-tight transition-all transform hover:scale-105 shadow-lg shadow-amber-500/20">
+                    <i class="fa-solid fa-plus-circle"></i> Jual Motor
+                </a>
+                @endif
+
+                {{-- PROFILE DROPDOWN (Dinamis: User/Vendor/Guest) --}}
+                @auth
+                <div x-data="{ userOpen: false }" @click.away="userOpen = false" class="relative">
+                    <button @click="userOpen = !userOpen" class="flex items-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 p-1.5 pr-4 rounded-full transition-all">
+                        <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-slate-700 to-slate-600 flex items-center justify-center border border-white/20 shadow-inner overflow-hidden">
+                            {{-- Foto Profil Dinamis --}}
+                             <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&bg=334155&color=fff" alt="Avatar">
+                        </div>
+                        <div class="hidden sm:flex flex-col items-start leading-tight">
+                            <span class="text-white text-[10px] font-medium opacity-60">
+                                {{ Auth::user()->role == 'vendor' ? 'Vendor Account' : 'Selamat datang,' }}
+                            </span>
+                            <span class="text-white text-sm font-bold">{{ Auth::user()->name }}</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform duration-300" :class="userOpen ? 'rotate-180' : ''"></i>
+                    </button>
+
+                    <div x-show="userOpen" x-transition class="absolute right-0 mt-2 w-52 bg-slate-900 border border-white/10 rounded-2xl shadow-2xl py-2 z-50" style="display: none;">
+                        
+                        <div class="px-4 py-2 border-b border-white/5 mb-1">
+                            <p class="text-[10px] text-slate-400 uppercase tracking-wider">Signed in as</p>
+                            <p class="text-xs font-bold text-white truncate">{{ Auth::user()->email }}</p>
+                        </div>
+                        
+                        <a href="{{ url('/profile_setting') }}" class="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
+                            <i class="fa-solid fa-gear w-5 text-center"></i> Pengaturan
                         </a>
-                        <a href="/booking_history" class="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
-                            <i class="fa-solid fa-clock-rotate-left text-slate-500 w-4"></i> Riwayat Booking
-                        </a>
+
+                        @if(Auth::user()->role == 'user')
+                            <a href="{{ url('/booking_history') }}" class="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
+                                <i class="fa-solid fa-clock-rotate-left w-5 text-center"></i> Riwayat Belanja
+                            </a>
+                        @endif
+
                         <div class="border-t border-white/5 my-1"></div>
-                        <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-sm text-red-400 hover:bg-red-500/10 font-bold transition-colors">
-                            <i class="fa-solid fa-right-from-bracket w-4"></i> Keluar
-                        </a>
+
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-400 hover:bg-red-500/10 transition-colors font-bold text-left">
+                                <i class="fa-solid fa-right-from-bracket w-5 text-center"></i> Logout
+                            </button>
+                        </form>
                     </div>
                 </div>
+                @endauth
+
+                @guest
+                <div class="flex items-center gap-3">
+                    <a href="{{ route('login') }}" class="text-slate-300 hover:text-white text-sm font-bold transition-colors px-2">Masuk</a>
+                    <a href="{{ route('register') }}" class="bg-white text-slate-900 hover:bg-slate-200 px-5 py-2 rounded-full text-sm font-bold transition-transform hover:scale-105 shadow-lg shadow-white/10">Daftar</a>
+                </div>
+                @endguest
             </div>
+            
+            <div class="md:hidden flex items-center">
+                <button class="text-slate-300 p-2 hover:bg-white/5 rounded-lg">
+                    <i class="fa-solid fa-bars-staggered text-xl"></i>
+                </button>
+            </div>
+
         </div>
     </div>
 </nav>
