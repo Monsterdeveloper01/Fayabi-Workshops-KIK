@@ -14,7 +14,7 @@
                 <span class="text-amber-500 text-xs font-bold uppercase tracking-widest">Proses Cepat & Aman</span>
             </div>
             <h1 class="text-3xl md:text-5xl font-black text-white italic uppercase tracking-tighter mb-4">
-                Jual Motormu, <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">Langsung Cair</span>
+                Jual Motormu, <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">Langsung Cair.</span>
             </h1>
             <p class="text-slate-400 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
                 Dapatkan penawaran harga terbaik sesuai kondisi pasar. Kami menerima segala jenis motor Jepang (Honda, Yamaha, Suzuki, Kawasaki).

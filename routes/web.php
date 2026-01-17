@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use app\Http\Controllers;
+use App\Http\Controllers\CartController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -60,8 +61,16 @@ Route::get('/news/{id}', function ($id) {
     return view('news.show'); 
 });
 
-// Brand Routes
 
+// Menampilkan halaman checkout
+Route::get('/checkout', function () {
+    $cartItems = session()->get('cart', []); 
+    return view('checkout.index', compact('cartItems'));
+})->name('checkout.index');
+Route::delete('/cart/remove/{index}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+
+// Brand Routes
 Route::get('/brand/harley', function () {
     return view('brand.harley');
 });

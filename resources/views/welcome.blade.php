@@ -217,105 +217,184 @@
     </section>
 
 {{-- SECTION: UNIT & PART PILIHAN --}}
-<section class="py-12 bg-slate-50">
+<section class="py-8 md:py-12 bg-slate-50"> {{-- Mengurangi padding mobile --}}
     <div class="max-w-7xl mx-auto px-4">
         
-        <div class="flex items-end justify-between mb-10">
+        <div class="flex items-end justify-between mb-6 md:mb-10"> {{-- Margin bawah lebih kecil di mobile --}}
             <div>
                 <div class="flex items-center gap-2 mb-2">
-                    <div class="h-1 w-8 bg-red-600"></div>
-                    <span class="text-red-600 font-black uppercase tracking-widest text-[10px]">Marketplace</span>
+                    <div class="h-1 w-6 md:h-1 md:w-8 bg-red-600"></div> {{-- Ukuran garis adaptif --}}
+                    <span class="text-red-600 font-black uppercase tracking-widest text-[9px] md:text-[10px]">Marketplace</span>
                 </div>
-                <h2 class="text-3xl font-black text-slate-900 uppercase italic">Unit & <span class="text-red-600">Part Pilihan</span></h2>
+                <h2 class="text-xl md:text-3xl font-black text-slate-900 uppercase italic leading-tight">Unit & <span class="text-red-600">Part Pilihan</span></h2>
             </div>
-            {{-- <a href="/all-products" class="text-slate-500 hover:text-red-600 font-bold text-xs uppercase tracking-widest transition-colors">
-                Lihat Semua <i class="fa-solid fa-arrow-right ml-2"></i>
-            </a> --}}
         </div>
 
         {{-- Grid Produk --}}
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {{-- Menggunakan gap-3 di mobile agar tidak terlalu renggang --}}
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
+            
             {{-- Item 1: Unit Motor --}}
-            <div class="group bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-xl transition-all duration-300">
+            <div class="group bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-xl transition-all duration-300 flex flex-col">
                 <div class="relative aspect-square overflow-hidden bg-slate-100">
                     <img src="http://127.0.0.1:8000/storage/brands/vario-160.png" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                    <div class="absolute top-3 left-3 bg-red-600 text-white text-[9px] font-black px-2 py-1 uppercase rounded">Motor</div>
-                    <button class="absolute top-3 right-3 w-8 h-8 bg-white/80 backdrop-blur rounded-full flex items-center justify-center text-slate-400 hover:text-red-600 transition-colors">
-                        <i class="fa-regular fa-heart"></i>
+                    <div class="absolute top-2 left-2 md:top-3 md:left-3 bg-red-600 text-white text-[8px] md:text-[9px] font-black px-1.5 py-0.5 md:px-2 md:py-1 uppercase rounded">Motor</div>
+                    <button class="absolute top-2 right-2 md:top-3 md:right-3 w-7 h-7 md:w-8 md:h-8 bg-white/80 backdrop-blur rounded-full flex items-center justify-center text-slate-400 hover:text-red-600 transition-colors">
+                        <i class="fa-regular fa-heart text-xs"></i>
                     </button>
                 </div>
-                <div class="p-4">
-                    <h3 class="text-lg font-black text-slate-900 mb-1">Rp 26.000.000</h3>
-                    <p class="text-slate-600 text-sm leading-tight line-clamp-2 mb-4">Honda Vario 160 CBS Type</p>
-                    <div class="flex items-center justify-between text-[10px] text-slate-400 font-bold uppercase tracking-tighter">
-                        <span><i class="fa-solid fa-location-dot mr-1"></i> Jakarta Pusat</span>
-                        <span>Hari Ini</span>
+                <div class="p-3 md:p-4 flex flex-col flex-grow"> {{-- Padding lebih kecil di mobile --}}
+                    <h3 class="text-sm md:text-lg font-black text-slate-900 mb-0.5">Rp 26.000.000</h3>
+                    <p class="text-slate-600 text-[10px] md:text-sm leading-tight line-clamp-2 mb-3 h-8 md:h-10">Honda Vario 160 CBS Type</p>
+                    
+                    <div class="flex items-center justify-between text-[8px] md:text-[10px] text-slate-400 font-bold uppercase tracking-tighter mt-auto mb-3">
+                        <span class="truncate mr-1"><i class="fa-solid fa-location-dot mr-1"></i> Jakarta Pusat</span>
+                        <span class="whitespace-nowrap">Hari Ini</span>
                     </div>
+
+                    <form action="{{ route('cart.add') }}" method="POST" class="mt-auto">
+                        @csrf
+                        <input type="hidden" name="name" value="Honda Vario 160 CBS Type">
+                        <input type="hidden" name="price" value="26000000">
+                        <input type="hidden" name="image" value="http://127.0.0.1:8000/storage/brands/vario-160.png">
+                        <input type="hidden" name="category" value="Motor">
+
+                        <div class="flex gap-1.5 md:gap-2">
+                            <button type="submit" name="action" value="add_to_cart" class="flex-none w-9 h-9 md:w-11 md:h-11 border border-slate-200 text-slate-400 hover:text-red-600 hover:border-red-600 rounded-lg transition-all duration-300 flex items-center justify-center group">
+                                <i class="fa-solid fa-cart-shopping text-xs md:text-sm group-hover:scale-110 transition-transform"></i>
+                            </button>
+                            
+                            <button type="submit" name="action" value="buy_now" class="flex-grow bg-red-600 text-white text-[8px] md:text-[10px] font-black uppercase tracking-wider md:tracking-[0.2em] rounded-lg flex items-center justify-center hover:bg-slate-900 transition-all duration-300 group">
+                                <span>Buy Now</span>
+                                <i class="fa-solid fa-chevron-right ml-1 md:ml-2 text-[7px] md:text-[8px] group-hover:translate-x-1 transition-transform"></i>
+                            </button>
+                        </div>
+                    </form>              
                 </div>
             </div>
 
             {{-- Item 2: Sparepart --}}
-            <div class="group bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-xl transition-all duration-300">
+            <div class="group bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-xl transition-all duration-300 flex flex-col">
                 <div class="relative aspect-square overflow-hidden bg-slate-100">
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAktiGFEme4cY5BsW478ciwpH3UEUUrTPg-w&s" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                    <div class="absolute top-3 left-3 bg-blue-600 text-white text-[9px] font-black px-2 py-1 uppercase rounded">Sparepart</div>
-                    <button class="absolute top-3 right-3 w-8 h-8 bg-white/80 backdrop-blur rounded-full flex items-center justify-center text-slate-400 hover:text-red-600 transition-colors">
-                        <i class="fa-regular fa-heart"></i>
+                    <div class="absolute top-2 left-2 md:top-3 md:left-3 bg-blue-600 text-white text-[8px] md:text-[9px] font-black px-1.5 py-0.5 md:px-2 md:py-1 uppercase rounded">Sparepart</div>
+                    <button class="absolute top-2 right-2 md:top-3 md:right-3 w-7 h-7 md:w-8 md:h-8 bg-white/80 backdrop-blur rounded-full flex items-center justify-center text-slate-400 hover:text-red-600 transition-colors">
+                        <i class="fa-regular fa-heart text-xs"></i>
                     </button>
                 </div>
-                <div class="p-4">
-                    <h3 class="text-lg font-black text-slate-900 mb-1">Rp 185.000</h3>
-                    <p class="text-slate-600 text-sm leading-tight line-clamp-2 mb-4">Piston Kit Honda Vario 125</p>
-                    <div class="flex items-center justify-between text-[10px] text-slate-400 font-bold uppercase tracking-tighter">
-                        <span><i class="fa-solid fa-location-dot mr-1"></i> Jakarta Pusat</span>
-                        <span>2 Jam Lalu</span>
+                <div class="p-3 md:p-4 flex flex-col flex-grow">
+                    <h3 class="text-sm md:text-lg font-black text-slate-900 mb-0.5">Rp 185.000</h3>
+                    <p class="text-slate-600 text-[10px] md:text-sm leading-tight line-clamp-2 mb-3 h-8 md:h-10">Piston Kit Honda Vario 125</p>
+                    
+                    <div class="flex items-center justify-between text-[8px] md:text-[10px] text-slate-400 font-bold uppercase tracking-tighter mt-auto mb-3">
+                        <span class="truncate mr-1"><i class="fa-solid fa-location-dot mr-1"></i> Jakarta Pusat</span>
+                        <span class="whitespace-nowrap">2 Jam Lalu</span>
                     </div>
+
+                    <form action="{{ route('cart.add') }}" method="POST" class="mt-auto">
+                        @csrf
+                        <input type="hidden" name="name" value="Piston Kit Honda Vario 125">
+                        <input type="hidden" name="price" value="185000">
+                        <input type="hidden" name="image" value="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAktiGFEme4cY5BsW478ciwpH3UEUUrTPg-w&s">
+                        <input type="hidden" name="category" value="Sparepart">
+
+                        <div class="flex gap-1.5 md:gap-2">
+                            <button type="submit" name="action" value="add_to_cart" class="flex-none w-9 h-9 md:w-11 md:h-11 border border-slate-200 text-slate-400 hover:text-red-600 hover:border-red-600 rounded-lg transition-all duration-300 flex items-center justify-center group">
+                                <i class="fa-solid fa-cart-shopping text-xs md:text-sm group-hover:scale-110 transition-transform"></i>
+                            </button>
+                            
+                            <button type="submit" name="action" value="buy_now" class="flex-grow bg-red-600 text-white text-[8px] md:text-[10px] font-black uppercase tracking-wider md:tracking-[0.2em] rounded-lg flex items-center justify-center hover:bg-slate-900 transition-all duration-300 group">
+                                <span>Buy Now</span>
+                                <i class="fa-solid fa-chevron-right ml-1 md:ml-2 text-[7px] md:text-[8px] group-hover:translate-x-1 transition-transform"></i>
+                            </button>
+                        </div>
+                    </form>              
                 </div>
             </div>
 
             {{-- Item 3: Aksesoris --}}
-            <div class="group bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-xl transition-all duration-300">
+            <div class="group bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-xl transition-all duration-300 flex flex-col">
                 <div class="relative aspect-square overflow-hidden bg-slate-100">
                     <img src="https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//93/MTA-53931602/michelin_velg-rcb-racing-boy-yamaha-jupiter-z-palang-5-type-sp-522-gold-1-set_full01.jpg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                    <div class="absolute top-3 left-3 bg-orange-500 text-white text-[9px] font-black px-2 py-1 uppercase rounded">Aksesoris</div>
-                    <button class="absolute top-3 right-3 w-8 h-8 bg-white/80 backdrop-blur rounded-full flex items-center justify-center text-slate-400 hover:text-red-600 transition-colors">
-                        <i class="fa-regular fa-heart"></i>
+                    <div class="absolute top-2 left-2 md:top-3 md:left-3 bg-orange-500 text-white text-[8px] md:text-[9px] font-black px-1.5 py-0.5 md:px-2 md:py-1 uppercase rounded">Aksesoris</div>
+                    <button class="absolute top-2 right-2 md:top-3 md:right-3 w-7 h-7 md:w-8 md:h-8 bg-white/80 backdrop-blur rounded-full flex items-center justify-center text-slate-400 hover:text-red-600 transition-colors">
+                        <i class="fa-regular fa-heart text-xs"></i>
                     </button>
                 </div>
-                <div class="p-4">
-                    <h3 class="text-lg font-black text-slate-900 mb-1">Rp 2.100.000</h3>
-                    <p class="text-slate-600 text-sm leading-tight line-clamp-2 mb-4">Velg RCB SP522 Gold</p>
-                    <div class="flex items-center justify-between text-[10px] text-slate-400 font-bold uppercase tracking-tighter">
-                        <span><i class="fa-solid fa-location-dot mr-1"></i> Jakarta Pusat</span>
-                        <span>Kemarin</span>
+                <div class="p-3 md:p-4 flex flex-col flex-grow">
+                    <h3 class="text-sm md:text-lg font-black text-slate-900 mb-0.5">Rp 2.100.000</h3>
+                    <p class="text-slate-600 text-[10px] md:text-sm leading-tight line-clamp-2 mb-3 h-8 md:h-10">Velg RCB SP522 Gold</p>
+                    
+                    <div class="flex items-center justify-between text-[8px] md:text-[10px] text-slate-400 font-bold uppercase tracking-tighter mt-auto mb-3">
+                        <span class="truncate mr-1"><i class="fa-solid fa-location-dot mr-1"></i> Jakarta Pusat</span>
+                        <span class="whitespace-nowrap">Kemarin</span>
                     </div>
+
+                    <form action="{{ route('cart.add') }}" method="POST" class="mt-auto">
+                        @csrf
+                        <input type="hidden" name="name" value="Velg RCB SP522 Gold">
+                        <input type="hidden" name="price" value="21000000">
+                        <input type="hidden" name="image" value="https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//93/MTA-53931602/michelin_velg-rcb-racing-boy-yamaha-jupiter-z-palang-5-type-sp-522-gold-1-set_full01.jpg">
+                        <input type="hidden" name="category" value="Aksesoris">
+
+                        <div class="flex gap-1.5 md:gap-2">
+                            <button type="submit" name="action" value="add_to_cart" class="flex-none w-9 h-9 md:w-11 md:h-11 border border-slate-200 text-slate-400 hover:text-red-600 hover:border-red-600 rounded-lg transition-all duration-300 flex items-center justify-center group">
+                                <i class="fa-solid fa-cart-shopping text-xs md:text-sm group-hover:scale-110 transition-transform"></i>
+                            </button>
+                            
+                            <button type="submit" name="action" value="buy_now" class="flex-grow bg-red-600 text-white text-[8px] md:text-[10px] font-black uppercase tracking-wider md:tracking-[0.2em] rounded-lg flex items-center justify-center hover:bg-slate-900 transition-all duration-300 group">
+                                <span>Buy Now</span>
+                                <i class="fa-solid fa-chevron-right ml-1 md:ml-2 text-[7px] md:text-[8px] group-hover:translate-x-1 transition-transform"></i>
+                            </button>
+                        </div>
+                    </form>              
                 </div>
             </div>
 
             {{-- Item 4: Unit Motor --}}
-            <div class="group bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-xl transition-all duration-300">
+            <div class="group bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-xl transition-all duration-300 flex flex-col">
                 <div class="relative aspect-square overflow-hidden bg-slate-100">
                     <img src="http://127.0.0.1:8000/storage/brands/cbr-250rr.png" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                    <div class="absolute top-3 left-3 bg-red-600 text-white text-[9px] font-black px-2 py-1 uppercase rounded">Motor</div>
-                    <button class="absolute top-3 right-3 w-8 h-8 bg-white/80 backdrop-blur rounded-full flex items-center justify-center text-slate-400 hover:text-red-600 transition-colors">
-                        <i class="fa-regular fa-heart"></i>
+                    <div class="absolute top-2 left-2 md:top-3 md:left-3 bg-red-600 text-white text-[8px] md:text-[9px] font-black px-1.5 py-0.5 md:px-2 md:py-1 uppercase rounded">Motor</div>
+                    <button class="absolute top-2 right-2 md:top-3 md:right-3 w-7 h-7 md:w-8 md:h-8 bg-white/80 backdrop-blur rounded-full flex items-center justify-center text-slate-400 hover:text-red-600 transition-colors">
+                        <i class="fa-regular fa-heart text-xs"></i>
                     </button>
                 </div>
-                <div class="p-4">
-                    <h3 class="text-lg font-black text-slate-900 mb-1">Rp 83.760.000</h3>
-                    <p class="text-slate-600 text-sm leading-tight line-clamp-2 mb-4">Honda CBR 250RR - SP QS Type</p>
-                    <div class="flex items-center justify-between text-[10px] text-slate-400 font-bold uppercase tracking-tighter">
-                        <span><i class="fa-solid fa-location-dot mr-1"></i> Jakarta Pusat</span>
-                        <span>1 Jam Lalu</span>
+                <div class="p-3 md:p-4 flex flex-col flex-grow">
+                    <h3 class="text-sm md:text-lg font-black text-slate-900 mb-0.5">Rp 83.760.000</h3>
+                    <p class="text-slate-600 text-[10px] md:text-sm leading-tight line-clamp-2 mb-3 h-8 md:h-10">Honda CBR 250RR - SP QS Type</p>
+                    
+                    <div class="flex items-center justify-between text-[8px] md:text-[10px] text-slate-400 font-bold uppercase tracking-tighter mt-auto mb-3">
+                        <span class="truncate mr-1"><i class="fa-solid fa-location-dot mr-1"></i> Jakarta Pusat</span>
+                        <span class="whitespace-nowrap">1 Jam Lalu</span>
                     </div>
-                </div>
+
+                    <form action="{{ route('cart.add') }}" method="POST" class="mt-auto">
+                        @csrf
+                        <input type="hidden" name="name" value="Honda CBR 250RR - SP QS Type">
+                        <input type="hidden" name="price" value="83760000">
+                        <input type="hidden" name="image" value="http://127.0.0.1:8000/storage/brands/cbr-250rr.png">
+                        <input type="hidden" name="category" value="Motor">
+
+                        <div class="flex gap-1.5 md:gap-2">
+                            <button type="submit" name="action" value="add_to_cart" class="flex-none w-9 h-9 md:w-11 md:h-11 border border-slate-200 text-slate-400 hover:text-red-600 hover:border-red-600 rounded-lg transition-all duration-300 flex items-center justify-center group">
+                                <i class="fa-solid fa-cart-shopping text-xs md:text-sm group-hover:scale-110 transition-transform"></i>
+                            </button>
+                            
+                            <button type="submit" name="action" value="buy_now" class="flex-grow bg-red-600 text-white text-[8px] md:text-[10px] font-black uppercase tracking-wider md:tracking-[0.2em] rounded-lg flex items-center justify-center hover:bg-slate-900 transition-all duration-300 group">
+                                <span>Buy Now</span>
+                                <i class="fa-solid fa-chevron-right ml-1 md:ml-2 text-[7px] md:text-[8px] group-hover:translate-x-1 transition-transform"></i>
+                            </button>
+                        </div>
+                    </form>              
+                 </div>
             </div>
 
         </div>
     </div>
 </section>
 
-    {{-- NEWS SECTION: BERITA OTOMOTIF TERUPDATE --}}
+{{-- NEWS SECTION: BERITA OTOMOTIF TERUPDATE --}}
     <section class="py-12">
         <div class="text-center mb-12">
             <h2 class="text-4xl font-black text-slate-900 uppercase italic">Update <span class="text-red-600">Workshop</span></h2>
