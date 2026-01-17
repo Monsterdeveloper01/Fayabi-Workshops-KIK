@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\Product; 
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -60,19 +61,20 @@ class CheckoutController extends Controller
     // 2. Proses Simpan Order (Header & Detail)
     public function process(Request $request)
     {
-        // Validasi
+        // Validasi Input
         $request->validate([
             'email' => 'required|email',
             'payment' => 'required',
         ]);
 
-        // Gunakan DB Transaction agar kalau detail gagal, header gak kebuat (Aman!)
+        // Mulai Transaksi Database (PENTING AGAR DATA KONSISTEN)
         DB::beginTransaction();
 
         try {
-            $user = Auth::user(); // Bisa null kalau guest (opsional: harus login dulu sebaiknya)
-            
-            // Hitung Total (Ambil ulang dari DB/Session biar aman dari inspect element hack)
+            $user = Auth::user();
+
+            // 1. Ambil Data Keranjang Terbaru dari Database
+            // Kita ambil fresh dari DB biar datanya valid (bukan dari session/cache lama)
             $cartItems = [];
             if ($user) {
                 $dbCarts = Cart::where('user_id', $user->id)->with('product')->get();
@@ -85,52 +87,82 @@ class CheckoutController extends Controller
                     ];
                 }
             } else {
+                // Logic Guest (Opsional, tapi sebaiknya dipaksa login)
                 $cartItems = session()->get('cart', []);
             }
 
-            // Hitung matematika harga
+            // Cek keranjang kosong
+            if (empty($cartItems)) {
+                throw new \Exception("Keranjang belanja kosong.");
+            }
+
+            // Hitung Total Bayar
             $subtotal = collect($cartItems)->sum(fn($item) => $item['price'] * $item['qty']);
             $ppn = $subtotal * 0.11;
             $serviceFee = 2500;
             $totalPrice = $subtotal + $ppn + $serviceFee;
 
-            // 1. SIMPAN HEADER (Table Orders)
+            // 2. SIMPAN HEADER ORDER (Data Umum)
             $order = Order::create([
-                'user_id' => $user ? $user->id : 1, // Jika guest, kasih ke user ID 1 (Admin/Anonim) atau paksa login
+                'user_id' => $user->id,
                 'order_number' => 'ORD-' . strtoupper(Str::random(10)),
                 'total_price' => $totalPrice,
                 'status' => 'pending',
                 'payment_method' => $request->payment,
                 'payment_status' => 'unpaid',
-                'email' => $request->email,
+                'email' => $request->email, // Email dari form checkout
+                // Simpan alamat snapshot saat checkout (Opsional tapi bagus)
+                // 'shipping_address' => $user->address_line . ', ' . $user->city
             ]);
 
-            // 2. SIMPAN DETAIL (Table Order Items)
+            // 3. LOOP BARANG: CEK STOK & KURANGI STOK
             foreach ($cartItems as $item) {
+                
+                // A. Ambil Data Produk Asli dari DB
+                // Gunakan lockForUpdate() biar gak rebutan stok sama user lain di detik yg sama
+                $product = Product::where('id', $item['product_id'])->lockForUpdate()->first();
+
+                if (!$product) {
+                    throw new \Exception("Produk '{$item['name']}' tidak ditemukan atau sudah dihapus.");
+                }
+
+                // B. VALIDASI: Cek Apakah Stok Cukup?
+                if ($product->stock < $item['qty']) {
+                    throw new \Exception("Stok Habis! Produk '{$product->name}' hanya tersisa {$product->stock} item.");
+                }
+
+                // C. UPDATE: Kurangi Stok Produk
+                $product->decrement('stock', $item['qty']);
+
+                // D. Simpan ke Order Item
                 OrderItem::create([
                     'order_id' => $order->id,
-                    'product_id' => $item['product_id'], // Pastikan key ini ada
-                    'product_name' => $item['name'],
-                    'price' => $item['price'],
+                    'product_id' => $product->id,
+                    'product_name' => $product->name, // Snapshot nama (jaga2 kalo diganti admin)
+                    'price' => $product->price,       // Snapshot harga saat beli
                     'qty' => $item['qty'],
                 ]);
             }
 
-            // 3. BERSIHKAN KERANJANG
+            // 4. BERSIHKAN KERANJANG
             if ($user) {
                 Cart::where('user_id', $user->id)->delete();
             } else {
                 session()->forget('cart');
             }
 
-            DB::commit(); // Simpan permanen
+            // Jika semua lancar, Simpan Perubahan Permanen
+            DB::commit();
 
-            // Redirect ke halaman sukses / invoice
-            return redirect()->route('booking.history')->with('status', 'Pesanan Berhasil Dibuat! Order ID: ' . $order->order_number);
+            // Redirect Sukses
+            return redirect()->route('booking.history')->with('status', 'Pesanan Berhasil! Order ID: ' . $order->order_number);
 
         } catch (\Exception $e) {
-            DB::rollBack(); // Batalkan semua kalau error
-            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+            // Jika ada error (misal stok kurang), Batalkan SEMUA perubahan database
+            DB::rollBack(); 
+            
+            // Kembalikan user ke halaman checkout dengan pesan error
+            return redirect()->back()->with('error', 'Gagal memproses pesanan: ' . $e->getMessage());
         }
     }
 }

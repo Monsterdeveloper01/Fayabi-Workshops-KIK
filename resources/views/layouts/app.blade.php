@@ -132,8 +132,24 @@
                        <i class="fa-solid fa-box"></i> Produk Saya
                     </a>
 
-                    <a href="#" class="text-slate-400 hover:text-white hover:bg-white/5 px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center gap-2">
-                        <i class="fa-solid fa-receipt"></i> Pesanan Masuk <span class="bg-red-600 text-white text-[9px] px-1.5 rounded-md">2</span>
+                    {{-- LOGIC HITUNG TOTAL PESANAN VENDOR --}}
+                    @php
+                        $vendorOrderCount = \App\Models\Order::whereHas('items.product', function($q) {
+                            $q->where('user_id', Auth::id());
+                        })->count();
+                    @endphp
+
+                    <a href="{{ route('vendor.orders.index') }}" 
+                    class="{{ request()->routeIs('vendor.orders.index*') ? 'text-white bg-white/10' : 'text-slate-400 hover:text-white hover:bg-white/5' }} px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center gap-2">
+                        
+                        <i class="fa-solid fa-receipt"></i> Pesanan Masuk
+                        
+                        {{-- Tampilkan Badge hanya jika ada pesanan --}}
+                        @if($vendorOrderCount > 0)
+                            <span class="bg-red-600 text-white text-[9px] px-1.5 rounded-md animate-pulse">
+                                {{ $vendorOrderCount }}
+                            </span>
+                        @endif
                     </a>
 
                     {{-- Tombol Upload Cepat --}}

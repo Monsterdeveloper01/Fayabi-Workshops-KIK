@@ -53,7 +53,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard', [VendorController::class, 'index'])->name('dashboard');
         Route::get('/create-product', [VendorController::class, 'create'])->name('create');
         Route::post('/store-product', [VendorController::class, 'store'])->name('store');
-
+        Route::get('/orders', [VendorController::class, 'orders'])->name('orders.index');
+        Route::get('/orders/{id}', [VendorController::class, 'showOrder'])->name('orders.show');
     });
 
     // --- Menu Utama (Aksesoris & Sparepart) ---
