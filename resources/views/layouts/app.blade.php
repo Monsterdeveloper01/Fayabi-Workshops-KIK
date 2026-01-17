@@ -268,7 +268,7 @@
                             <i class="fa-solid fa-receipt w-5 text-center"></i> Pesanan Saya
                         </a>
                         <a href="{{ url('/booking_history') }}" class="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
-                            <i class="fa-solid fa-clock-rotate-left w-5 text-center"></i> Riwayat Belanja
+                            <i class="fa-solid fa-clock-rotate-left w-5 text-center"></i> Riwayat booking
                         </a>
                         @endif
 

@@ -217,178 +217,107 @@
     </section>
 
 {{-- SECTION: UNIT & PART PILIHAN --}}
-<section class="py-8 md:py-12 bg-slate-50"> {{-- Mengurangi padding mobile --}}
+<section class="py-12 bg-slate-50">
     <div class="max-w-7xl mx-auto px-4">
         
-        <div class="flex items-end justify-between mb-6 md:mb-10"> {{-- Margin bawah lebih kecil di mobile --}}
+        {{-- Header Section --}}
+        <div class="flex items-center justify-between mb-8">
             <div>
                 <div class="flex items-center gap-2 mb-2">
-                    <div class="h-1 w-6 md:h-1 md:w-8 bg-red-600"></div> {{-- Ukuran garis adaptif --}}
-                    <span class="text-red-600 font-black uppercase tracking-widest text-[9px] md:text-[10px]">Marketplace</span>
+                    <div class="h-1 w-8 bg-red-600"></div>
+                    <span class="text-red-600 font-black uppercase tracking-[0.3em] text-[10px]">Featured</span>
                 </div>
-                <h2 class="text-xl md:text-3xl font-black text-slate-900 uppercase italic leading-tight">Unit & <span class="text-red-600">Part Pilihan</span></h2>
+                <h2 class="text-2xl md:text-4xl font-black text-slate-900 uppercase italic">
+                    Unit & <span class="text-red-600">Part Pilihan</span>
+                </h2>
             </div>
+            <a href="{{ route('sparepart.index') }}" class="hidden md:block text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-red-600 transition-colors">
+                Lihat Semua <i class="fa-solid fa-arrow-right ml-2"></i>
+            </a>
         </div>
 
         {{-- Grid Produk --}}
-        {{-- Menggunakan gap-3 di mobile agar tidak terlalu renggang --}}
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
+        {{-- grid-cols-2 untuk mobile agar tidak terlalu besar, md:grid-cols-4 untuk desktop --}}
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
             
-            {{-- Item 1: Unit Motor --}}
-            <div class="group bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-xl transition-all duration-300 flex flex-col">
+            {{-- 1. LOOPING UNIT MOTOR --}}
+            @foreach($motorUnits as $motor)
+            <div class="group bg-white rounded-2xl md:rounded-[2rem] overflow-hidden border border-slate-200 hover:shadow-xl transition-all duration-300 flex flex-col h-full">
+                
+                {{-- Container Gambar (DIKUNCI) --}}
                 <div class="relative aspect-square overflow-hidden bg-slate-100">
-                    <img src="http://127.0.0.1:8000/storage/brands/vario-160.png" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                    <div class="absolute top-2 left-2 md:top-3 md:left-3 bg-red-600 text-white text-[8px] md:text-[9px] font-black px-1.5 py-0.5 md:px-2 md:py-1 uppercase rounded">Motor</div>
-                    <button class="absolute top-2 right-2 md:top-3 md:right-3 w-7 h-7 md:w-8 md:h-8 bg-white/80 backdrop-blur rounded-full flex items-center justify-center text-slate-400 hover:text-red-600 transition-colors">
-                        <i class="fa-regular fa-heart text-xs"></i>
-                    </button>
-                </div>
-                <div class="p-3 md:p-4 flex flex-col flex-grow"> {{-- Padding lebih kecil di mobile --}}
-                    <h3 class="text-sm md:text-lg font-black text-slate-900 mb-0.5">Rp 26.000.000</h3>
-                    <p class="text-slate-600 text-[10px] md:text-sm leading-tight line-clamp-2 mb-3 h-8 md:h-10">Honda Vario 160 CBS Type</p>
+                    <img src="{{ Storage::url($motor->image) }}" 
+                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                         alt="{{ $motor->model }}">
                     
-                    <div class="flex items-center justify-between text-[8px] md:text-[10px] text-slate-400 font-bold uppercase tracking-tighter mt-auto mb-3">
-                        <span class="truncate mr-1"><i class="fa-solid fa-location-dot mr-1"></i> Jakarta Pusat</span>
-                        <span class="whitespace-nowrap">Hari Ini</span>
+                    <div class="absolute top-2 left-2 md:top-4 md:left-4">
+                        <span class="bg-red-600 text-white text-[8px] md:text-[9px] font-black px-2 py-1 uppercase rounded-md shadow-lg">Motor</span>
                     </div>
+                </div>
 
-                    <form action="{{ route('cart.add') }}" method="POST" class="mt-auto">
-                        @csrf
-                        <input type="hidden" name="name" value="Honda Vario 160 CBS Type">
-                        <input type="hidden" name="price" value="26000000">
-                        <input type="hidden" name="image" value="http://127.0.0.1:8000/storage/brands/vario-160.png">
-                        <input type="hidden" name="category" value="Motor">
-
-                        <div class="flex gap-1.5 md:gap-2">
-                            <button type="submit" name="action" value="add_to_cart" class="flex-none w-9 h-9 md:w-11 md:h-11 border border-slate-200 text-slate-400 hover:text-red-600 hover:border-red-600 rounded-lg transition-all duration-300 flex items-center justify-center group">
-                                <i class="fa-solid fa-cart-shopping text-xs md:text-sm group-hover:scale-110 transition-transform"></i>
-                            </button>
-                            
-                            <button type="submit" formaction="{{ route('checkout.index') }}" name="action" value="buy_now" class="flex-grow bg-red-600 text-white text-[8px] md:text-[10px] font-black uppercase tracking-wider md:tracking-[0.2em] rounded-lg flex items-center justify-center hover:bg-slate-900 transition-all duration-300 group">
-                                <span>Buy Now</span>
-                                <i class="fa-solid fa-chevron-right ml-1 md:ml-2 text-[7px] md:text-[8px] group-hover:translate-x-1 transition-transform"></i>
-                            </button>
-                        </div>
-                    </form>              
+                {{-- Konten Text --}}
+                <div class="p-3 md:p-5 flex flex-col flex-grow">
+                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">{{ $motor->brand }}</p>
+                    <h3 class="text-slate-900 font-bold text-xs md:text-sm leading-tight mb-2 line-clamp-2 h-8 md:h-10">
+                        {{ $motor->model }}
+                    </h3>
+                    
+                    <p class="text-red-600 font-black text-sm md:text-lg italic tracking-tighter mb-4">
+                        Rp {{ number_format($motor->price_offer, 0, ',', '.') }}
+                    </p>
+                    
+                    <div class="mt-auto pt-3 border-t border-slate-50">
+                        <a href="{{ route('jual.show', $motor->id) }}" class="w-full bg-slate-900 text-white text-[9px] md:text-[10px] font-black uppercase tracking-widest py-2.5 md:py-3 rounded-xl flex items-center justify-center hover:bg-red-600 transition-all">
+                            Cek Unit
+                        </a>
+                    </div>
                 </div>
             </div>
+            @endforeach
 
-            {{-- Item 2: Sparepart --}}
-            <div class="group bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-xl transition-all duration-300 flex flex-col">
+            {{-- 2. LOOPING SPAREPART / AKSESORIS --}}
+            @foreach($products as $item)
+            <div class="group bg-white rounded-2xl md:rounded-[2rem] overflow-hidden border border-slate-200 hover:shadow-xl transition-all duration-300 flex flex-col h-full">
+                
+                {{-- Container Gambar (DIKUNCI) --}}
                 <div class="relative aspect-square overflow-hidden bg-slate-100">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAktiGFEme4cY5BsW478ciwpH3UEUUrTPg-w&s" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                    <div class="absolute top-2 left-2 md:top-3 md:left-3 bg-blue-600 text-white text-[8px] md:text-[9px] font-black px-1.5 py-0.5 md:px-2 md:py-1 uppercase rounded">Sparepart</div>
-                    <button class="absolute top-2 right-2 md:top-3 md:right-3 w-7 h-7 md:w-8 md:h-8 bg-white/80 backdrop-blur rounded-full flex items-center justify-center text-slate-400 hover:text-red-600 transition-colors">
-                        <i class="fa-regular fa-heart text-xs"></i>
-                    </button>
-                </div>
-                <div class="p-3 md:p-4 flex flex-col flex-grow">
-                    <h3 class="text-sm md:text-lg font-black text-slate-900 mb-0.5">Rp 185.000</h3>
-                    <p class="text-slate-600 text-[10px] md:text-sm leading-tight line-clamp-2 mb-3 h-8 md:h-10">Piston Kit Honda Vario 125</p>
+                    <img src="{{ Storage::url($item->image) }}" 
+                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                         alt="{{ $item->name }}">
                     
-                    <div class="flex items-center justify-between text-[8px] md:text-[10px] text-slate-400 font-bold uppercase tracking-tighter mt-auto mb-3">
-                        <span class="truncate mr-1"><i class="fa-solid fa-location-dot mr-1"></i> Jakarta Pusat</span>
-                        <span class="whitespace-nowrap">2 Jam Lalu</span>
+                    <div class="absolute top-2 left-2 md:top-4 md:left-4">
+                        <span class="{{ $item->category_id == 1 ? 'bg-blue-600' : 'bg-orange-500' }} text-white text-[8px] md:text-[9px] font-black px-2 py-1 uppercase rounded-md shadow-lg">
+                            {{ $item->category->name ?? 'Part' }}
+                        </span>
                     </div>
+                </div>
 
-                    <form action="{{ route('cart.add') }}" method="POST" class="mt-auto">
-                        @csrf
-                        <input type="hidden" name="name" value="Piston Kit Honda Vario 125">
-                        <input type="hidden" name="price" value="185000">
-                        <input type="hidden" name="image" value="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAktiGFEme4cY5BsW478ciwpH3UEUUrTPg-w&s">
-                        <input type="hidden" name="category" value="Sparepart">
-
-                        <div class="flex gap-1.5 md:gap-2">
-                            <button type="submit" name="action" value="add_to_cart" class="flex-none w-9 h-9 md:w-11 md:h-11 border border-slate-200 text-slate-400 hover:text-red-600 hover:border-red-600 rounded-lg transition-all duration-300 flex items-center justify-center group">
-                                <i class="fa-solid fa-cart-shopping text-xs md:text-sm group-hover:scale-110 transition-transform"></i>
+                {{-- Konten Text --}}
+                <div class="p-3 md:p-5 flex flex-col flex-grow">
+                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Original Part</p>
+                    <h3 class="text-slate-900 font-bold text-xs md:text-sm leading-tight mb-2 line-clamp-2 h-8 md:h-10">
+                        {{ $item->name }}
+                    </h3>
+                    
+                    <p class="text-red-600 font-black text-sm md:text-lg italic tracking-tighter mb-4">
+                        Rp {{ number_format($item->price, 0, ',', '.') }}
+                    </p>
+                    
+                    <div class="mt-auto pt-3 border-t border-slate-50 flex gap-2">
+                        <form action="{{ route('cart.add') }}" method="POST" class="flex-none">
+                            @csrf
+                            <input type="hidden" name="product_id" value="{{ $item->id }}">
+                            <button type="submit" class="w-9 h-9 md:w-11 md:h-11 border-2 border-slate-100 text-slate-400 hover:text-red-600 hover:border-red-600 rounded-xl transition-all flex items-center justify-center">
+                                <i class="fa-solid fa-cart-plus text-xs md:text-sm"></i>
                             </button>
-                            
-                            <button type="submit" formaction="{{ route('checkout.index') }}" name="action" value="buy_now" class="flex-grow bg-red-600 text-white text-[8px] md:text-[10px] font-black uppercase tracking-wider md:tracking-[0.2em] rounded-lg flex items-center justify-center hover:bg-slate-900 transition-all duration-300 group">
-                                <span>Buy Now</span>
-                                <i class="fa-solid fa-chevron-right ml-1 md:ml-2 text-[7px] md:text-[8px] group-hover:translate-x-1 transition-transform"></i>
-                            </button>
-                        </div>
-                    </form>              
+                        </form>
+                        <a href="#" class="flex-grow bg-slate-100 text-slate-900 text-[9px] md:text-[10px] font-black uppercase tracking-widest rounded-xl flex items-center justify-center hover:bg-slate-900 hover:text-white transition-all">
+                            Detail
+                        </a>
+                    </div>
                 </div>
             </div>
-
-            {{-- Item 3: Aksesoris --}}
-            <div class="group bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-xl transition-all duration-300 flex flex-col">
-                <div class="relative aspect-square overflow-hidden bg-slate-100">
-                    <img src="https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//93/MTA-53931602/michelin_velg-rcb-racing-boy-yamaha-jupiter-z-palang-5-type-sp-522-gold-1-set_full01.jpg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                    <div class="absolute top-2 left-2 md:top-3 md:left-3 bg-orange-500 text-white text-[8px] md:text-[9px] font-black px-1.5 py-0.5 md:px-2 md:py-1 uppercase rounded">Aksesoris</div>
-                    <button class="absolute top-2 right-2 md:top-3 md:right-3 w-7 h-7 md:w-8 md:h-8 bg-white/80 backdrop-blur rounded-full flex items-center justify-center text-slate-400 hover:text-red-600 transition-colors">
-                        <i class="fa-regular fa-heart text-xs"></i>
-                    </button>
-                </div>
-                <div class="p-3 md:p-4 flex flex-col flex-grow">
-                    <h3 class="text-sm md:text-lg font-black text-slate-900 mb-0.5">Rp 2.100.000</h3>
-                    <p class="text-slate-600 text-[10px] md:text-sm leading-tight line-clamp-2 mb-3 h-8 md:h-10">Velg RCB SP522 Gold</p>
-                    
-                    <div class="flex items-center justify-between text-[8px] md:text-[10px] text-slate-400 font-bold uppercase tracking-tighter mt-auto mb-3">
-                        <span class="truncate mr-1"><i class="fa-solid fa-location-dot mr-1"></i> Jakarta Pusat</span>
-                        <span class="whitespace-nowrap">Kemarin</span>
-                    </div>
-
-                    <form action="{{ route('cart.add') }}" method="POST" class="mt-auto">
-                        @csrf
-                        <input type="hidden" name="name" value="Velg RCB SP522 Gold">
-                        <input type="hidden" name="price" value="21000000">
-                        <input type="hidden" name="image" value="https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//93/MTA-53931602/michelin_velg-rcb-racing-boy-yamaha-jupiter-z-palang-5-type-sp-522-gold-1-set_full01.jpg">
-                        <input type="hidden" name="category" value="Aksesoris">
-
-                        <div class="flex gap-1.5 md:gap-2">
-                            <button type="submit" name="action" value="add_to_cart" class="flex-none w-9 h-9 md:w-11 md:h-11 border border-slate-200 text-slate-400 hover:text-red-600 hover:border-red-600 rounded-lg transition-all duration-300 flex items-center justify-center group">
-                                <i class="fa-solid fa-cart-shopping text-xs md:text-sm group-hover:scale-110 transition-transform"></i>
-                            </button>
-                            
-                            <button type="submit" formaction="{{ route('checkout.index') }}" name="action" value="buy_now" class="flex-grow bg-red-600 text-white text-[8px] md:text-[10px] font-black uppercase tracking-wider md:tracking-[0.2em] rounded-lg flex items-center justify-center hover:bg-slate-900 transition-all duration-300 group">
-                                <span>Buy Now</span>
-                                <i class="fa-solid fa-chevron-right ml-1 md:ml-2 text-[7px] md:text-[8px] group-hover:translate-x-1 transition-transform"></i>
-                            </button>
-                        </div>
-                    </form>              
-                </div>
-            </div>
-
-            {{-- Item 4: Unit Motor --}}
-            <div class="group bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-xl transition-all duration-300 flex flex-col">
-                <div class="relative aspect-square overflow-hidden bg-slate-100">
-                    <img src="http://127.0.0.1:8000/storage/brands/cbr-250rr.png" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                    <div class="absolute top-2 left-2 md:top-3 md:left-3 bg-red-600 text-white text-[8px] md:text-[9px] font-black px-1.5 py-0.5 md:px-2 md:py-1 uppercase rounded">Motor</div>
-                    <button class="absolute top-2 right-2 md:top-3 md:right-3 w-7 h-7 md:w-8 md:h-8 bg-white/80 backdrop-blur rounded-full flex items-center justify-center text-slate-400 hover:text-red-600 transition-colors">
-                        <i class="fa-regular fa-heart text-xs"></i>
-                    </button>
-                </div>
-                <div class="p-3 md:p-4 flex flex-col flex-grow">
-                    <h3 class="text-sm md:text-lg font-black text-slate-900 mb-0.5">Rp 83.760.000</h3>
-                    <p class="text-slate-600 text-[10px] md:text-sm leading-tight line-clamp-2 mb-3 h-8 md:h-10">Honda CBR 250RR - SP QS Type</p>
-                    
-                    <div class="flex items-center justify-between text-[8px] md:text-[10px] text-slate-400 font-bold uppercase tracking-tighter mt-auto mb-3">
-                        <span class="truncate mr-1"><i class="fa-solid fa-location-dot mr-1"></i> Jakarta Pusat</span>
-                        <span class="whitespace-nowrap">1 Jam Lalu</span>
-                    </div>
-
-                    <form action="{{ route('cart.add') }}" method="POST" class="mt-auto">
-                        @csrf
-                        <input type="hidden" name="name" value="Honda CBR 250RR - SP QS Type">
-                        <input type="hidden" name="price" value="83760000">
-                        <input type="hidden" name="image" value="http://127.0.0.1:8000/storage/brands/cbr-250rr.png">
-                        <input type="hidden" name="category" value="Motor">
-
-                        <div class="flex gap-1.5 md:gap-2">
-                            <button type="submit" name="action" value="add_to_cart" class="flex-none w-9 h-9 md:w-11 md:h-11 border border-slate-200 text-slate-400 hover:text-red-600 hover:border-red-600 rounded-lg transition-all duration-300 flex items-center justify-center group">
-                                <i class="fa-solid fa-cart-shopping text-xs md:text-sm group-hover:scale-110 transition-transform"></i>
-                            </button>
-                            
-                            <button type="submit" formaction="{{ route('checkout.index') }}" name="action" value="buy_now" class="flex-grow bg-red-600 text-white text-[8px] md:text-[10px] font-black uppercase tracking-wider md:tracking-[0.2em] rounded-lg flex items-center justify-center hover:bg-slate-900 transition-all duration-300 group">
-                                <span>Buy Now</span>
-                                <i class="fa-solid fa-chevron-right ml-1 md:ml-2 text-[7px] md:text-[8px] group-hover:translate-x-1 transition-transform"></i>
-                            </button>
-                        </div>
-                    </form>              
-                 </div>
-            </div>
+            @endforeach
 
         </div>
     </div>

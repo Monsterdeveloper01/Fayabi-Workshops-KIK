@@ -27,8 +27,9 @@
                     <p class="text-white/70 text-xs md:text-sm mt-1 font-bold italic">Kembalikan kilau motor Anda dengan pencucian standar professional.</p>
                 </div>
 
-                <form action="#" method="POST" class="p-6 md:p-8 space-y-6">
+               <form action="{{ route('booking.store') }}" method="POST" class="p-6 md:p-8 space-y-6">
                     @csrf
+                    <input type="hidden" name="service_type" value="cuci">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div class="space-y-2">
                             <label class="block text-[10px] font-black text-white uppercase tracking-widest">Nama Lengkap</label>

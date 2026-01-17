@@ -1,200 +1,222 @@
 @extends('layouts.app')
-
 @section('content')
+{{-- Alpine.js untuk Image Preview & UI Logic --}}
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-<div class="min-h-screen pb-20 bg-slate-50">
+<main class="min-h-screen bg-slate-950 py-12 relative overflow-hidden">
+    
+    {{-- Elemen Dekoratif Background --}}
+    <div class="absolute top-0 -left-20 w-96 h-96 bg-amber-600/10 rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="absolute bottom-0 -right-20 w-96 h-96 bg-red-600/10 rounded-full blur-[120px] pointer-events-none"></div>
+    
+    {{-- Background Grid Pattern --}}
+    <div class="absolute inset-0 opacity-[0.03] pointer-events-none" 
+         style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 30px 30px;">
+    </div>
 
-    <div class="bg-slate-900 pt-12 pb-20 relative overflow-hidden border-b-4 border-amber-500 shadow-[inset_0_6px_10px_-4px_rgba(0,0,0,0.6)] z-20">
-        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#fbbf24 1px, transparent 1px); background-size: 24px 24px;"></div>
+    <div class="container mx-auto px-4 relative z-10">
         
-        <div class="container mx-auto px-4 relative z-10 text-center">
-            <div class="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/30 rounded-full px-4 py-1 mb-6">
+        {{-- Header Section --}}
+        <div class="max-w-4xl mx-auto text-center mb-12">
+            <div class="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 px-4 py-1.5 rounded-full mb-6">
                 <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
-                <span class="text-amber-500 text-xs font-bold uppercase tracking-widest">Proses Cepat & Aman</span>
+                <span class="text-amber-500 text-[10px] font-black uppercase tracking-[0.2em]">Fayabi Marketplace</span>
             </div>
-            <h1 class="text-3xl md:text-5xl font-black text-white italic uppercase tracking-tighter mb-4">
-                Jual Motormu, <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">Langsung Cair.</span>
+            <h1 class="text-4xl md:text-6xl font-black text-white italic uppercase tracking-tighter mb-4">
+                Jual Motormu <span class="text-amber-500">Sekarang.</span>
             </h1>
-            <p class="text-slate-400 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
-                Dapatkan penawaran harga terbaik sesuai kondisi pasar. Kami menerima segala jenis motor Jepang (Honda, Yamaha, Suzuki, Kawasaki).
+            <p class="text-slate-400 text-sm md:text-base max-w-2xl mx-auto leading-relaxed font-medium">
+                Dapatkan penawaran harga terbaik. Kami membantu Anda memasarkan unit ke jaringan kolektor dan pembeli potensial kami.
             </p>
         </div>
-    </div>
 
-    <div class="container mx-auto px-4 -mt-10 relative z-30 py-12">
-        <div class="flex flex-col lg:flex-row gap-8">
-            
-            <div class="w-full lg:w-2/3">
-                <form action="#" method="POST" enctype="multipart/form-data" class="bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden">
-                    @csrf
-                    
-                    <div class="bg-slate-50 border-b border-slate-100 p-6 flex items-center justify-between">
-                        <h2 class="text-lg font-black text-slate-800 uppercase italic flex items-center gap-2">
-                            <i class="fa-solid fa-clipboard-list text-amber-500"></i> Form Data Motor
-                        </h2>
-                        <span class="text-xs text-slate-400 font-medium">*Wajib diisi lengkap</span>
-                    </div>
-
-                    <div class="p-6 md:p-8 space-y-8">
-
+        <div class="max-w-5xl mx-auto">
+            {{-- DAFTAR UNIT DIJUAL SAYA (Hanya muncul jika user sudah punya data) --}}
+            {{-- Pastikan nama variabelnya $mySales (sama dengan yang di compact) --}}
+@if(isset($mySales) && $mySales->count() > 0)
+    <div class="mt-20 border-t border-white/10 pt-16 py-20">
+        <h3 class="text-2xl font-black text-white uppercase italic mb-8">
+            Unit <span class="text-amber-500">Dijual Saya</span>
+        </h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            @foreach($mySales as $sale)
+                {{-- Isi card motor kamu di sini --}}
+                <div class="bg-slate-900/40 border border-white/10 rounded-[2rem] p-6 flex items-center justify-between">
+                    <div class="flex items-center gap-4">
+                        <img src="{{ Storage::url($sale->image) }}" class="w-16 h-16 rounded-2xl object-cover">
                         <div>
-                            <h3 class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4 border-b border-slate-100 pb-2">1. Identitas Kendaraan</h3>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                
-                                <div>
-                                    <label class="block text-sm font-bold text-slate-700 mb-2">Merek Motor</label>
-                                    <select class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all text-slate-700 cursor-pointer">
-                                        <option value="" disabled selected>Pilih Merek...</option>
-                                        <option value="Honda">Honda</option>
-                                        <option value="Yamaha">Yamaha</option>
-                                        <option value="Suzuki">Suzuki</option>
-                                        <option value="Kawasaki">Kawasaki</option>
-                                        <option value="Lainnya">Lainnya</option>
-                                    </select>
-                                </div>
-
-                                <div>
-                                    <label class="block text-sm font-bold text-slate-700 mb-2">Tipe / Model</label>
-                                    <input type="text" placeholder="Contoh: Vario 160 ABS" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:border-amber-500 transition-all">
-                                </div>
-
-                                <div>
-                                    <label class="block text-sm font-bold text-slate-700 mb-2">Tahun Pembuatan</label>
-                                    <input type="number" placeholder="2022" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:border-amber-500 transition-all">
-                                </div>
-
-                                <div>
-                                    <label class="block text-sm font-bold text-slate-700 mb-2">Jarak Tempuh (KM)</label>
-                                    <div class="relative">
-                                        <input type="number" placeholder="15000" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:border-amber-500 transition-all">
-                                        <span class="absolute right-4 top-3 text-slate-400 text-sm font-bold">KM</span>
-                                    </div>
-                                </div>
-                            </div>
+                            <h4 class="text-white font-bold text-sm uppercase">{{ $sale->model }}</h4>
+                            <p class="text-amber-500 text-[10px] font-black uppercase italic">Status: {{ $sale->status }}</p>
                         </div>
-
-                        <div x-data="{ photoPreview: null }">
-                            <h3 class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4 border-b border-slate-100 pb-2">2. Kondisi & Foto</h3>
-                            
-                            <div class="mb-6">
-                                <label class="block text-sm font-bold text-slate-700 mb-2">Deskripsi Kondisi</label>
-                                <textarea rows="4" placeholder="Jelaskan kondisi mesin, body, pajak hidup/mati, atau modifikasi yang sudah terpasang..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:border-amber-500 transition-all"></textarea>
-                            </div>
-
-                            <div>
-                                <label class="block text-sm font-bold text-slate-700 mb-2">Upload Foto Motor (Utama)</label>
-                                
-                                <div class="relative w-full h-48 border-2 border-dashed border-slate-300 rounded-2xl bg-slate-50 hover:bg-amber-50 hover:border-amber-400 transition-all flex flex-col items-center justify-center cursor-pointer group overflow-hidden">
-                                    
-                                    <input type="file" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" 
-                                           @change="photoPreview = URL.createObjectURL($event.target.files[0])">
-                                    
-                                    <div x-show="!photoPreview" class="text-center p-4">
-                                        <div class="w-12 h-12 bg-white rounded-full shadow-sm flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
-                                            <i class="fa-solid fa-camera text-slate-400 group-hover:text-amber-500"></i>
-                                        </div>
-                                        <p class="text-sm font-bold text-slate-600 group-hover:text-amber-600">Klik untuk upload foto</p>
-                                        <p class="text-xs text-slate-400 mt-1">Format JPG/PNG, Maks 5MB</p>
-                                    </div>
-
-                                    <img x-show="photoPreview" :src="photoPreview" class="absolute inset-0 w-full h-full object-cover">
-                                    
-                                    <div x-show="photoPreview" class="absolute bottom-3 right-3 bg-black/50 text-white text-xs px-3 py-1 rounded-full backdrop-blur-sm z-20">
-                                        Ganti Foto
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <h3 class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4 border-b border-slate-100 pb-2">3. Harga & Kontak</h3>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                
-                                <div>
-                                    <label class="block text-sm font-bold text-slate-700 mb-2">Harga Penawaran Anda</label>
-                                    <div class="relative">
-                                        <span class="absolute left-4 top-3 text-slate-800 font-bold">Rp</span>
-                                        <input type="number" placeholder="15.000.000" class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:border-amber-500 font-bold text-slate-800 text-lg transition-all">
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <label class="block text-sm font-bold text-slate-700 mb-2">Nomor WhatsApp</label>
-                                    <div class="relative">
-                                        <span class="absolute left-4 top-3 text-slate-500"><i class="fa-brands fa-whatsapp text-lg"></i></span>
-                                        <input type="tel" placeholder="0812xxxxxxx" class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-12 pr-4 py-3 focus:outline-none focus:border-amber-500 transition-all">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
-
-                    <div class="bg-slate-50 p-6 border-t border-slate-100 flex flex-col md:flex-row items-center justify-between gap-4">
-                        <p class="text-xs text-slate-400 text-center md:text-left">
-                            Dengan mengirim formulir ini, Anda menyetujui kebijakan privasi kami.
-                        </p>
-                        <button type="button" class="w-full md:w-auto bg-amber-500 hover:bg-amber-600 text-white font-black uppercase tracking-wider py-3 px-8 rounded-xl shadow-lg shadow-amber-500/30 transition-transform transform hover:-translate-y-1 active:scale-95">
-                            Kirim Penawaran <i class="fa-solid fa-paper-plane ml-2"></i>
-                        </button>
-                    </div>
-
-                </form>
-            </div>
-
-            <div class="w-full lg:w-1/3 space-y-6">
-                
-                <div class="bg-slate-900 rounded-3xl p-6 text-white relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-32 h-32 bg-amber-500 rounded-full blur-[60px] opacity-20"></div>
-                    
-                    <h3 class="text-xl font-black italic uppercase mb-6">Kenapa Jual Disini?</h3>
-                    
-                    <ul class="space-y-4">
-                        <li class="flex items-start gap-3">
-                            <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-amber-500 shrink-0">
-                                <i class="fa-solid fa-bolt"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-sm">Proses Cepat</h4>
-                                <p class="text-xs text-slate-400 mt-1">Estimasi harga dalam 1x24 jam setelah data diterima.</p>
-                            </div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-amber-500 shrink-0">
-                                <i class="fa-solid fa-hand-holding-dollar"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-sm">Harga Kompetitif</h4>
-                                <p class="text-xs text-slate-400 mt-1">Kami berani adu harga sesuai kondisi motor dan pasaran.</p>
-                            </div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-amber-500 shrink-0">
-                                <i class="fa-solid fa-file-shield"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-sm">Dokumen Aman</h4>
-                                <p class="text-xs text-slate-400 mt-1">Proses balik nama dan surat-surat kami bantu urus.</p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm text-center">
-                    <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-400">
-                        <i class="fa-solid fa-headset text-2xl"></i>
-                    </div>
-                    <h3 class="font-bold text-slate-800 mb-1">Butuh Bantuan?</h3>
-                    <p class="text-xs text-slate-500 mb-4">Bingung soal harga pasaran motormu? Chat admin kami dulu.</p>
-                    <a href="#" class="inline-flex items-center justify-center gap-2 w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2.5 rounded-xl transition-colors">
-                        <i class="fa-brands fa-whatsapp text-lg"></i> Chat via WhatsApp
+                    <a href="{{ route('jual.show', $sale->id) }}" class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-white hover:bg-amber-600 transition-all">
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
                     </a>
                 </div>
-
+            @endforeach
+        </div>
+    </div>
+@endif
+            {{-- Notifikasi Sukses --}}
+            @if (session('status'))
+            <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)"
+                 class="mb-8 bg-green-500/10 border border-green-500/50 text-green-400 px-6 py-4 rounded-2xl flex items-center gap-3 shadow-[0_0_30px_rgba(34,197,94,0.1)]">
+                <i class="fa-solid fa-circle-check"></i>
+                <span class="font-bold text-sm uppercase tracking-wide">{{ session('status') }}</span>
             </div>
+            @endif
+
+            
+
+            <form action="{{ route('jual.store') }}" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-20">
+                @csrf
+
+                {{-- KOLOM KIRI: FORM INPUT (2/3) --}}
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="bg-slate-900/40 backdrop-blur-2xl border border-white/10 rounded-[2.5rem] p-8 md:p-10">
+                        
+                        <div class="space-y-10">
+                            {{-- Step 1: Identitas --}}
+                            <div class="space-y-6">
+                                <h3 class="text-white font-black uppercase italic tracking-wider border-l-4 border-amber-500 pl-3 text-sm">
+                                    1. Spesifikasi Kendaraan
+                                </h3>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div class="space-y-2">
+                                        <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Merek Motor</label>
+                                        <select name="brand" required class="w-full bg-white/5 border-2 border-white/10 text-white px-5 py-4 rounded-2xl text-sm font-bold focus:outline-none focus:border-amber-500 transition-all appearance-none cursor-pointer">
+                                            <option value="" class="bg-slate-900">Pilih Merek</option>
+                                            <option value="Honda" class="bg-slate-900">Honda</option>
+                                            <option value="Yamaha" class="bg-slate-900">Yamaha</option>
+                                            <option value="Suzuki" class="bg-slate-900">Suzuki</option>
+                                            <option value="Kawasaki" class="bg-slate-900">Kawasaki</option>
+                                            <option value="Lainnya" class="bg-slate-900">Lainnya</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="space-y-2">
+                                        <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Tipe / Model</label>
+                                        <input type="text" name="model" value="{{ old('model') }}" placeholder="Contoh: Ninja ZX-25R" required
+                                            class="w-full bg-white/5 border-2 border-white/10 text-white px-5 py-4 rounded-2xl text-sm font-bold focus:outline-none focus:border-amber-500 transition-all placeholder:text-slate-800">
+                                    </div>
+
+                                    <div class="space-y-2">
+                                        <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Tahun</label>
+                                        <input type="number" name="year" value="{{ old('year') }}" placeholder="2022" required
+                                            class="w-full bg-white/5 border-2 border-white/10 text-white px-5 py-4 rounded-2xl text-sm font-bold focus:outline-none focus:border-amber-500 transition-all">
+                                    </div>
+
+                                    <div class="space-y-2">
+                                        <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Odometer (KM)</label>
+                                        <div class="relative">
+                                            <input type="number" name="mileage" value="{{ old('mileage') }}" placeholder="12000" required
+                                                class="w-full bg-white/5 border-2 border-white/10 text-white px-5 py-4 rounded-2xl text-sm font-bold focus:outline-none focus:border-amber-500 transition-all">
+                                            <span class="absolute right-5 top-4 text-[10px] font-black text-slate-500 uppercase">KM</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- Step 2: Kondisi & Foto --}}
+                            <div class="space-y-6">
+                                <h3 class="text-white font-black uppercase italic tracking-wider border-l-4 border-amber-500 pl-3 text-sm">
+                                    2. Detail Kondisi & Visual
+                                </h3>
+
+                                <div class="space-y-2">
+                                    <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Deskripsi Kondisi</label>
+                                    <textarea name="description" rows="4" placeholder="Jelaskan kondisi mesin, surat-surat, Pajak, dan Modifikasi..." required
+                                        class="w-full bg-white/5 border-2 border-white/10 text-white px-5 py-4 rounded-2xl text-sm font-bold focus:outline-none focus:border-amber-500 transition-all placeholder:text-slate-800">{{ old('description') }}</textarea>
+                                </div>
+
+                                <div x-data="{ photoPreview: null }" class="space-y-2">
+                                    <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Foto Utama Kendaraan</label>
+                                    <div class="relative group">
+                                        <div class="w-full h-56 rounded-3xl border-2 border-dashed border-white/10 bg-white/5 flex flex-col items-center justify-center overflow-hidden transition-all group-hover:border-amber-500/50">
+                                            <input type="file" name="image" required class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20"
+                                                @change="photoPreview = URL.createObjectURL($event.target.files[0])">
+                                            <template x-if="!photoPreview">
+                                                <div class="text-center">
+                                                    <i class="fa-solid fa-camera text-3xl text-slate-700 mb-2"></i>
+                                                    <p class="text-[10px] font-black text-slate-600 uppercase tracking-widest">Klik Untuk Upload</p>
+                                                </div>
+                                            </template>
+                                            <template x-if="photoPreview">
+                                                <img :src="photoPreview" class="w-full h-full object-cover">
+                                            </template>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- Step 3: Harga --}}
+                            <div class="space-y-6">
+                                <h3 class="text-white font-black uppercase italic tracking-wider border-l-4 border-amber-500 pl-3 text-sm">
+                                    3. Harga & Kontak
+                                </h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div class="space-y-2">
+                                        <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Harga Penawaran (IDR)</label>
+                                        <div class="relative">
+                                            <span class="absolute left-5 top-4 text-xs font-black text-amber-500 uppercase italic">Rp</span>
+                                            <input type="number" name="price_offer" value="{{ old('price_offer') }}" placeholder="25000000" required
+                                                class="w-full bg-white/5 border-2 border-white/10 text-amber-500 pl-12 pr-5 py-4 rounded-2xl text-xl font-black focus:outline-none focus:border-amber-500 transition-all tracking-tighter italic">
+                                        </div>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">WhatsApp Aktif</label>
+                                        <div class="relative">
+                                            <span class="absolute left-5 top-4 text-slate-600"><i class="fa-brands fa-whatsapp text-lg"></i></span>
+                                            <input type="tel" name="whatsapp" value="{{ old('whatsapp') }}" placeholder="0812XXXXXXXX" required
+                                                class="w-full bg-white/5 border-2 border-white/10 text-white pl-12 pr-5 py-4 rounded-2xl text-sm font-bold focus:outline-none focus:border-amber-500 transition-all">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- KOLOM KANAN: INFO & SUBMIT --}}
+                <div class="space-y-6">
+                    <div class="bg-amber-500 rounded-[2.5rem] p-8 shadow-[0_20px_50px_rgba(245,158,11,0.2)]">
+                        <h3 class="text-slate-950 font-black uppercase italic text-xl mb-6 tracking-tighter">Kenapa Jual di Fayabi?</h3>
+                        <ul class="space-y-5">
+                            <li class="flex items-start gap-4 text-slate-950">
+                                <i class="fa-solid fa-bolt mt-1 text-xs"></i>
+                                <p class="text-[11px] font-bold leading-tight">Proses verifikasi cepat di hadapan pembeli potensial.</p>
+                            </li>
+                            <li class="flex items-start gap-4 text-slate-950">
+                                <i class="fa-solid fa-hand-holding-dollar mt-1 text-xs"></i>
+                                <p class="text-[11px] font-bold leading-tight">Penilaian harga jujur sesuai kondisi aktual motor.</p>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-slate-900/40 border border-white/10 rounded-[2.5rem] p-8">
+                        <p class="text-slate-500 text-[10px] leading-relaxed font-bold uppercase tracking-wider">
+                            <i class="fa-solid fa-circle-info text-amber-500 mr-2"></i>
+                            Verifikasi data dilakukan <span class="text-white">maksimal 24 Jam</span>. Kami akan menghubungi via WhatsApp.
+                        </p>
+                    </div>
+
+                    <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-black py-6 rounded-[2rem] uppercase tracking-[0.3em] text-xs shadow-xl transition-all transform hover:-translate-y-2 active:scale-95 flex items-center justify-center gap-3 group">
+                        <span>Kirim Penawaran</span>
+                        <i class="fa-solid fa-paper-plane group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
+                    </button>
+                </div>
+            </form>
+
+            
 
         </div>
     </div>
-</div>
+</main>
+
+<style>
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    select::-ms-expand { display: none; }
+</style>
 @endsection
