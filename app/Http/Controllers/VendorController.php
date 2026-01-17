@@ -5,12 +5,52 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Models\Order;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class VendorController extends Controller
 {
+    public function orders()
+    {
+        $vendorId = Auth::id();
+
+        // Ambil Order yang memiliki Item produk milik Vendor ini
+        $orders = Order::whereHas('items.product', function($query) use ($vendorId) {
+            $query->where('user_id', $vendorId);
+        })
+        ->with(['user', 'items.product']) // Eager Load biar cepat
+        ->latest()
+        ->get();
+
+        return view('vendor.orders.index', compact('orders'));
+    }
+
+    // 2. DETAIL PESANAN
+    public function showOrder($id)
+    {
+        $vendorId = Auth::id();
+
+        // Ambil Order spesifik
+        $order = Order::with(['user', 'items.product'])->findOrFail($id);
+
+        // FILTER ITEM: Hanya tampilkan item milik vendor ini saja
+        // (Order mungkin berisi barang vendor lain, kita harus sembunyikan itu)
+        $vendorItems = $order->items->filter(function($item) use ($vendorId) {
+            return $item->product->user_id == $vendorId;
+        });
+
+        // Cek keamanan: Kalau gak ada item vendor ini di order itu, tolak akses
+        if($vendorItems->isEmpty()) {
+            abort(403, 'Pesanan ini tidak mengandung produk Anda.');
+        }
+
+        // Hitung Pendapatan Vendor dari Order ini
+        $vendorTotal = $vendorItems->sum(fn($item) => $item->price * $item->qty);
+
+        return view('vendor.orders.show', compact('order', 'vendorItems', 'vendorTotal'));
+    }
     // 1. Halaman Dashboard Vendor
     public function index()
     {
