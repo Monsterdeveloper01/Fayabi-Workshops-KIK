@@ -25,6 +25,12 @@ class ProfileUpdateRequest extends FormRequest
                 'max:255',
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],
+            'recipient_name' => ['nullable', 'string', 'max:255'],
+        'phone_number'   => ['nullable', 'numeric'],
+        'address_line'   => ['nullable', 'string'],
+        'city'           => ['nullable', 'string', 'max:255'],
+        'province'       => ['nullable', 'string', 'max:255'],
+        'postal_code'    => ['nullable', 'numeric'],
         ];
     }
 }

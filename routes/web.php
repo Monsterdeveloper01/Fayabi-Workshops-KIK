@@ -48,14 +48,13 @@ Route::get('/', function () {
 Route::middleware(['auth'])->group(function () {
 
     // --- AREA KHUSUS VENDOR ---
-// Kita tambahkan middleware tambahan agar User biasa gak bisa masuk sini
-Route::middleware(['auth', 'role:vendor'])->prefix('vendor')->name('vendor.')->group(function () {
-    Route::get('/my-products', [VendorController::class, 'products'])->name('products');
-    Route::get('/dashboard', [VendorController::class, 'index'])->name('dashboard');
-    Route::get('/create-product', [VendorController::class, 'create'])->name('create');
-    Route::post('/store-product', [VendorController::class, 'store'])->name('store');
+    Route::middleware(['auth', 'role:vendor'])->prefix('vendor')->name('vendor.')->group(function () {
+        Route::get('/my-products', [VendorController::class, 'products'])->name('products');
+        Route::get('/dashboard', [VendorController::class, 'index'])->name('dashboard');
+        Route::get('/create-product', [VendorController::class, 'create'])->name('create');
+        Route::post('/store-product', [VendorController::class, 'store'])->name('store');
 
-});
+    });
 
     // --- Menu Utama (Aksesoris & Sparepart) ---
    Route::get('/aksesoris', [AksesorisController::class, 'index'])->name('aksesoris.index');
@@ -89,14 +88,12 @@ Route::middleware(['auth', 'role:vendor'])->prefix('vendor')->name('vendor.')->g
     });
 
     // --- Transaksi (Cart & Checkout) ---
-    Route::get('/checkout', function () {
-        $cartItems = session()->get('cart', []); 
-        return view('checkout.index', compact('cartItems'));
-    })->name('checkout.index');
+   Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+    Route::delete('/cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
 
-    Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout.process');
-    Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
-    Route::delete('/cart/remove/{index}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+    // Checkout
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+    Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('checkout.process');
 
     // --- News (Opsional: Kalau mau baca berita harus login) ---
   
