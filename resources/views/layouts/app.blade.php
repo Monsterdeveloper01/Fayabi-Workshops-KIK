@@ -127,7 +127,7 @@
                        <i class="fa-solid fa-chart-pie"></i> Ringkasan
                     </a>
 
-                    <a href="{{ route('vendor.dashboard') }}" 
+                    <a href="{{ route('vendor.products') }}" 
                        class="text-slate-400 hover:text-white hover:bg-white/5 px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center gap-2">
                        <i class="fa-solid fa-box"></i> Produk Saya
                     </a>

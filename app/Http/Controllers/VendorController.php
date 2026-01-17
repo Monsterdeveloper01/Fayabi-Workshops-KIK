@@ -27,6 +27,49 @@ class VendorController extends Controller
         return view('vendor.create', compact('categories'));
     }
 
+    public function products(Request $request)
+{
+    // 1. Base Query: Ambil produk milik vendor yang login
+    $query = Product::where('user_id', Auth::id());
+
+    // 2. Logika Filter Statistik
+    $filter = $request->query('filter');
+    $title = 'Semua Produk'; // Judul default
+
+    switch ($filter) {
+        case 'termahal':
+            $query->orderBy('price', 'desc');
+            $title = 'Produk Sultan (Termahal)';
+            break;
+            
+        case 'termurah':
+            $query->orderBy('price', 'asc');
+            $title = 'Produk Hemat (Termurah)';
+            break;
+
+        case 'terlaku':
+            // Asumsi: Stok paling sedikit = Paling Laku (Sementara, sebelum ada tabel transaksi)
+            $query->orderBy('stock', 'asc'); 
+            $title = 'Paling Laku / Stok Menipis';
+            break;
+
+        case 'jarang_dibeli':
+            // Asumsi: Stok masih banyak & update terakhir sudah lama
+            $query->orderBy('stock', 'desc')->orderBy('updated_at', 'asc');
+            $title = 'Stok Menumpuk (Jarang Dibeli)';
+            break;
+
+        default:
+            $query->latest(); // Default: Terbaru
+            break;
+    }
+
+    // 3. Eksekusi dengan Pagination (12 produk per halaman)
+    $products = $query->paginate(12)->withQueryString();
+
+    return view('vendor.products', compact('products', 'filter', 'title'));
+}
+
     // 3. Proses Simpan Produk ke Database
     public function store(Request $request)
     {

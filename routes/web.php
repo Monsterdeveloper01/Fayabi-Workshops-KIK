@@ -5,7 +5,9 @@ use app\Http\Controllers;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SparepartController; // Jangan lupa import di atas
 use App\Http\Controllers\VendorController;
+use App\Http\Controllers\AksesorisController; // <--- Import ini di atas
 
 Route::get('/', function () {
     return view('welcome');
@@ -48,7 +50,7 @@ Route::middleware(['auth'])->group(function () {
     // --- AREA KHUSUS VENDOR ---
 // Kita tambahkan middleware tambahan agar User biasa gak bisa masuk sini
 Route::middleware(['auth', 'role:vendor'])->prefix('vendor')->name('vendor.')->group(function () {
-    
+    Route::get('/my-products', [VendorController::class, 'products'])->name('products');
     Route::get('/dashboard', [VendorController::class, 'index'])->name('dashboard');
     Route::get('/create-product', [VendorController::class, 'create'])->name('create');
     Route::post('/store-product', [VendorController::class, 'store'])->name('store');
@@ -56,13 +58,9 @@ Route::middleware(['auth', 'role:vendor'])->prefix('vendor')->name('vendor.')->g
 });
 
     // --- Menu Utama (Aksesoris & Sparepart) ---
-    Route::get('/aksesoris', function () {
-        return view('aksesoris.index');
-    });
+   Route::get('/aksesoris', [AksesorisController::class, 'index'])->name('aksesoris.index');
 
-    Route::get('/sparepart', function () {
-        return view('sparepart.index');
-    });
+    Route::get('/sparepart', [SparepartController::class, 'index'])->name('sparepart.index');
 
     // --- Menu Jasa ---
     Route::get('/service_motor', function () {
