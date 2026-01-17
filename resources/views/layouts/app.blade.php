@@ -222,11 +222,19 @@
                         <a href="{{ url('/profile_setting') }}" class="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
                             <i class="fa-solid fa-gear w-5 text-center"></i> Pengaturan
                         </a>
-
+                        <a href="{{ route('chat.index') }}" class="flex items-center justify-between px-4 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors group">
+                            <div class="flex items-center gap-3">
+                                <i class="fa-solid fa-comments w-5 text-center text-slate-500 group-hover:text-white"></i>
+                                <span>Chat</span>
+                            </div>
+                        </a>
                         @if(Auth::user()->role == 'user')
-                            <a href="{{ url('/booking_history') }}" class="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
-                                <i class="fa-solid fa-clock-rotate-left w-5 text-center"></i> Riwayat Belanja
-                            </a>
+                        <a href="{{ url('/pesanan_saya') }}" class="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
+                            <i class="fa-solid fa-receipt w-5 text-center"></i> Pesanan Saya
+                        </a>
+                        <a href="{{ url('/booking_history') }}" class="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
+                            <i class="fa-solid fa-clock-rotate-left w-5 text-center"></i> Riwayat Belanja
+                        </a>
                         @endif
 
                         <div class="border-t border-white/5 my-1"></div>

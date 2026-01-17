@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use app\Http\Controllers;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ProfileController;
@@ -57,6 +58,22 @@ Route::middleware(['auth', 'role:vendor'])->prefix('vendor')->name('vendor.')->g
 
 });
 
+    Route::get('/pesanan_saya', function () {
+        return view('pesanan_saya.index');
+    });
+
+    Route::middleware(['auth'])->group(function () {
+        // Grouping Chat
+        Route::prefix('chat')->name('chat.')->group(function () {
+            Route::get('/', [ChatController::class, 'index'])->name('index'); // /chat
+            Route::get('/room/{id}', [ChatController::class, 'show'])->name('show'); // /chat/room/{id}
+            Route::post('/send', [ChatController::class, 'sendMessage'])->name('send');
+        });
+
+        // Khusus Vendor
+        Route::get('/vendor/chats', [ChatController::class, 'vendorIndex'])->name('vendor.chats');
+    });
+    
     // --- Menu Utama (Aksesoris & Sparepart) ---
    Route::get('/aksesoris', [AksesorisController::class, 'index'])->name('aksesoris.index');
 
