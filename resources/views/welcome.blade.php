@@ -264,7 +264,7 @@
                                 <i class="fa-solid fa-cart-shopping text-xs md:text-sm group-hover:scale-110 transition-transform"></i>
                             </button>
                             
-                            <button type="submit" name="action" value="buy_now" class="flex-grow bg-red-600 text-white text-[8px] md:text-[10px] font-black uppercase tracking-wider md:tracking-[0.2em] rounded-lg flex items-center justify-center hover:bg-slate-900 transition-all duration-300 group">
+                            <button type="submit" formaction="{{ route('checkout.index') }}" name="action" value="buy_now" class="flex-grow bg-red-600 text-white text-[8px] md:text-[10px] font-black uppercase tracking-wider md:tracking-[0.2em] rounded-lg flex items-center justify-center hover:bg-slate-900 transition-all duration-300 group">
                                 <span>Buy Now</span>
                                 <i class="fa-solid fa-chevron-right ml-1 md:ml-2 text-[7px] md:text-[8px] group-hover:translate-x-1 transition-transform"></i>
                             </button>
@@ -303,7 +303,7 @@
                                 <i class="fa-solid fa-cart-shopping text-xs md:text-sm group-hover:scale-110 transition-transform"></i>
                             </button>
                             
-                            <button type="submit" name="action" value="buy_now" class="flex-grow bg-red-600 text-white text-[8px] md:text-[10px] font-black uppercase tracking-wider md:tracking-[0.2em] rounded-lg flex items-center justify-center hover:bg-slate-900 transition-all duration-300 group">
+                            <button type="submit" formaction="{{ route('checkout.index') }}" name="action" value="buy_now" class="flex-grow bg-red-600 text-white text-[8px] md:text-[10px] font-black uppercase tracking-wider md:tracking-[0.2em] rounded-lg flex items-center justify-center hover:bg-slate-900 transition-all duration-300 group">
                                 <span>Buy Now</span>
                                 <i class="fa-solid fa-chevron-right ml-1 md:ml-2 text-[7px] md:text-[8px] group-hover:translate-x-1 transition-transform"></i>
                             </button>
@@ -342,7 +342,7 @@
                                 <i class="fa-solid fa-cart-shopping text-xs md:text-sm group-hover:scale-110 transition-transform"></i>
                             </button>
                             
-                            <button type="submit" name="action" value="buy_now" class="flex-grow bg-red-600 text-white text-[8px] md:text-[10px] font-black uppercase tracking-wider md:tracking-[0.2em] rounded-lg flex items-center justify-center hover:bg-slate-900 transition-all duration-300 group">
+                            <button type="submit" formaction="{{ route('checkout.index') }}" name="action" value="buy_now" class="flex-grow bg-red-600 text-white text-[8px] md:text-[10px] font-black uppercase tracking-wider md:tracking-[0.2em] rounded-lg flex items-center justify-center hover:bg-slate-900 transition-all duration-300 group">
                                 <span>Buy Now</span>
                                 <i class="fa-solid fa-chevron-right ml-1 md:ml-2 text-[7px] md:text-[8px] group-hover:translate-x-1 transition-transform"></i>
                             </button>
@@ -381,7 +381,7 @@
                                 <i class="fa-solid fa-cart-shopping text-xs md:text-sm group-hover:scale-110 transition-transform"></i>
                             </button>
                             
-                            <button type="submit" name="action" value="buy_now" class="flex-grow bg-red-600 text-white text-[8px] md:text-[10px] font-black uppercase tracking-wider md:tracking-[0.2em] rounded-lg flex items-center justify-center hover:bg-slate-900 transition-all duration-300 group">
+                            <button type="submit" formaction="{{ route('checkout.index') }}" name="action" value="buy_now" class="flex-grow bg-red-600 text-white text-[8px] md:text-[10px] font-black uppercase tracking-wider md:tracking-[0.2em] rounded-lg flex items-center justify-center hover:bg-slate-900 transition-all duration-300 group">
                                 <span>Buy Now</span>
                                 <i class="fa-solid fa-chevron-right ml-1 md:ml-2 text-[7px] md:text-[8px] group-hover:translate-x-1 transition-transform"></i>
                             </button>

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use app\Http\Controllers;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -68,6 +69,7 @@ Route::get('/checkout', function () {
     return view('checkout.index', compact('cartItems'));
 })->name('checkout.index');
 Route::delete('/cart/remove/{index}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout.process');
 Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
 
 // Brand Routes
