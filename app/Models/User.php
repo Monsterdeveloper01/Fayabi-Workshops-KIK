@@ -40,6 +40,14 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function sentMessages() {
+        return $this->hasMany(Message::class, 'sender_id');
+    }
+
+    public function receivedMessages() {
+        return $this->hasMany(Message::class, 'receiver_id');
+    }
+
     /**
      * Get the attributes that should be cast.
      *

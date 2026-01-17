@@ -178,21 +178,21 @@
                                                 <span class="text-xl font-black text-slate-900">Rp {{ number_format($item->price, 0, ',', '.') }}</span>
                                             </div>
                                             
-                                            {{-- UPDATE DI SINI: MENAMBAHKAN ID PADA OBJEK ALPINE --}}
-                                            <button 
-                                                @click="modalOpen = true; selectedProduct = {
-                                                    id: '{{ $item->id }}',  {{-- <--- PENTING! --}}
-                                                    name: '{{ addslashes($item->name) }}',
-                                                    brand: '{{ $item->brand ?? 'Generic' }}',
-                                                    type: '{{ $cat->name }}',
-                                                    price: 'Rp {{ number_format($item->price, 0, ',', '.') }}',
-                                                    desc: '{{ addslashes($item->description) }}',
-                                                    image: '{{ $item->image ? Storage::url($item->image) : '' }}',
-                                                    color: '{{ $style['color'] }}'
-                                                }"
-                                                class="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center hover:bg-{{ $style['color'] }}-600 transition-colors shadow-lg hover:shadow-{{ $style['color'] }}-500/30">
-                                                <i class="fa-solid fa-cart-shopping"></i>
-                                            </button>
+                                          {{-- Update Button di loop produk --}}
+                                        <button @click="modalOpen = true; selectedProduct = {
+                                            id: '{{ $item->id }}',
+                                            vendor_id: '{{ $item->user_id }}', {{-- Tambahkan ID Vendor --}}
+                                            name: '{{ addslashes($item->name) }}',
+                                            brand: '{{ $item->brand ?? 'Generic' }}',
+                                            type: '{{ $cat->name }}',
+                                            price: 'Rp {{ number_format($item->price, 0, ',', '.') }}',
+                                            desc: '{{ addslashes($item->description) }}',
+                                            image: '{{ $item->image ? Storage::url($item->image) : '' }}',
+                                            color: '{{ $style['color'] }}'
+                                        }"
+                                        class="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center hover:bg-{{ $style['color'] }}-600 transition-colors shadow-lg">
+                                            <i class="fa-solid fa-cart-shopping"></i>
+                                        </button>
                                         </div>
                                     </div>
                                 </div>
@@ -268,6 +268,9 @@
                         <i class="fa-regular fa-heart"></i>
                     </button>
                 </form>
+                <a :href="'/chat/' + selectedProduct.vendor_id" class="w-12 h-12 flex items-center justify-center border border-slate-200 rounded-xl hover:bg-red-50 hover:text-red-500 transition-colors">
+        <i class="fa-solid fa-comment-dots text-lg"></i>
+    </a>
             </div>
         </div>
     </div>

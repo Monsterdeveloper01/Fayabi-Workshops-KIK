@@ -256,7 +256,8 @@
                         <a href="{{ url('/profile') }}" class="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
                             <i class="fa-solid fa-gear w-5 text-center"></i> Pengaturan
                         </a>
-                        <a href="{{ route('chat.index') }}" class="flex items-center justify-between px-4 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors group">
+                       {{-- Panggil 'chat.list' untuk ke halaman Inbox/Daftar Chat --}}
+                        <a href="{{ route('chat.list') }}" class="flex items-center justify-between px-4 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors group">
                             <div class="flex items-center gap-3">
                                 <i class="fa-solid fa-comments w-5 text-center text-slate-500 group-hover:text-white"></i>
                                 <span>Chat</span>

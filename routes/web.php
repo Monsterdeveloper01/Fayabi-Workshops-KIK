@@ -1,131 +1,88 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use app\Http\Controllers;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SparepartController; // Jangan lupa import di atas
+use App\Http\Controllers\SparepartController;
 use App\Http\Controllers\VendorController;
-use App\Http\Controllers\AksesorisController; // <--- Import ini di atas
+use App\Http\Controllers\AksesorisController;
+use App\Http\Controllers\OrderController;
 
+/*
+|--------------------------------------------------------------------------
+| 1. ROUTE PUBLIK
+|--------------------------------------------------------------------------
+*/
 Route::get('/', function () {
     return view('welcome');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->name('home');
 
-Route::middleware('auth')->group(function () {
+Route::get('/news/{id}', function ($id) {
+    return view('news.show'); 
+});
+
+/*
+|--------------------------------------------------------------------------
+| 2. ROUTE SETELAH LOGIN (AUTH)
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth'])->group(function () {
+
+    // --- PROFILE MANAGEMENT ---
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
 
-require __DIR__.'/auth.php';
-
-/*
-|--------------------------------------------------------------------------
-| 1. ROUTE PUBLIK (Bisa Diakses Siapa Saja)
-|--------------------------------------------------------------------------
-| Route ini ditaruh DI LUAR middleware 'auth'.
-| Biasanya halaman depan/landing page.
-*/
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
-  Route::get('/news/{id}', function ($id) {
-        return view('news.show'); 
-    });
-
-/*
-|--------------------------------------------------------------------------
-| 2. ROUTE PROTECTED (HARUS LOGIN DULU)
-|--------------------------------------------------------------------------
-| Semua route di dalam group ini WAJIB Login.
-| Kalau belum login, otomatis dilempar ke halaman Login.
-*/
-
-Route::middleware(['auth'])->group(function () {
-
-    // --- AREA KHUSUS VENDOR ---
-    Route::middleware(['auth', 'role:vendor'])->prefix('vendor')->name('vendor.')->group(function () {
-        Route::get('/my-products', [VendorController::class, 'products'])->name('products');
+    // --- AREA KHUSUS VENDOR (Role Check) ---
+    Route::middleware(['role:vendor'])->prefix('vendor')->name('vendor.')->group(function () {
         Route::get('/dashboard', [VendorController::class, 'index'])->name('dashboard');
+        Route::get('/my-products', [VendorController::class, 'products'])->name('products');
         Route::get('/create-product', [VendorController::class, 'create'])->name('create');
         Route::post('/store-product', [VendorController::class, 'store'])->name('store');
+        
+        // Pesanan Masuk untuk Vendor
         Route::get('/orders', [VendorController::class, 'orders'])->name('orders.index');
         Route::get('/orders/{id}', [VendorController::class, 'showOrder'])->name('orders.show');
     });
 
-    Route::get('/pesanan_saya', function () {
-        return view('pesanan_saya.index');
-    });
+    // --- SISTEM CHAT (User & Vendor) ---
+    // Gunakan nama yang konsisten agar tidak error di Blade
+    Route::get('/chats', [ChatController::class, 'index'])->name('chat.list');
+    Route::get('/chat/{id}', [ChatController::class, 'show'])->name('chat.show');
+    Route::post('/chat/send', [ChatController::class, 'send'])->name('chat.send');
 
-    Route::middleware(['auth'])->group(function () {
-        // Grouping Chat
-        Route::prefix('chat')->name('chat.')->group(function () {
-            Route::get('/', [ChatController::class, 'index'])->name('index'); // /chat
-            Route::get('/room/{id}', [ChatController::class, 'show'])->name('show'); // /chat/room/{id}
-            Route::post('/send', [ChatController::class, 'sendMessage'])->name('send');
-        });
-
-        // Khusus Vendor
-        Route::get('/vendor/chats', [ChatController::class, 'vendorIndex'])->name('vendor.chats');
-    });
-    
-    // --- Menu Utama (Aksesoris & Sparepart) ---
-   Route::get('/aksesoris', [AksesorisController::class, 'index'])->name('aksesoris.index');
-
+    // --- BELANJA (Sparepart & Aksesoris) ---
     Route::get('/sparepart', [SparepartController::class, 'index'])->name('sparepart.index');
+    Route::get('/aksesoris', [AksesorisController::class, 'index'])->name('aksesoris.index');
 
-    // --- Menu Jasa ---
-    Route::get('/service_motor', function () {
-        return view('service_motor.index');
-    });
-
-    Route::get('/cuci_motor', function () {
-        return view('cuci_motor.index');
-    });
-
-    Route::get('/modifikasi_motor', function () {
-        return view('modifikasi_motor.index');
-    });
-
-    // --- Fitur User ---
-    Route::get('/profile_setting', function () {
-        return view('profile_setting.index');
-    });
-
+    // --- PESANAN SAYA (User) ---
+    Route::get('/pesanan_saya', [OrderController::class, 'myOrders'])->name('pesanan_saya.index');
     Route::get('/booking_history', function () {
         return view('booking_history.index');
-    });
-    
-    Route::get('/jual', function () {
-        return view('jual.index');
-    });
+    })->name('booking.history');
 
-    // --- Transaksi (Cart & Checkout) ---
-   Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+    // --- KERANJANG & CHECKOUT ---
+    Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
     Route::delete('/cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
-
-    // Checkout
+    
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
     Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('checkout.process');
 
-    // --- News (Opsional: Kalau mau baca berita harus login) ---
-  
+    // --- JASA & LAINNYA ---
+    Route::get('/service_motor', function () { return view('service_motor.index'); });
+    Route::get('/cuci_motor', function () { return view('cuci_motor.index'); });
+    Route::get('/modifikasi_motor', function () { return view('modifikasi_motor.index'); });
+    Route::get('/jual', function () { return view('jual.index'); });
 
-    // --- Brand Pages ---
-    Route::get('/brand/harley', function () { return view('brand.harley'); });
-    Route::get('/brand/aprilia', function () { return view('brand.aprilia'); });
-    Route::get('/brand/ducati', function () { return view('brand.ducati'); });
-    Route::get('/brand/kawasaki', function () { return view('brand.kawasaki'); });
-    Route::get('/brand/ktm', function () { return view('brand.ktm'); });
-    Route::get('/brand/suzuki', function () { return view('brand.suzuki'); });
-    Route::get('/brand/yamaha', function () { return view('brand.yamaha'); });
-    Route::get('/brand/honda', function () { return view('brand.honda'); });
-    Route::get('/brand/bmw', function () { return view('brand.bmw'); });
+    // --- BRAND PAGES ---
+    $brands = ['harley', 'aprilia', 'ducati', 'kawasaki', 'ktm', 'suzuki', 'yamaha', 'honda', 'bmw'];
+    foreach ($brands as $brand) {
+        Route::get("/brand/{$brand}", function () use ($brand) { 
+            return view("brand.{$brand}"); 
+        })->name("brand.{$brand}");
+    }
+});
 
-}); 
-// <--- Jangan lupa tutup kurung kurawal dan tutup kurung biasa di sini!
+require __DIR__.'/auth.php';

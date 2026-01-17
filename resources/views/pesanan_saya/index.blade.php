@@ -3,6 +3,7 @@
 @section('content')
 <div class="bg-slate-950 min-h-screen py-10 relative overflow-hidden">
     
+    {{-- Glow Effects --}}
     <div class="absolute top-0 -left-20 w-[500px] h-[500px] bg-red-600/10 rounded-full blur-[120px] pointer-events-none"></div>
     <div class="absolute bottom-0 -right-20 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none"></div>
 
@@ -17,7 +18,7 @@
         </div>
 
         {{-- Tab Navigation --}}
-        <div x-data="{ tab: 'belum_bayar' }">
+        <div>
             <div class="flex items-center justify-between border-b border-white/5 overflow-x-auto no-scrollbar mb-8">
                 @php
                     $tabs = [
@@ -30,60 +31,81 @@
                 @endphp
 
                 @foreach($tabs as $t)
-                <button @click="tab = '{{ $t['id'] }}'" 
-                        :class="tab === '{{ $t['id'] }}' ? 'text-red-600 border-red-600' : 'text-slate-500 border-transparent hover:text-slate-300'"
-                        class="px-4 py-3 text-xs font-black uppercase tracking-widest border-b-2 transition-all whitespace-nowrap">
+                <a href="{{ route('pesanan_saya.index', ['status' => $t['id']]) }}" 
+                   class="px-4 py-3 text-xs font-black uppercase tracking-widest border-b-2 transition-all whitespace-nowrap 
+                   {{ $status === $t['id'] ? 'text-red-600 border-red-600' : 'text-slate-500 border-transparent hover:text-slate-300' }}">
                     {{ $t['label'] }}
-                </button>
+                </a>
                 @endforeach
             </div>
 
-            {{-- Empty State Content (Seperti di Gambar) --}}
-            <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-12 flex flex-col items-center justify-center text-center">
-                <div class="w-32 h-32 bg-slate-900/50 rounded-full flex items-center justify-center mb-6 border border-white/5 shadow-inner">
-                    <i class="fa-solid fa-clipboard-list text-5xl text-slate-700"></i>
-                </div>
-                <h3 class="text-lg font-bold text-white mb-2">Belum ada pesanan</h3>
-                <p class="text-slate-500 text-sm max-w-xs mb-8">Sepertinya kamu belum melakukan transaksi apapun hari ini.</p>
-                <a href="{{ url('/') }}" class="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-xl font-black uppercase text-[10px] tracking-widest transition-all transform hover:scale-105 shadow-lg shadow-red-600/20">
-                    Mulai Belanja
-                </a>
-            </div>
-
-            {{-- Rekomendasi "Kamu Mungkin Juga Suka" --}}
-            <div class="mt-16">
-                <div class="flex items-center gap-4 mb-8">
-                    <div class="h-px bg-white/10 flex-1"></div>
-                    <h2 class="text-xs font-black text-slate-500 uppercase tracking-[0.3em]">Kamu Mungkin Juga Suka</h2>
-                    <div class="h-px bg-white/10 flex-1"></div>
-                </div>
-
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
-                    {{-- Dummy Product 1 --}}
-                    <div class="group">
-                        <div class="relative aspect-square rounded-3xl overflow-hidden bg-white/5 border border-white/10 mb-4 transition-all group-hover:border-red-600/50">
-                            <img src="https://images.unsplash.com/photo-1558981403-c5f9199a28bc?q=80&w=500" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                            <div class="absolute top-3 left-3 bg-red-600 text-white text-[9px] font-black px-2 py-1 rounded-md">-52%</div>
-                        </div>
-                        <h4 class="text-white font-bold text-sm truncate px-1">Jas Hujan Motor Waterproof</h4>
-                        <div class="flex items-center justify-between mt-2 px-1">
-                            <span class="text-red-600 font-black text-sm">Rp 260.440</span>
-                            <span class="text-[9px] text-slate-500 font-bold uppercase">18 Terjual</span>
-                        </div>
+            {{-- List Pesanan --}}
+            @forelse($orders as $order)
+                <div class="bg-white/5 border border-white/10 rounded-3xl p-6 mb-6 group hover:border-red-600/30 transition-all">
+                    <div class="flex justify-between items-center mb-4 border-b border-white/5 pb-4">
+                        <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Order #{{ $order->order_number }}</span>
+                        <span class="px-3 py-1 bg-red-600/10 text-red-500 rounded-full text-[9px] font-black uppercase tracking-tighter">
+                            {{ $order->status }}
+                        </span>
                     </div>
 
-                    {{-- Dummy Product 2 --}}
-                    <div class="group">
-                        <div class="relative aspect-square rounded-3xl overflow-hidden bg-white/5 border border-white/10 mb-4 transition-all group-hover:border-red-600/50">
-                            <img src="https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?q=80&w=500" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                            <div class="absolute top-3 left-3 bg-red-600 text-white text-[9px] font-black px-2 py-1 rounded-md">-59%</div>
+                    @foreach($order->items as $item)
+                    <div class="flex gap-4 mb-4">
+                        <div class="w-16 h-16 bg-slate-900 rounded-2xl overflow-hidden border border-white/5">
+                            <img src="{{ $item->product->image ? asset('storage/'.$item->product->image) : 'https://via.placeholder.com/150' }}" class="w-full h-full object-cover">
                         </div>
-                        <h4 class="text-white font-bold text-sm truncate px-1">Ransel Wanita Laptop</h4>
-                        <div class="flex items-center justify-between mt-2 px-1">
-                            <span class="text-red-600 font-black text-sm">Rp 461.208</span>
-                            <span class="text-[9px] text-slate-500 font-bold uppercase">3RB+ Terjual</span>
+                        <div class="flex-1">
+                            <h4 class="text-white font-bold text-sm leading-tight">{{ $item->product_name }}</h4>
+                            <p class="text-slate-500 text-xs mt-1">{{ $item->qty }} x Rp {{ number_format($item->price, 0, ',', '.') }}</p>
                         </div>
                     </div>
+                    @endforeach
+
+                    <div class="flex justify-between items-center mt-6 border-t border-white/5 pt-4">
+                        <div>
+                            <p class="text-[9px] text-slate-500 uppercase font-black tracking-widest">Total Bill</p>
+                            <p class="text-lg font-black text-white italic tracking-tighter">Rp {{ number_format($order->total_price, 0, ',', '.') }}</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <a href="#" class="px-5 py-2 bg-white/5 border border-white/10 text-white text-[10px] font-black uppercase rounded-lg hover:bg-white/10 transition-all">Detail</a>
+                            @if($order->status === 'pending' && $order->payment_status === 'unpaid')
+                                <button class="px-5 py-2 bg-red-600 text-white text-[10px] font-black uppercase rounded-lg hover:bg-red-700 transition-all shadow-lg shadow-red-600/20">Bayar</button>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            @empty
+                {{-- Empty State --}}
+                <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-12 flex flex-col items-center justify-center text-center">
+                    <div class="w-24 h-24 bg-slate-900/50 rounded-full flex items-center justify-center mb-6 border border-white/5">
+                        <i class="fa-solid fa-clipboard-list text-4xl text-slate-700"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2 uppercase italic tracking-tighter">Tidak Ada Pesanan</h3>
+                    <p class="text-slate-500 text-sm max-w-xs mb-8">Belum ada transaksi di tab ini.</p>
+                    <a href="{{ url('/') }}" class="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-xl font-black uppercase text-[10px] tracking-widest transition-all">
+                        Cari Sparepart
+                    </a>
+                </div>
+            @endforelse
+
+            {{-- Rekomendasi --}}
+            <div class="mt-20">
+                <div class="flex items-center gap-4 mb-10">
+                    <div class="h-px bg-white/5 flex-1"></div>
+                    <h2 class="text-[10px] font-black text-slate-500 uppercase tracking-[0.4em] italic">Recommended</h2>
+                    <div class="h-px bg-white/5 flex-1"></div>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    @foreach($recommendations as $rec)
+                    <div class="group cursor-pointer">
+                        <div class="relative aspect-square rounded-[2rem] overflow-hidden bg-white/5 border border-white/10 mb-4 transition-all group-hover:border-red-600/50 shadow-2xl">
+                            <img src="{{ $rec->image ? asset('storage/'.$rec->image) : 'https://via.placeholder.com/150' }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        </div>
+                        <h4 class="text-white font-bold text-xs truncate px-1 uppercase tracking-tight">{{ $rec->name }}</h4>
+                        <span class="text-red-600 font-black text-xs px-1 italic">Rp {{ number_format($rec->price, 0, ',', '.') }}</span>
+                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
