@@ -183,6 +183,16 @@
                 <a href="{{ url('/jual') }}" class="hidden lg:flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-slate-950 px-5 py-2.5 rounded-full font-bold text-xs uppercase tracking-tight transition-all transform hover:scale-105 shadow-lg shadow-amber-500/20">
                     <i class="fa-solid fa-plus-circle"></i> Jual Motor
                 </a>
+                <a href="{{ route('checkout.index') }}" class="relative group p-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full transition-all">
+                    <i class="fa-solid fa-cart-shopping text-slate-300 group-hover:text-white text-lg"></i>
+                    
+                    {{-- Logic Sinkronisasi --}}
+                    @if(session('cart') && count(session('cart')) > 0)
+                        <span class="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-black w-5 h-5 flex items-center justify-center rounded-full border-2 border-slate-900 shadow-lg animate-bounce">
+                            {{ count(session('cart')) }}
+                        </span>
+                    @endif
+                </a>
                 @endif
 
                 {{-- PROFILE DROPDOWN (Dinamis: User/Vendor/Guest) --}}
