@@ -40,7 +40,7 @@
 <div x-data="{ 
     mobileFilterOpen: false, 
     modalOpen: false,
-    selectedProduct: { name: '', price: '', desc: '', type: '', brand: '', image: '', color: 'red' }
+    selectedProduct: { id: '', name: '', price: '', desc: '', type: '', brand: '', image: '', color: 'red' }
 }" class="min-h-screen pb-20 bg-slate-50 relative">
 
     <div class="bg-slate-900 text-white pt-10 pb-16 relative overflow-hidden border-b-4 border-red-600 z-20 shadow-[inset_0_6px_10px_-4px_rgba(0,0,0,0.6)]">
@@ -178,8 +178,10 @@
                                                 <span class="text-xl font-black text-slate-900">Rp {{ number_format($item->price, 0, ',', '.') }}</span>
                                             </div>
                                             
+                                            {{-- UPDATE DI SINI: MENAMBAHKAN ID PADA OBJEK ALPINE --}}
                                             <button 
                                                 @click="modalOpen = true; selectedProduct = {
+                                                    id: '{{ $item->id }}',  {{-- <--- PENTING! --}}
                                                     name: '{{ addslashes($item->name) }}',
                                                     brand: '{{ $item->brand ?? 'Generic' }}',
                                                     type: '{{ $cat->name }}',
@@ -253,8 +255,12 @@
                     <p x-text="selectedProduct.desc" class="text-slate-500 text-sm leading-relaxed whitespace-pre-line"></p>
                 </div>
 
+                {{-- UPDATE DI SINI: FORM MODAL DENGAN INPUT HIDDEN ID --}}
                 <form method="POST" action="{{ route('cart.add') }}" class="flex gap-3">
                     @csrf
+                    {{-- Input Hidden untuk mengirim ID Produk --}}
+                    <input type="hidden" name="product_id" :value="selectedProduct.id">
+
                     <button class="flex-1 bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-xl transition-colors shadow-lg shadow-slate-900/20">
                         <i class="fa-solid fa-cart-shopping mr-2"></i> Beli Sekarang
                     </button>

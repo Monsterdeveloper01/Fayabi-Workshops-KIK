@@ -183,16 +183,34 @@
                 <a href="{{ url('/jual') }}" class="hidden lg:flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-slate-950 px-5 py-2.5 rounded-full font-bold text-xs uppercase tracking-tight transition-all transform hover:scale-105 shadow-lg shadow-amber-500/20">
                     <i class="fa-solid fa-plus-circle"></i> Jual Motor
                 </a>
-                <a href="{{ route('checkout.index') }}" class="relative group p-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full transition-all">
-                    <i class="fa-solid fa-cart-shopping text-slate-300 group-hover:text-white text-lg"></i>
-                    
-                    {{-- Logic Sinkronisasi --}}
-                    @if(session('cart') && count(session('cart')) > 0)
-                        <span class="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-black w-5 h-5 flex items-center justify-center rounded-full border-2 border-slate-900 shadow-lg animate-bounce">
-                            {{ count(session('cart')) }}
-                        </span>
-                    @endif
-                </a>
+                {{-- ======================================================== --}}
+                {{-- LOGIC CART BUTTON (FIXED)                                --}}
+                {{-- ======================================================== --}}
+                @if(!Auth::check() || Auth::user()->role == 'user') 
+                    @php
+                        $cartCount = 0;
+                        if(Auth::check()) {
+                            // Jika Login: Hitung dari Database
+                            $cartCount = \App\Models\Cart::where('user_id', Auth::id())->sum('qty');
+                        } else {
+                            // Jika Tamu: Hitung dari Session
+                            $cart = session('cart', []);
+                            $cartCount = collect($cart)->sum('qty');
+                        }
+                    @endphp
+
+                    <a href="{{ route('checkout.index') }}" class="relative group p-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full transition-all">
+                        <i class="fa-solid fa-cart-shopping text-slate-300 group-hover:text-white text-lg"></i>
+                        
+                        {{-- Badge Merah --}}
+                        @if($cartCount > 0)
+                            <span class="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-black w-5 h-5 flex items-center justify-center rounded-full border-2 border-slate-900 shadow-lg animate-bounce">
+                                {{ $cartCount }}
+                            </span>
+                        @endif
+                    </a>
+                @endif
+                {{-- ======================================================== --}}
                 @endif
 
                 {{-- PROFILE DROPDOWN (Dinamis: User/Vendor/Guest) --}}
@@ -219,7 +237,7 @@
                             <p class="text-xs font-bold text-white truncate">{{ Auth::user()->email }}</p>
                         </div>
                         
-                        <a href="{{ url('/profile_setting') }}" class="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
+                        <a href="{{ url('/profile') }}" class="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
                             <i class="fa-solid fa-gear w-5 text-center"></i> Pengaturan
                         </a>
                         <a href="{{ route('chat.index') }}" class="flex items-center justify-between px-4 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors group">

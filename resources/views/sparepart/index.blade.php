@@ -160,17 +160,18 @@
                                                 <span class="font-black text-slate-900">Rp {{ number_format($item->price, 0, ',', '.') }}</span>
                                                 
                                                 <button 
-                                                    @click="modalOpen = true; selectedProduct = {
-                                                        name: '{{ addslashes($item->name) }}',
-                                                        brand: '{{ $item->brand ?? 'No Brand' }}',
-                                                        type: '{{ ucfirst($item->condition) }}',
-                                                        price: 'Rp {{ number_format($item->price, 0, ',', '.') }}',
-                                                        desc: '{{ addslashes($item->description) }}',
-                                                        image: '{{ $item->image ? Storage::url($item->image) : '' }}'
-                                                    }"
-                                                    class="text-xs font-bold text-white bg-slate-800 px-3 py-1.5 rounded-full hover:bg-red-600 transition-colors">
-                                                    Lihat
-                                                </button>
+                                            @click="modalOpen = true; selectedProduct = {
+                                                id: '{{ $item->id }}',   {{-- <--- INI WAJIB DITAMBAHKAN --}}
+                                                name: '{{ addslashes($item->name) }}',
+                                                brand: '{{ $item->brand ?? 'No Brand' }}',
+                                                type: '{{ ucfirst($item->condition) }}',
+                                                price: 'Rp {{ number_format($item->price, 0, ',', '.') }}',
+                                                desc: '{{ addslashes($item->description) }}',
+                                                image: '{{ $item->image ? Storage::url($item->image) : '' }}'
+                                            }"
+                                            class="text-xs font-bold text-white bg-slate-800 px-3 py-1.5 rounded-full hover:bg-red-600 transition-colors">
+                                            Lihat
+                                        </button>
                                             </div>
                                         </div>
                                     </div>
@@ -223,6 +224,7 @@
 
                 <form method="POST" action="{{ route('cart.add') }}" class="w-full">
                     @csrf
+                    <input type="hidden" name="product_id" :value="selectedProduct.id">
                     <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-xl transition-colors shadow-lg shadow-red-600/20">
                         <i class="fa-solid fa-cart-shopping mr-2"></i> Tambah ke Keranjang
                     </button>
