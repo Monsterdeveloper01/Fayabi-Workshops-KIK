@@ -123,7 +123,7 @@
                         <a href="/modifikasi_motor" class="flex items-center gap-3 px-4 py-3 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
                             <i class="fa-solid fa-wand-magic-sparkles text-slate-500 w-5"></i> Modifikasi
                         </a>
-                        <a href="/cuci_motor" class="flex items-center gap-3 px-4 py-3 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
+                        <a href="/cuci_motor" class="flex Fitems-center gap-3 px-4 py-3 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
                             <i class="fa-solid fa-soap text-slate-500 w-5"></i> Cuci Motor
                         </a>
                     </div>
@@ -144,17 +144,74 @@
                     <i class="fa-solid fa-plus text-lg md:text-sm"></i> 
                     <span class="hidden sm:inline">Jual Motor</span>
                 </a>
-                <div x-data="{ userOpen: false }" @click.away="userOpen = false" class="relative">
-                    <button @click="userOpen = !userOpen" class="flex items-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 p-1.5 pr-4 rounded-full transition-all">
-                        <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-slate-700 to-slate-600 flex items-center justify-center border border-white/20 shadow-inner">
-                            <i class="fa-solid fa-user text-white text-xs"></i>
-                        </div>
-                        <div class="hidden sm:flex flex-col items-start leading-tight">
-                            <span class="text-white text-[11px] font-medium opacity-60">Selamat datang,</span>
-                            <span class="text-white text-sm font-bold">User Pro</span>
-                        </div>
-                        <i class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform" :class="userOpen ? 'rotate-180' : ''"></i>
-                    </button>
+                <div class="flex items-center gap-4">
+
+    @auth
+    <div x-data="{ userOpen: false }" @click.away="userOpen = false" class="relative">
+        
+        <button @click="userOpen = !userOpen" class="flex items-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 p-1.5 pr-4 rounded-full transition-all">
+            <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-slate-700 to-slate-600 flex items-center justify-center border border-white/20 shadow-inner">
+                <i class="fa-solid fa-user text-white text-xs"></i>
+            </div>
+            
+            <div class="hidden sm:flex flex-col items-start leading-tight">
+                <span class="text-white text-[11px] font-medium opacity-60">Halo,</span>
+                <span class="text-white text-sm font-bold">{{ Auth::user()->name }}</span>
+            </div>
+            
+            <i class="fa-solid fa-chevron-down text-[10px] text-slate-500 transition-transform duration-300" :class="userOpen ? 'rotate-180' : ''"></i>
+        </button>
+
+        <div 
+            x-show="userOpen"
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0 translate-y-2"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            x-transition:leave="transition ease-in duration-150"
+            x-transition:leave-start="opacity-100 translate-y-0"
+            x-transition:leave-end="opacity-0 translate-y-2"
+            style="display: none;" 
+            class="absolute right-0 mt-2 w-52 bg-slate-800 border border-white/10 rounded-2xl shadow-2xl py-2 z-50"
+        >
+            <div class="px-4 py-2 border-b border-white/5 mb-1">
+                <p class="text-xs text-slate-400">Signed in as</p>
+                <p class="text-sm font-bold text-white truncate">{{ Auth::user()->email }}</p>
+            </div>
+            
+            <a href="{{ route('profile.edit') }}" class="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
+                <i class="fa-solid fa-gear w-5 text-center"></i> Pengaturan
+            </a>
+            
+            <a href="{{ url('/booking_history') }}" class="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
+                <i class="fa-solid fa-clock-rotate-left w-5 text-center"></i> Riwayat
+            </a>
+
+            <div class="border-t border-white/5 my-1"></div>
+
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-400 hover:bg-red-500/10 transition-colors font-bold text-left">
+                    <i class="fa-solid fa-right-from-bracket w-5 text-center"></i> Logout
+                </button>
+            </form>
+        </div>
+    </div>
+    @endauth
+
+    @guest
+    <div class="flex items-center gap-3">
+        <a href="{{ route('login') }}" class="text-slate-300 hover:text-white text-sm font-bold transition-colors px-2">
+            Masuk
+        </a>
+
+        <a href="{{ route('register') }}" class="bg-white text-slate-900 hover:bg-slate-100 px-5 py-2 rounded-full text-sm font-bold transition-transform hover:scale-105 shadow-lg shadow-white/10">
+            Daftar
+        </a>
+    </div>
+    @endguest
+
+</div>
+                
                     <div x-show="userOpen" x-cloak x-transition
                         class="absolute right-0 mt-3 w-52 bg-slate-800 border border-white/10 rounded-2xl shadow-2xl py-2 z-[60]">
                         <a href="/profile_setting" class="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">

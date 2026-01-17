@@ -4,111 +4,105 @@ use Illuminate\Support\Facades\Route;
 use app\Http\Controllers;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\ProfileController;
+
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
+
+/*
+|--------------------------------------------------------------------------
+| 1. ROUTE PUBLIK (Bisa Diakses Siapa Saja)
+|--------------------------------------------------------------------------
+| Route ini ditaruh DI LUAR middleware 'auth'.
+| Biasanya halaman depan/landing page.
+*/
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/aksesoris', function () {
-    // Kita "matikan" dulu view-nya buat ngetes
-    // dd('Halo, ini route Aksesoris lho!');
+  Route::get('/news/{id}', function ($id) {
+        return view('news.show'); 
+    });
 
-    return view('aksesoris.index');
-});
+/*
+|--------------------------------------------------------------------------
+| 2. ROUTE PROTECTED (HARUS LOGIN DULU)
+|--------------------------------------------------------------------------
+| Semua route di dalam group ini WAJIB Login.
+| Kalau belum login, otomatis dilempar ke halaman Login.
+*/
 
-Route::get('/service_motor', function () {
-    // Kita "matikan" dulu view-nya buat ngetes
-    // dd('Halo, ini route Service Motor lho!');
+Route::middleware(['auth'])->group(function () {
 
-    return view('service_motor.index');
-});
+    // --- Menu Utama (Aksesoris & Sparepart) ---
+    Route::get('/aksesoris', function () {
+        return view('aksesoris.index');
+    });
 
-Route::get('/cuci_motor', function () {
-    // Kita "matikan" dulu view-nya buat ngetes
-    // dd('Halo, ini route Cuci Motor lho!');
+    Route::get('/sparepart', function () {
+        return view('sparepart.index');
+    });
 
-    return view('cuci_motor.index');
-});
+    // --- Menu Jasa ---
+    Route::get('/service_motor', function () {
+        return view('service_motor.index');
+    });
 
-Route::get('/modifikasi_motor', function () {
-    // Kita "matikan" dulu view-nya buat ngetes
-    // dd('Halo, ini route Modifikasi Motor lho!');
+    Route::get('/cuci_motor', function () {
+        return view('cuci_motor.index');
+    });
 
-    return view('modifikasi_motor.index');
-});
+    Route::get('/modifikasi_motor', function () {
+        return view('modifikasi_motor.index');
+    });
 
-Route::get('/sparepart', function () {
-    // Kita "matikan" dulu view-nya buat ngetes
-    // dd('Halo, ini route Modifikasi Motor lho!');
+    // --- Fitur User ---
+    Route::get('/profile_setting', function () {
+        return view('profile_setting.index');
+    });
 
-    return view('sparepart.index');
-});
+    Route::get('/booking_history', function () {
+        return view('booking_history.index');
+    });
+    
+    Route::get('/jual', function () {
+        return view('jual.index');
+    });
 
-Route::get('/profile_setting', function () {
-    // Kita "matikan" dulu view-nya buat ngetes
-    // dd('Halo, ini route Profile Setting lho!');
+    // --- Transaksi (Cart & Checkout) ---
+    Route::get('/checkout', function () {
+        $cartItems = session()->get('cart', []); 
+        return view('checkout.index', compact('cartItems'));
+    })->name('checkout.index');
 
-    return view('profile_setting.index');
-});
+    Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout.process');
+    Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+    Route::delete('/cart/remove/{index}', [CartController::class, 'removeFromCart'])->name('cart.remove');
 
-Route::get('/booking_history', function () {
-    // Kita "matikan" dulu view-nya buat ngetes
-    // dd('Halo, ini route Booking History lho!');
+    // --- News (Opsional: Kalau mau baca berita harus login) ---
+  
 
-    return view('booking_history.index');
-});
+    // --- Brand Pages ---
+    Route::get('/brand/harley', function () { return view('brand.harley'); });
+    Route::get('/brand/aprilia', function () { return view('brand.aprilia'); });
+    Route::get('/brand/ducati', function () { return view('brand.ducati'); });
+    Route::get('/brand/kawasaki', function () { return view('brand.kawasaki'); });
+    Route::get('/brand/ktm', function () { return view('brand.ktm'); });
+    Route::get('/brand/suzuki', function () { return view('brand.suzuki'); });
+    Route::get('/brand/yamaha', function () { return view('brand.yamaha'); });
+    Route::get('/brand/honda', function () { return view('brand.honda'); });
+    Route::get('/brand/bmw', function () { return view('brand.bmw'); });
 
-Route::get('/news/{id}', function ($id) {
-    return view('news.show'); 
-});
-
-
-// Menampilkan halaman checkout
-Route::get('/checkout', function () {
-    $cartItems = session()->get('cart', []); 
-    return view('checkout.index', compact('cartItems'));
-})->name('checkout.index');
-Route::delete('/cart/remove/{index}', [CartController::class, 'removeFromCart'])->name('cart.remove');
-Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout.process');
-Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
-
-// Brand Routes
-Route::get('/brand/harley', function () {
-    return view('brand.harley');
-});
-
-Route::get('/brand/aprilia', function () {
-    return view('brand.aprilia');
-});
-
-Route::get('/brand/ducati', function () {
-    return view('brand.ducati');
-});
-
-Route::get('/brand/kawasaki', function () {
-    return view('brand.kawasaki');
-});
-
-Route::get('/brand/ktm', function () {
-    return view('brand.ktm');
-});
-
-Route::get('/brand/suzuki', function () {
-    return view('brand.suzuki');
-});
-
-Route::get('/brand/yamaha', function () {
-    return view('brand.yamaha');
-});
-
-Route::get('/brand/honda', function () {
-    return view('brand.honda');
-});
-
-Route::get('/brand/bmw', function () {
-    return view('brand.bmw');
-});
-
-Route::get('/jual', function () {
-    return view('jual.index');
-});
+}); 
+// <--- Jangan lupa tutup kurung kurawal dan tutup kurung biasa di sini!
